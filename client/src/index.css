@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer base {
+	html {
+		box-sizing: border-box;
+		font-family: "Inter", sans-serif;
+	}
+}
+@theme {
+	--color-orange: #f59e0b;
+	--color-orange-600: #d97706;
+	--color-orange-700: #b45309;
+}

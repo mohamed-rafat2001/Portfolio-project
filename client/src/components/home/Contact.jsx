@@ -135,7 +135,7 @@ const Contact = () => {
 										Location
 									</p>
 									<p className="text-xs font-bold text-[#1a1a1a] dark:text-white">
-										Egypt, Remote Friendly
+										Egypt
 									</p>
 								</div>
 							</div>

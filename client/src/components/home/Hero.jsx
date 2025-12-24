@@ -157,7 +157,7 @@ const Hero = () => {
 								Location
 							</p>
 							<p className="text-xs font-bold text-gray-900 dark:text-white">
-								Egypt, Remote
+								Egypt
 							</p>
 						</div>
 					</div>

@@ -1,11 +1,42 @@
 import { useState, useEffect, useCallback } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { HiCodeBracket, HiBars3, HiXMark } from "react-icons/hi2";
+import {
+	HiCodeBracket,
+	HiBars3,
+	HiXMark,
+	HiSun,
+	HiMoon,
+} from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isDark, setIsDark] = useState(false);
 	const { pathname } = useLocation();
+
+	// Initialize theme from localStorage or system preference
+	useEffect(() => {
+		const savedTheme = localStorage.getItem("theme");
+		const systemPrefersDark = window.matchMedia(
+			"(prefers-color-scheme: dark)"
+		).matches;
+
+		if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+			setIsDark(true);
+			document.documentElement.classList.add("dark");
+		}
+	}, []);
+
+	const toggleTheme = () => {
+		setIsDark(!isDark);
+		if (!isDark) {
+			document.documentElement.classList.add("dark");
+			localStorage.setItem("theme", "dark");
+		} else {
+			document.documentElement.classList.remove("dark");
+			localStorage.setItem("theme", "light");
+		}
+	};
 
 	const closeMenu = useCallback(() => setIsOpen(false), []);
 
@@ -25,7 +56,9 @@ const Header = () => {
 
 	const navLinkStyles = ({ isActive }) =>
 		`transition-colors duration-200 text-xl md:text-base font-medium ${
-			isActive ? "text-orange font-semibold" : "text-gray-600 hover:text-orange"
+			isActive
+				? "text-orange font-semibold"
+				: "text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange"
 		}`;
 
 	const navLinks = [
@@ -39,7 +72,7 @@ const Header = () => {
 	];
 
 	return (
-		<header className=" md:py-6 border-b border-gray-200 shadow  py-4 sticky top-0 z-50">
+		<header className="md:py-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow py-4 sticky top-0 z-50 transition-colors duration-300">
 			<div className="flex justify-between items-center container mx-auto px-4">
 				{/* Logo */}
 				<div className="flex items-center">
@@ -53,7 +86,7 @@ const Header = () => {
 						>
 							<HiCodeBracket className="text-2xl md:text-3xl text-orange" />
 						</motion.div>
-						<h1 className="text-xl md:text-2xl font-extrabold tracking-tight">
+						<h1 className="text-xl md:text-2xl font-extrabold tracking-tight dark:text-white">
 							MOHAMED <span className="text-orange">RAFAT</span>
 						</h1>
 					</Link>
@@ -74,34 +107,61 @@ const Header = () => {
 							</motion.div>
 						))}
 
-					<motion.div
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
-						className="ml-4"
-					>
-						<Link
-							to="/contact"
-							className="bg-orange text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-orange/20 hover:shadow-orange/40 transition-shadow duration-300"
+					<div className="flex items-center gap-4 ml-4">
+						<motion.button
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 0.9 }}
+							onClick={toggleTheme}
+							className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors"
+							aria-label="Toggle theme"
 						>
-							Contact
-						</Link>
-					</motion.div>
+							{isDark ? (
+								<HiSun className="text-2xl" />
+							) : (
+								<HiMoon className="text-2xl" />
+							)}
+						</motion.button>
+
+						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+							<Link
+								to="/contact"
+								className="bg-orange text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-orange/20 hover:shadow-orange/40 transition-shadow duration-300"
+							>
+								Contact
+							</Link>
+						</motion.div>
+					</div>
 				</nav>
 
 				{/* Mobile Menu Button */}
-				<button
-					className="md:hidden cursor-pointer p-2 text-gray-600 hover:text-orange transition-colors"
-					onClick={() => setIsOpen(!isOpen)}
-					aria-label="Toggle menu"
-				>
-					{isOpen ? (
-						<HiXMark className="text-3xl" />
-					) : (
-						<HiBars3 className="text-3xl" />
-					)}
-				</button>
+				<div className="flex items-center gap-2 md:hidden">
+					<motion.button
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 0.9 }}
+						onClick={toggleTheme}
+						className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors"
+						aria-label="Toggle theme"
+					>
+						{isDark ? (
+							<HiSun className="text-2xl" />
+						) : (
+							<HiMoon className="text-2xl" />
+						)}
+					</motion.button>
+
+					<button
+						className="cursor-pointer p-2 text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors"
+						onClick={() => setIsOpen(!isOpen)}
+						aria-label="Toggle menu"
+					>
+						{isOpen ? (
+							<HiXMark className="text-3xl" />
+						) : (
+							<HiBars3 className="text-3xl" />
+						)}
+					</button>
+				</div>
 			</div>
-            
 
 			{/* Mobile Navigation Overlay */}
 			<AnimatePresence>
@@ -111,7 +171,7 @@ const Header = () => {
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: "100%" }}
 						transition={{ type: "spring", damping: 25, stiffness: 200 }}
-						className="fixed inset-0 top-[73px] bg-white z-40 md:hidden flex flex-col p-6 space-y-6"
+						className="fixed inset-0 top-[73px] bg-white dark:bg-gray-900 z-40 md:hidden flex flex-col p-6 space-y-6 transition-colors duration-300"
 					>
 						{navLinks.map((link) => (
 							<NavLink

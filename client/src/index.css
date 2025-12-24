@@ -1,13 +1,31 @@
 @import "tailwindcss";
 
-@layer base {
-	html {
-		box-sizing: border-box;
-		font-family: "Inter", sans-serif;
-	}
-}
 @theme {
 	--color-orange: #f59e0b;
 	--color-orange-600: #d97706;
 	--color-orange-700: #b45309;
 }
+
+@layer base {
+	html {
+		box-sizing: border-box;
+		font-family: "Inter", sans-serif;
+		scroll-behavior: smooth;
+		overflow-x: hidden;
+	}
+
+	body {
+		overflow-x: hidden;
+		width: 100%;
+		position: relative;
+	}
+
+	* {
+		transition-property: color, background-color, border-color,
+			text-decoration-color, fill, stroke;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 300ms;
+	}
+}
+
+@custom-variant dark (&:where(.dark, .dark *));

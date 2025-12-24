@@ -1,13 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
-import {
-	HiCodeBracket,
-	HiBars3,
-	HiXMark,
-	HiSun,
-	HiMoon,
-} from "react-icons/hi2";
-import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { HiBars3, HiXMark, HiSun, HiMoon } from "react-icons/hi2";
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import Logo from "./Logo";
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -28,8 +23,9 @@ const Header = () => {
 	}, []);
 
 	const toggleTheme = () => {
-		setIsDark(!isDark);
-		if (!isDark) {
+		const newDark = !isDark;
+		setIsDark(newDark);
+		if (newDark) {
 			document.documentElement.classList.add("dark");
 			localStorage.setItem("theme", "dark");
 		} else {
@@ -54,110 +50,89 @@ const Header = () => {
 		}
 	}, [isOpen]);
 
-	const navLinkStyles = ({ isActive }) =>
-		`transition-colors duration-200 text-xl md:text-base font-medium ${
-			isActive
-				? "text-orange font-semibold"
-				: "text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange"
-		}`;
+	const navLinkStyles =
+		"transition-all duration-200 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-orange dark:hover:text-orange uppercase tracking-widest";
 
 	const navLinks = [
-		{ to: "/", label: "Home", end: true },
-		{ to: "/about", label: "About" },
-		{ to: "/projects", label: "Projects" },
-		{ to: "/skills", label: "Skills" },
-		{ to: "/educations", label: "Educations" },
-		{ to: "/experiences", label: "Experiences" },
-		{ to: "/contact", label: "Contact" },
+		{ to: "#home", label: "Home" },
+		{ to: "#about", label: "About" },
+		{ to: "#projects", label: "Projects" },
+		{ to: "#journey", label: "Journey" },
+		{ to: "#skills", label: "Skills" },
 	];
 
 	return (
-		<header className="md:py-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow py-4 sticky top-0 z-50 transition-colors duration-300">
+		<header className="border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl py-3 md:py-4 sticky top-0 z-50">
 			<div className="flex justify-between items-center container mx-auto px-4">
 				{/* Logo */}
 				<div className="flex items-center">
-					<Link to="/" className="flex items-center gap-2 group">
-						<motion.div
-							initial={{ rotate: -10 }}
-							animate={{ rotate: 0 }}
-							whileHover={{ scale: 1.1, rotate: 5 }}
-							whileTap={{ scale: 0.9 }}
-							transition={{ duration: 0.3 }}
-						>
-							<HiCodeBracket className="text-2xl md:text-3xl text-orange" />
-						</motion.div>
-						<h1 className="text-xl md:text-2xl font-extrabold tracking-tight dark:text-white">
-							MOHAMED <span className="text-orange">RAFAT</span>
-						</h1>
-					</Link>
+					<Logo textSize="text-lg md:text-xl" iconSize="text-xl md:text-2xl" />
 				</div>
 
-				<nav className="hidden md:flex space-x-8 items-center">
-					{navLinks
-						.filter((link) => link.label !== "Contact")
-						.map((link) => (
-							<motion.div
-								key={link.to}
-								whileHover={{ y: -2 }}
-								whileTap={{ y: 0 }}
-							>
-								<NavLink to={link.to} end={link.end} className={navLinkStyles}>
-									{link.label}
-								</NavLink>
-							</motion.div>
-						))}
+				<nav className="hidden md:flex space-x-6 items-center">
+					{navLinks.map((link) => (
+						<Motion.div
+							key={link.to}
+							whileHover={{ y: -1 }}
+							whileTap={{ y: 0 }}
+						>
+							<a href={link.to} className={navLinkStyles}>
+								{link.label}
+							</a>
+						</Motion.div>
+					))}
 
-					<div className="flex items-center gap-4 ml-4">
-						<motion.button
-							whileHover={{ scale: 1.1 }}
+					<div className="flex items-center gap-4 ml-2">
+						<Motion.button
+							whileHover={{ scale: 1.1, rotate: 5 }}
 							whileTap={{ scale: 0.9 }}
 							onClick={toggleTheme}
-							className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors"
+							className="p-2 rounded-xl cursor-pointer bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-orange dark:hover:text-orange transition-all shadow-sm"
 							aria-label="Toggle theme"
 						>
 							{isDark ? (
-								<HiSun className="text-2xl" />
+								<HiSun className="text-xl" />
 							) : (
-								<HiMoon className="text-2xl" />
+								<HiMoon className="text-xl" />
 							)}
-						</motion.button>
+						</Motion.button>
 
-						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-							<Link
-								to="/contact"
-								className="bg-orange text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-orange/20 hover:shadow-orange/40 transition-shadow duration-300"
+						<Motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+							<a
+								href="#contact"
+								className="bg-orange text-white px-5 py-2.5 rounded-xl text-xs font-black shadow-lg shadow-orange/20 hover:shadow-orange/40 transition-all duration-300 uppercase tracking-widest border-b-2 border-orange-600 active:border-b-0"
 							>
-								Contact
-							</Link>
-						</motion.div>
+								Contact Me
+							</a>
+						</Motion.div>
 					</div>
 				</nav>
 
-				{/* Mobile Menu Button */}
+				{/* Mobile Controls */}
 				<div className="flex items-center gap-2 md:hidden">
-					<motion.button
+					<Motion.button
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 0.9 }}
 						onClick={toggleTheme}
-						className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors"
+						className="p-2 rounded-xl cursor-pointer text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors bg-gray-50 dark:bg-gray-800"
 						aria-label="Toggle theme"
 					>
 						{isDark ? (
-							<HiSun className="text-2xl" />
+							<HiSun className="text-xl" />
 						) : (
-							<HiMoon className="text-2xl" />
+							<HiMoon className="text-xl" />
 						)}
-					</motion.button>
+					</Motion.button>
 
 					<button
-						className="cursor-pointer p-2 text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors"
+						className="cursor-pointer p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors bg-gray-50 dark:bg-gray-800"
 						onClick={() => setIsOpen(!isOpen)}
 						aria-label="Toggle menu"
 					>
 						{isOpen ? (
-							<HiXMark className="text-3xl" />
+							<HiXMark className="text-2xl" />
 						) : (
-							<HiBars3 className="text-3xl" />
+							<HiBars3 className="text-2xl" />
 						)}
 					</button>
 				</div>
@@ -166,25 +141,46 @@ const Header = () => {
 			{/* Mobile Navigation Overlay */}
 			<AnimatePresence>
 				{isOpen && (
-					<motion.div
-						initial={{ opacity: 0, x: "100%" }}
-						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: "100%" }}
-						transition={{ type: "spring", damping: 25, stiffness: 200 }}
-						className="fixed inset-0 top-[73px] bg-white dark:bg-gray-900 z-40 md:hidden flex flex-col p-6 space-y-6 transition-colors duration-300"
+					<Motion.div
+						initial={{ opacity: 0, height: 0 }}
+						animate={{ opacity: 1, height: "calc(100vh - 65px)" }}
+						exit={{ opacity: 0, height: 0 }}
+						transition={{ duration: 0.3, ease: "easeInOut" }}
+						className="fixed inset-0 top-[65px] bg-white dark:bg-gray-900 z-40 md:hidden overflow-y-auto"
 					>
-						{navLinks.map((link) => (
-							<NavLink
-								key={link.to}
-								to={link.to}
-								end={link.end}
-								className={navLinkStyles}
-								onClick={closeMenu}
+						<div className="flex flex-col p-6 space-y-2">
+							{navLinks.map((link, index) => (
+								<Motion.div
+									key={link.to}
+									initial={{ opacity: 0, x: -20 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ delay: index * 0.05 }}
+								>
+									<a
+										href={link.to}
+										className="block p-4 rounded-2xl text-lg font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-orange transition-all uppercase tracking-widest"
+										onClick={closeMenu}
+									>
+										{link.label}
+									</a>
+								</Motion.div>
+							))}
+							<Motion.div
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: navLinks.length * 0.05 }}
+								className="pt-4"
 							>
-								{link.label}
-							</NavLink>
-						))}
-					</motion.div>
+								<a
+									href="#contact"
+									className="block w-full bg-orange text-white px-6 py-5 rounded-2xl text-center font-black uppercase tracking-widest shadow-xl shadow-orange/20 text-lg"
+									onClick={closeMenu}
+								>
+									Contact Me
+								</a>
+							</Motion.div>
+						</div>
+					</Motion.div>
 				)}
 			</AnimatePresence>
 		</header>

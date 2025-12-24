@@ -1,8 +1,21 @@
+import Hero from "../components/home/Hero";
+import About from "../components/home/About";
+import Projects from "../components/home/Projects";
+import Experience from "../components/home/Experience";
+import Skills from "../components/home/Skills";
+import Contact from "../components/home/Contact";
+
 const Home = () => {
 	return (
-		<div className="container mx-auto px-4 py-20">
-			<h1 className="text-4xl font-bold">Welcome to My Portfolio</h1>
+		<div className="flex flex-col">
+			<Hero />
+			<About />
+			<Projects />
+			<Experience />
+			<Skills />
+			<Contact />
 		</div>
 	);
 };
+
 export default Home;

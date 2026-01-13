@@ -3,7 +3,7 @@ import useCurrentUser from "../hooks/useCurrentUser";
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 
 export default function ProtectRoute() {
-	const [isAuthenticated, isLoading] = useCurrentUser();
+	const { isAuthenticated, isLoading } = useCurrentUser();
 	const location = useLocation();
 	// Keep track if the user has just become unauthenticated
 	const wasAuthenticated = useRef(isAuthenticated);

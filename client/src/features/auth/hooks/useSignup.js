@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 export default function useSignup() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+
 	const {
-		mutate: signUpFunc,
+		mutate: signupFunc,
 		data: response,
 		error,
 		isLoading,
@@ -14,9 +15,10 @@ export default function useSignup() {
 		mutationFn: signUp,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["User"] });
-			navigate("/login");
+			navigate("/adminPanel/profile");
 		},
 	});
+
 	const user = response?.data?.data?.user;
-	return { user, error, isLoading, signUpFunc };
+	return { user, error, isLoading, signupFunc };
 }

@@ -1,15 +1,23 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import Projects from "../pages/Projects";
-import Skills from "../pages/Skills";
-import Educations from "../pages/Educations";
-import Experiences from "../pages/Experiences";
-import Contact from "../pages/Contact";
-import NotFound from "../pages/NotFound";
-import About from "../pages/About";
-import AppLayout from "../ui/AppLayout";
+
+import AppLayout from "../layouts/AppLayout.jsx";
+import AdminLayout from "../layouts/AdminLayout.jsx";
+
+import Home from "../features/home/Home.jsx";
+import PublicProjects from "../features/home/PublicProjects.jsx";
+import PublicSkills from "../features/home/PublicSkills.jsx";
+
+import Login from "../features/auth/Login.jsx";
+import Signup from "../features/auth/Signup.jsx";
+
+import Profile from "../features/adminPanel/Profile/Profile.jsx";
+import Projects from "../features/adminPanel/Projects/Projects.jsx";
+import Educations from "../features/adminPanel/Educations/Educations.jsx";
+import Experiences from "../features/adminPanel/Experiences/Experiences.jsx";
+import Skills from "../features/adminPanel/skills/Skills.jsx";
+
+import NotFound from "../ui/NotFound.jsx";
+import ProtectRoute from "./ProtectRoute.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -29,37 +37,57 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/projects",
-				element: <Projects />,
+				element: <PublicProjects />,
 			},
 			{
 				path: "/skills",
-				element: <Skills />,
-			},
-			{
-				path: "/educations",
-				element: <Educations />,
-			},
-			{
-				path: "/experiences",
-				element: <Experiences />,
-			},
-			{
-				path: "/contact",
-				element: <Contact />,
-			},
-			{
-				path: "/about",
-				element: <About />,
-			},
-			{
-				path: "/404",
-				element: <NotFound />,
-			},
-			{
-				path: "*",
-				element: <Navigate to="/404" />,
+				element: <PublicSkills />,
 			},
 		],
+	},
+	{
+		element: <ProtectRoute />,
+		children: [
+			{
+				path: "/adminPanel",
+				element: <AdminLayout />,
+				children: [
+					{
+						index: true,
+						path: "profile",
+						element: <Profile />,
+					},
+					{
+						path: "profile",
+						element: <Profile />,
+					},
+					{
+						path: "educations",
+						element: <Educations />,
+					},
+					{
+						path: "projects",
+						element: <Projects />,
+					},
+					{
+						path: "experiences",
+						element: <Experiences />,
+					},
+					{
+						path: "skills",
+						element: <Skills />,
+					},
+				],
+			},
+		],
+	},
+	{
+		path: "/404",
+		element: <NotFound />,
+	},
+	{
+		path: "*",
+		element: <Navigate to="/404" />,
 	},
 ]);
 export default router;

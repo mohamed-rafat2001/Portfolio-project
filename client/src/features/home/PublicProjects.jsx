@@ -1,0 +1,4 @@
+const PublicProjects = () => {
+	return <h1>Projects</h1>;
+};
+export default PublicProjects;

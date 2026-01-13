@@ -1,13 +1,16 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const skillSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        trim: true,
-        min: 3,
-        required:[true,"name is required"]
-    },
-    skills:[String]
-}, { timestamps: true })
+const skillSchema = new mongoose.Schema(
+	{
+		name: {
+			type: String,
+			trim: true,
+			min: 3,
+			required: [true, "name is required"],
+		},
+		skills: [String],
+	},
+	{ timestamps: true }
+);
 
-export default mongoose.model("SkillsModel",skillSchema)
+export default mongoose.model("SkillsModel", skillSchema);

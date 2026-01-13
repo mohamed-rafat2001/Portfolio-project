@@ -1,14 +1,19 @@
-import express from "express"
-import { login, signUp } from "../controllers/userController.js"
+import express from "express";
+import { protect } from "../middlewares/authMiddleware.js";
 
-const Router = express.Router()
+import {
+	getMe,
+	profileImg,
+	updateMe,
+	updatePassword,
+} from "../controllers/userController.js";
 
-Router.post("/signup", signUp)
-Router.post("/login",login)
-// Router.route("/")
-//     .post()
-//     .get()
-//     .patch()
-//     .delete()
+const Router = express.Router();
 
-export default Router
+// add protect middleware to all routes
+Router.use(protect);
+
+Router.route("/").get(getMe).patch(updateMe);
+Router.patch("/profileImg", profileImg);
+Router.patch("/updatePassword", updatePassword);
+export default Router;

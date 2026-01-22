@@ -11,18 +11,16 @@ import {
 export const createExperience = createDoc(ExperienceModel, [
 	"company",
 	"description",
-	"period",
+	"duration",
 	"role",
-	"files",
 ]);
 
 // update Experience
 export const updateExperience = updateDoc(ExperienceModel, [
 	"company",
 	"description",
-	"period",
+	"duration",
 	"role",
-	"files",
 ]);
 
 // get Experience by id

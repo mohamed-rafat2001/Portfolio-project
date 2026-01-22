@@ -33,6 +33,10 @@ const emailSchema = new mongoose.Schema(
 			min: 20,
 			required: [true, "email is required"],
 		},
+		read: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{ timestamps: true }
 );

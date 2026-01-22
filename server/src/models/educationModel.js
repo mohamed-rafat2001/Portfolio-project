@@ -2,11 +2,17 @@ import mongoose from "mongoose";
 
 const educationSchema = new mongoose.Schema(
 	{
-		name: {
+		institution: {
 			type: String,
 			trim: true,
 			min: 3,
-			required: [true, "name is required"],
+			required: [true, "institution is required"],
+		},
+		degree: {
+			type: String,
+			trim: true,
+			min: 3,
+			required: [true, "degree is required"],
 		},
 		description: {
 			type: String,
@@ -14,8 +20,20 @@ const educationSchema = new mongoose.Schema(
 			min: 3,
 			required: [true, "description is required"],
 		},
-		date: { type: Date, required: true },
-		files: [String],
+		duration: { type: String, required: true },
+		images: [
+			{
+				public_id: String,
+				secure_url: String,
+			},
+		],
+		attachments: [
+			{
+				public_id: String,
+				secure_url: String,
+				originalName: String,
+			},
+		],
 	},
 	{ timestamps: true }
 );

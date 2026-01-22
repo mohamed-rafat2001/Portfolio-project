@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 
 const socialMediaSchema = new mongoose.Schema({
 	name: {
@@ -14,7 +15,54 @@ const socialMediaSchema = new mongoose.Schema({
 		trim: true,
 	},
 });
+const infoDetailsSchema = new mongoose.Schema(
+	{
+		job:{
+			title:{
+				type: String,
+				trim: true,
+				min: 5,
+			},
+			note:{
+				type: String,
+				trim: true,
+				min: 20,
+			},
+		},
 
+		profileImg: {
+			public_id: {
+				type: String,
+				default: null,
+			},
+			secure_url: {
+				type: String,
+				default: null,
+			},
+		},
+		socialMedia: [socialMediaSchema],
+		aboutMe: {
+			title:{
+				type: String,
+				trim: true,
+				min: 5,
+			},
+			message:{
+				type: String,
+				trim: true,
+				min: 20,}
+		},
+		location: {
+			type: String,
+			trim: true,
+			required: [true, "location is required"],
+		},
+		available:{
+			type:Boolean,
+			default:true
+		}
+	}
+)
 const userSchema = new mongoose.Schema(
 	{
 		name: {
@@ -29,24 +77,14 @@ const userSchema = new mongoose.Schema(
 			required: [true, "email is required"],
 			validate: [validator.isEmail, "please enter the valid email"],
 		},
-		profileImg: String,
+		
 		phoneNumber: {
 			type: String,
 			required: [true, "phone number is required"],
 			trim: true,
 			validate: [validator.isMobilePhone, "please enter valid phone number"],
 		},
-		socialMedia: [socialMediaSchema],
-		aboutMe: {
-			type: String,
-			trim: true,
-			min: 20,
-		},
-		location: {
-			type: String,
-			trim: true,
-			required: [true, "location is required"],
-		},
+		infos:infoDetailsSchema,
 		password: {
 			type: String,
 			trim: true,
@@ -108,11 +146,9 @@ userSchema.methods.createCookie = function (res) {
 	const token = this.createToken();
 	res.cookie("token", token, {
 		httpOnly: true,
-		secure: process.env.NODE_MODE === "PRODUCTION" ? true : false,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "strict",
-		maxAge: new Date(
-			Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-		),
+		maxAge: (process.env.COOKIE_EXPIRE || 7) * 24 * 60 * 60 * 1000,
 	});
 };
 
@@ -120,7 +156,7 @@ userSchema.methods.createCookie = function (res) {
 userSchema.methods.removeCookie = function (res) {
 	res.cookie("token", "", {
 		httpOnly: true,
-		secure: process.env.NODE_MODE === "PRODUCTION" ? true : false,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "strict",
 		maxAge: 0,
 	});

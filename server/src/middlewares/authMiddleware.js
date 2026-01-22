@@ -1,29 +1,28 @@
 import jwt from "jsonwebtoken";
 import appError from "../utils/appError.js";
 import catchAsync from "../middlewares/catchAsyncMiddleware.js";
+import UserModel from "../models/userModel.js";
 
 export const protect = catchAsync(async (req, res, next) => {
 	let token;
-	// get token from headers or coockies
-	if (
-		req.headers.authorization &&
-		req.headers.authorization.startsWith("Bearer")
-	) {
-		token = req.headers.authorization.split(" ")[1];
-	} else if (req.cookies.token) token = req.cookies.token;
-	else {
-		return next(new appError("no token", 404));
+	// get token only from cookies
+	if (req.cookies && req.cookies.token) {
+		token = req.cookies.token;
+	}
+
+	if (!token) {
+		return next(new appError("no token", 401));
 	}
 
 	// veryfication token
-	const decode = jwt.decode(token, process.env.JWT_KEY);
+	const decode = jwt.verify(token, process.env.JWT_KEY);
 
 	// check user if still exist
 	const user = await UserModel.findById(decode._id);
 
 	if (!user)
 		return next(
-			new appError("the user belong to this token does'nt exist", 400)
+			new appError("the user belong to this token does'nt exist", 401)
 		);
 
 	req.user = user;

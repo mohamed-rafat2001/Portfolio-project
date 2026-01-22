@@ -14,9 +14,24 @@ const projectSchema = new mongoose.Schema(
 			min: 20,
 			required: [true, "description is required"],
 		},
-		tech: [String],
-		mainImg: String,
-		images: [String],
+		techStack: [{
+			title:{
+				type: String,
+				trim: true,
+				min: 5,
+			},
+			techs:[String]
+		}],
+		mainImg: {
+			public_id: String,
+			secure_url: String,
+		},
+		images: [
+			{
+				public_id: String,
+				secure_url: String,
+			},
+		],
 		liveUrl: {
 			type: String,
 			trim: true,
@@ -26,6 +41,10 @@ const projectSchema = new mongoose.Schema(
 			type: String,
 			trim: true,
 			required: [true, "repoUrl is required"],
+		},
+		isPreferred: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	{ timestamps: true }

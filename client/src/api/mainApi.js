@@ -2,14 +2,8 @@ import axios from "axios";
 
 const mainApi = axios.create({
 	baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1/",
-	withCredentials: true, // Required for httpOnly cookies
-	headers: {
-		"Content-Type": "application/json",
-	},
+	withCredentials: true,
 });
-
-// No request interceptor needed - cookies are sent automatically
-// with withCredentials: true
 
 // Response interceptor - Handle token expiration
 mainApi.interceptors.response.use(
@@ -17,14 +11,19 @@ mainApi.interceptors.response.use(
 		return response;
 	},
 	async (error) => {
-		const originalRequest = error.config;
+		// Only redirect if it's a 401 error and not a request to the user profile
+		// which is already handled by the ProtectedRoute and useCurrentUser hook
+		if (
+			error.response?.status === 401 &&
+			!error.config.url.includes("users") &&
+			!error.config.url.includes("auth/login")
+		) {
+			const publicPaths = ["/login", "/signup", "/"];
+			const currentPath = window.location.pathname;
 
-		// If 401 and not already retried
-		if (error.response?.status === 401 && !originalRequest._retry) {
-			originalRequest._retry = true;
-
-			// Redirect to login
-			window.location.href = "/login";
+			if (!publicPaths.includes(currentPath)) {
+				window.location.href = "/login";
+			}
 		}
 
 		return Promise.reject(error);

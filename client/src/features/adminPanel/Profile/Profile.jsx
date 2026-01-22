@@ -1,206 +1,168 @@
 import { useForm } from "react-hook-form";
-import { HiOutlineUser, HiOutlineEnvelope, HiOutlineLockClosed, HiOutlinePhoto } from "react-icons/hi2";
-import useCurrentUser from "../../../hooks/useCurrentUser";
-import { updateMe, updatePassword, updateProfileImg } from "../../../services/user";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { motion as Motion } from "framer-motion";
-import { useState } from "react";
+import { HiOutlineCheck, HiOutlineUserCircle } from "react-icons/hi2";
+import useCurrentUser from "../../auth/hooks/useCurrentUser";
+import useUpdateUser from "./hooks/useUpdateUser";
+import AccountSection from "./components/AccountSection";
+import AboutSection from "./components/AboutSection";
+import ProfessionalSection from "./components/ProfessionalSection";
+import SocialSection from "./components/SocialSection";
+import SecuritySection from "./components/SecuritySection";
+import LoadingState from "../../../shared/components/ui/LoadingState";
+
+const profileSchema = z.object({
+	name: z.string().min(3, "Name must be at least 3 characters"),
+	email: z.string().email("Invalid email address"),
+	phoneNumber: z.string().min(10, "Phone number must be at least 10 characters"),
+	infos: z.object({
+		job: z.object({
+			title: z.string().min(5, "Job title must be at least 5 characters"),
+			note: z.string().min(20, "Job note must be at least 20 characters"),
+		}),
+		aboutMe: z.object({
+			title: z.string().min(5, "About title must be at least 5 characters"),
+			message: z.string().min(20, "About message must be at least 20 characters"),
+		}),
+		location: z.string().min(3, "Location is required"),
+		available: z.boolean().default(true),
+	}),
+	// Social media handled separately in transformation
+	github: z.string().url("Invalid URL").optional().or(z.literal("")),
+	linkedin: z.string().url("Invalid URL").optional().or(z.literal("")),
+	twitter: z.string().url("Invalid URL").optional().or(z.literal("")),
+	portfolio: z.string().url("Invalid URL").optional().or(z.literal("")),
+	passwordCurrent: z.string().optional(),
+	password: z.string().min(8, "Password must be at least 8 characters").optional().or(z.literal("")),
+	passwordConfirm: z.string().optional(),
+});
 
 const Profile = () => {
-	const { user, isLoading: isUserLoading } = useCurrentUser();
-	const queryClient = useQueryClient();
-	const [activeTab, setActiveTab] = useState("general");
+	const { user, isLoading: userLoading } = useCurrentUser();
+	const { updateUser, isLoading: isUpdating } = useUpdateUser();
 
-	const { register, handleSubmit, reset, formState: { errors } } = useForm({
-		values: user
+	// Transform user data for the form
+	const defaultValues = user ? {
+		...user,
+		github: user.infos?.socialMedia?.find(s => s.name.toLowerCase() === 'github')?.url || "",
+		linkedin: user.infos?.socialMedia?.find(s => s.name.toLowerCase() === 'linkedin')?.url || "",
+		twitter: user.infos?.socialMedia?.find(s => s.name.toLowerCase() === 'twitter')?.url || "",
+		portfolio: user.infos?.socialMedia?.find(s => s.name.toLowerCase() === 'portfolio')?.url || "",
+	} : {};
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isDirty },
+		reset,
+	} = useForm({
+		resolver: zodResolver(profileSchema),
+		values: defaultValues,
 	});
 
-	const { mutate: updateProfile, isLoading: isUpdatingProfile } = useMutation({
-		mutationFn: updateMe,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["User"] });
+	const onSubmit = (data) => {
+		// Transform data back for the backend
+		const socialMedia = [
+			{ name: 'GitHub', url: data.github },
+			{ name: 'LinkedIn', url: data.linkedin },
+			{ name: 'Twitter', url: data.twitter },
+			{ name: 'Portfolio', url: data.portfolio },
+		].filter(s => s.url);
+
+		const payload = {
+			name: data.name,
+			email: data.email,
+			phoneNumber: data.phoneNumber,
+			infos: {
+				...data.infos,
+				socialMedia
+			}
+		};
+
+		// If password is being changed
+		if (data.password) {
+			payload.passwordCurrent = data.passwordCurrent;
+			payload.password = data.password;
+			payload.passwordConfirm = data.passwordConfirm;
 		}
-	});
 
-	const { mutate: changePassword, isLoading: isChangingPassword } = useMutation({
-		mutationFn: updatePassword,
-		onSuccess: () => {
-			reset();
-		}
-	});
-
-	const { mutate: changeProfileImg, isLoading: isUpdatingImg } = useMutation({
-		mutationFn: updateProfileImg,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["User"] });
-		}
-	});
-
-	if (isUserLoading) return <div className="flex items-center justify-center h-64"><div className="w-10 h-10 border-4 border-orange border-t-transparent rounded-full animate-spin"></div></div>;
-
-	const onUpdateProfile = (data) => {
-		updateProfile({ name: data.name, email: data.email });
-	};
-
-	const onUpdatePassword = (data) => {
-		changePassword({
-			currentPassword: data.currentPassword,
-			newPassword: data.newPassword,
-			confirmPassword: data.confirmPassword
+		updateUser(payload, {
+			onSuccess: () => reset(data),
 		});
 	};
 
-	const onUpdateImage = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			const formData = new FormData();
-			formData.append("profileImg", file);
-			changeProfileImg(formData);
-		}
-	};
+	if (userLoading) return <LoadingState message="Loading your profile..." />;
 
 	return (
-		<div className="space-y-8">
-			<div>
-				<h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Profile Settings</h1>
-				<p className="text-gray-500 dark:text-gray-400 mt-2">Manage your account information and security.</p>
-			</div>
-
-			<div className="flex gap-4 border-b border-gray-100 dark:border-gray-800">
-				{["general", "security"].map((tab) => (
-					<button
-						key={tab}
-						onClick={() => setActiveTab(tab)}
-						className={`pb-4 px-2 font-black uppercase tracking-widest text-[10px] transition-all relative ${
-							activeTab === tab ? "text-orange" : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-						}`}
-					>
-						{tab}
-						{activeTab === tab && (
-							<Motion.div
-								layoutId="activeTab"
-								className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange"
-							/>
-						)}
-					</button>
-				))}
-			</div>
-
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-				{activeTab === "general" ? (
-					<>
-						<div className="lg:col-span-1 space-y-6">
-							<div className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 text-center">
-								<div className="relative inline-block group">
-									<div className="w-32 h-32 rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-800 mx-auto border-4 border-white dark:border-gray-950 shadow-xl">
-										<img
-											src={user?.profileImg || "/default-user.jpg"}
-											alt={user?.name}
-											className="w-full h-full object-cover"
-										/>
-									</div>
-									<label className="absolute -bottom-2 -right-2 p-3 bg-orange text-white rounded-2xl shadow-lg cursor-pointer hover:scale-110 transition-transform">
-										<HiOutlinePhoto className="text-xl" />
-										<input type="file" className="hidden" onChange={onUpdateImage} accept="image/*" />
-									</label>
-								</div>
-								<div className="mt-6">
-									<h3 className="font-black text-xl text-gray-900 dark:text-white uppercase">{user?.name}</h3>
-									<p className="text-gray-500 text-sm mt-1">{user?.email}</p>
-								</div>
-							</div>
+		<div className="max-w-5xl mx-auto space-y-12">
+			{/* Header */}
+			<section className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+				<div className="flex items-center gap-6">
+					<div className="relative group">
+						<div className="w-24 h-24 md:w-32 md:h-32 rounded-[2.5rem] bg-orange/10 flex items-center justify-center text-orange overflow-hidden border-4 border-white dark:border-gray-950 shadow-xl">
+							{user?.infos?.profileImg?.secure_url ? (
+								<img
+									src={user.infos.profileImg.secure_url}
+									alt={user.name}
+									className="w-full h-full object-cover"
+								/>
+							) : (
+								<HiOutlineUserCircle className="text-6xl md:text-8xl" />
+							)}
 						</div>
-
-						<div className="lg:col-span-2">
-							<form onSubmit={handleSubmit(onUpdateProfile)} className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 space-y-6">
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-									<div className="space-y-2">
-										<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Full Name</label>
-										<div className="relative">
-											<HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-											<input
-												{...register("name", { required: "Name is required" })}
-												className="w-full pl-12 pr-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-												placeholder="Your name"
-											/>
-										</div>
-									</div>
-									<div className="space-y-2">
-										<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Email Address</label>
-										<div className="relative">
-											<HiOutlineEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-											<input
-												{...register("email", { required: "Email is required" })}
-												className="w-full pl-12 pr-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-												placeholder="Email"
-											/>
-										</div>
-									</div>
-								</div>
-								<div className="flex justify-end">
-									<button
-										disabled={isUpdatingProfile}
-										className="bg-orange text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-orange/20 hover:scale-105 transition-all disabled:opacity-50"
-									>
-										{isUpdatingProfile ? "Updating..." : "Save Changes"}
-									</button>
-								</div>
-							</form>
-						</div>
-					</>
-				) : (
-					<div className="lg:col-span-3">
-						<form onSubmit={handleSubmit(onUpdatePassword)} className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 max-w-2xl space-y-6">
-							<div className="space-y-2">
-								<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Current Password</label>
-								<div className="relative">
-									<HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-									<input
-										type="password"
-										{...register("currentPassword", { required: "Current password is required" })}
-										className="w-full pl-12 pr-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-										placeholder="••••••••"
-									/>
-								</div>
-							</div>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-								<div className="space-y-2">
-									<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">New Password</label>
-									<div className="relative">
-										<HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-										<input
-											type="password"
-											{...register("newPassword", { required: "New password is required" })}
-											className="w-full pl-12 pr-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-											placeholder="••••••••"
-										/>
-									</div>
-								</div>
-								<div className="space-y-2">
-									<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Confirm Password</label>
-									<div className="relative">
-										<HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-										<input
-											type="password"
-											{...register("confirmPassword", { required: "Please confirm your password" })}
-											className="w-full pl-12 pr-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-											placeholder="••••••••"
-										/>
-									</div>
-								</div>
-							</div>
-							<div className="flex justify-end">
-								<button
-									disabled={isChangingPassword}
-									className="bg-orange text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-orange/20 hover:scale-105 transition-all disabled:opacity-50"
-								>
-									{isChangingPassword ? "Updating..." : "Update Password"}
-								</button>
-							</div>
-						</form>
+						<button className="absolute -bottom-2 -right-2 w-10 h-10 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange hover:scale-110 transition-transform cursor-pointer">
+							<HiOutlineUserCircle className="text-xl" />
+						</button>
 					</div>
-				)}
-			</div>
+					<div>
+						<Motion.div
+							initial={{ opacity: 0, x: -20 }}
+							animate={{ opacity: 1, x: 0 }}
+							className="flex items-center gap-3 mb-2"
+						>
+							<span className="text-xs font-black uppercase tracking-widest text-orange bg-orange/5 px-3 py-1 rounded-full border border-orange/10">
+								Admin Profile
+							</span>
+						</Motion.div>
+						<h1 className="text-4xl font-black text-gray-900 dark:text-white">
+							{user?.name}
+						</h1>
+						<p className="text-gray-500 dark:text-gray-400 font-medium">
+							{user?.infos?.job?.title || "Portfolio Administrator"}
+						</p>
+					</div>
+				</div>
+
+				<Motion.button
+					whileHover={{ scale: 1.02 }}
+					whileTap={{ scale: 0.98 }}
+					onClick={handleSubmit(onSubmit)}
+					disabled={!isDirty || isUpdating}
+					className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all shadow-xl shadow-orange/20 cursor-pointer ${
+						isDirty && !isUpdating
+							? "bg-orange text-white hover:bg-orange/90"
+							: "bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
+					}`}
+				>
+					{isUpdating ? (
+						<div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+					) : (
+						<HiOutlineCheck className="text-xl" />
+					)}
+					Save Changes
+				</Motion.button>
+			</section>
+
+			<form className="grid grid-cols-1 lg:grid-cols-2 gap-8" onSubmit={e => e.preventDefault()}>
+				<AccountSection register={register} errors={errors} />
+				<AboutSection register={register} errors={errors} />
+				<ProfessionalSection register={register} errors={errors} />
+				<SocialSection register={register} errors={errors} />
+				<div className="lg:col-span-2">
+					<SecuritySection register={register} errors={errors} />
+				</div>
+			</form>
 		</div>
 	);
 };

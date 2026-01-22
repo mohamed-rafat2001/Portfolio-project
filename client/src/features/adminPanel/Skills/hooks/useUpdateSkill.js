@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { updateSkill } from "../../../../services/skill.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { updateSkill } from "../services/skill";
 
 export default function useUpdateSkill() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		updateSkill,
-		"Skills"
-	);
-	return { error, isLoading, updateSkill: mutate, data };
+	return useMutationFactory(updateSkill, "Skills");
 }

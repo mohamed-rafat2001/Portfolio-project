@@ -5,18 +5,20 @@ import AdminLayout from "../layouts/AdminLayout.jsx";
 
 import Home from "../features/home/Home.jsx";
 import PublicProjects from "../features/home/PublicProjects.jsx";
+import ProjectDetails from "../features/home/ProjectDetails.jsx";
 import PublicSkills from "../features/home/PublicSkills.jsx";
 
 import Login from "../features/auth/Login.jsx";
-import Signup from "../features/auth/Signup.jsx";
 
 import Profile from "../features/adminPanel/Profile/Profile.jsx";
 import Projects from "../features/adminPanel/Projects/Projects.jsx";
 import Educations from "../features/adminPanel/Educations/Educations.jsx";
 import Experiences from "../features/adminPanel/Experiences/Experiences.jsx";
-import Skills from "../features/adminPanel/skills/Skills.jsx";
+import Skills from "../features/adminPanel/Skills/Skills.jsx";
+import Emails from "../features/adminPanel/Emails/Emails.jsx";
+import Dashboard from "../features/adminPanel/Dashboard/Dashboard.jsx";
 
-import NotFound from "../ui/NotFound.jsx";
+import NotFound from "../shared/components/ui/NotFound.jsx";
 import ProtectRoute from "./ProtectRoute.jsx";
 
 const router = createBrowserRouter([
@@ -32,12 +34,12 @@ const router = createBrowserRouter([
 				element: <Login />,
 			},
 			{
-				path: "/signup",
-				element: <Signup />,
-			},
-			{
 				path: "/projects",
 				element: <PublicProjects />,
+			},
+			{
+				path: "/projects/:id",
+				element: <ProjectDetails />,
 			},
 			{
 				path: "/skills",
@@ -54,8 +56,11 @@ const router = createBrowserRouter([
 				children: [
 					{
 						index: true,
-						path: "profile",
-						element: <Profile />,
+						element: <Dashboard />,
+					},
+					{
+						path: "dashboard",
+						element: <Dashboard />,
 					},
 					{
 						path: "profile",
@@ -76,6 +81,10 @@ const router = createBrowserRouter([
 					{
 						path: "skills",
 						element: <Skills />,
+					},
+					{
+						path: "emails",
+						element: <Emails />,
 					},
 				],
 			},

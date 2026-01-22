@@ -1,6 +1,6 @@
 import { motion as Motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi2";
-import profileImg from "../../../assets/profissionalMe.png";
+import profileImg from "../../../shared/assets/profissionalMe.png";
 
 const sectionVariants = {
 	hidden: { opacity: 0, y: 50 },
@@ -14,7 +14,7 @@ const sectionVariants = {
 	},
 };
 
-const About = () => {
+const About = ({ user }) => {
 	return (
 		<Motion.section
 			id="about"
@@ -22,7 +22,7 @@ const About = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.2 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-white dark:bg-gray-900 overflow-hidden"
+			className="py-12 md:py-16 bg-white dark:bg-gray-900 overflow-hidden"
 		>
 			<div className="container mx-auto px-4">
 				<div className="flex items-center gap-8 mb-16">
@@ -44,8 +44,8 @@ const About = () => {
 
 							<div className="relative aspect-square rounded-4xl bg-gray-100 dark:bg-gray-800 overflow-hidden border-4 border-white dark:border-gray-900 shadow-2xl">
 								<img
-									src={profileImg}
-									alt="Mohamed Rafat"
+									src={user?.infos?.profileImg?.secure_url || profileImg}
+									alt={user?.name || "Mohamed Rafat"}
 									className="w-full h-full object-cover transition-all duration-700 hover:scale-110"
 								/>
 							</div>
@@ -56,27 +56,24 @@ const About = () => {
 					<div className="flex-1 space-y-8">
 						<div className="space-y-4">
 							<h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] dark:text-white leading-tight">
-								Hello, I'm Mohamed Rafat
+								{user?.infos?.aboutMe?.title || `Hello, I'm ${user?.name || "Mohamed Rafat"}`}
 							</h3>
 						</div>
 
 						<div className="space-y-6 text-gray-500 dark:text-gray-400">
 							<p className="text-lg md:text-xl leading-relaxed">
-								I am a dedicated{" "}
-								<span className="text-[#1a1a1a] dark:text-white font-bold">
-									Full Stack Developer
-								</span>{" "}
-								with a deep passion for creating seamless digital experiences.
-								My journey began with a curiosity for how things work on the
-								web, which quickly evolved into a career building robust
-								applications.
-							</p>
-							<p className="text-lg md:text-xl leading-relaxed">
-								With a strong foundation in both frontend and backend
-								technologies, I enjoy bridging the gap between design and
-								technical implementation. I thrive in collaborative environments
-								where I can solve complex problems and contribute to innovative
-								solutions.
+								{user?.infos?.aboutMe?.message || (
+									<>
+										I am a dedicated{" "}
+										<span className="text-[#1a1a1a] dark:text-white font-bold">
+											Full Stack Developer
+										</span>{" "}
+										with a deep passion for creating seamless digital experiences.
+										My journey began with a curiosity for how things work on the
+										web, which quickly evolved into a career building robust
+										applications.
+									</>
+								)}
 							</p>
 						</div>
 

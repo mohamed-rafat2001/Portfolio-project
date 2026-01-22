@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { deleteEmail } from "../../../../services/email.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { deleteEmail } from "../services/email";
 
 export default function useDeleteEmail() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		deleteEmail,
-		"Emails"
-	);
-	return { error, isLoading, deleteEmail: mutate, data };
+	return useMutationFactory(deleteEmail, "Emails");
 }

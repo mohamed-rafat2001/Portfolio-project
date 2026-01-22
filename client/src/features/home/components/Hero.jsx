@@ -1,4 +1,5 @@
 import { motion as Motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
 	HiArrowRight,
 	HiPaperAirplane,
@@ -19,7 +20,7 @@ const sectionVariants = {
 	},
 };
 
-const Hero = () => {
+const Hero = ({ user }) => {
 	return (
 		<Motion.section
 			id="home"
@@ -27,7 +28,7 @@ const Hero = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.2 }}
 			variants={sectionVariants}
-			className="relative min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center pt-10 pb-20 md:pt-20 md:pb-32 overflow-hidden bg-[#fafafa] dark:bg-gray-950"
+			className="relative min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center pt-4 pb-8 md:pt-6 md:pb-12 overflow-hidden bg-[#fafafa] dark:bg-gray-950"
 		>
 			{/* Enhanced Background with Grid and Radial Glow */}
 			<div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -48,20 +49,31 @@ const Hero = () => {
 			</div>
 
 			<div className="container mx-auto px-4 text-center relative z-10">
-				{/* Availability Badge */}
+				{/* Availability & Location Badge */}
 				<Motion.div
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5 }}
-					className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 mb-8 shadow-sm"
+					className="inline-flex flex-wrap items-center justify-center gap-4 mb-8"
 				>
-					<span className="relative flex h-2 w-2">
-						<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-						<span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-					</span>
-					<span className="text-[10px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em]">
-						Available for new projects
-					</span>
+					<div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm">
+						<span className="relative flex h-2 w-2">
+							<span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${user?.infos?.available !== false ? "bg-green-400" : "bg-red-400"} opacity-75`}></span>
+							<span className={`relative inline-flex rounded-full h-2 w-2 ${user?.infos?.available !== false ? "bg-green-500" : "bg-red-500"}`}></span>
+						</span>
+						<span className="text-[10px] md:text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em]">
+							{user?.infos?.available !== false ? "Available for new projects" : "Currently busy"}
+						</span>
+					</div>
+
+					{user?.infos?.location && (
+						<div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm">
+							<HiMapPin className="text-orange text-sm" />
+							<span className="text-[10px] md:text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em]">
+								{user.infos.location}
+							</span>
+						</div>
+					)}
 				</Motion.div>
 
 				{/* Name & Title */}
@@ -72,22 +84,21 @@ const Hero = () => {
 					className="mb-8"
 				>
 					<h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] dark:text-white mb-2 uppercase tracking-tighter">
-						Mohamed Rafat
+						{user?.name || "Mohamed Rafat"}
 					</h1>
 					<h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-orange uppercase tracking-tighter leading-[0.9]">
-						Full Stack Dev
+						{user?.infos?.job?.title || "Full Stack Dev"}
 					</h2>
 				</Motion.div>
 
-				{/* Description */}
+				{/* Job Note / Description */}
 				<Motion.p
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: 0.4, duration: 0.5 }}
-					className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-medium"
+					className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed font-medium px-4"
 				>
-					Building robust, scalable applications with a focus on seamless user
-					experiences and modern architecture.
+					{user?.infos?.job?.note || user?.infos?.aboutMe?.message || "I am a dedicated Full Stack Developer with a deep passion for creating seamless digital experiences. My journey began with a curiosity for how things work on the web, which quickly evolved into a career building robust applications."}
 				</Motion.p>
 
 				{/* Action Buttons */}
@@ -95,18 +106,18 @@ const Hero = () => {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.6, duration: 0.5 }}
-					className="flex flex-row items-center justify-center gap-4 mb-20"
+					className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
 				>
-					<a
-						href="#projects"
-						className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#1a1a1a] dark:bg-white text-white dark:text-gray-900 font-bold transition-all hover:bg-black dark:hover:bg-gray-100 shadow-xl shadow-black/10 active:scale-95"
+					<Link
+						to="/projects"
+						className="group w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#1a1a1a] dark:bg-white text-white dark:text-gray-900 font-bold transition-all hover:bg-black dark:hover:bg-gray-100 shadow-xl shadow-black/10 active:scale-95"
 					>
 						View Projects
 						<HiArrowRight className="text-xl transition-transform group-hover:translate-x-1" />
-					</a>
+					</Link>
 					<a
 						href="#contact"
-						className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white font-bold transition-all hover:bg-gray-50 dark:hover:bg-gray-800 shadow-xl shadow-black/5 active:scale-95"
+						className="group w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white font-bold transition-all hover:bg-gray-50 dark:hover:bg-gray-800 shadow-xl shadow-black/5 active:scale-95"
 					>
 						Contact Me
 						<HiPaperAirplane className="text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -118,46 +129,46 @@ const Hero = () => {
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.8, duration: 0.6 }}
-					className="inline-flex flex-wrap items-center justify-center gap-8 md:gap-12 px-8 py-5 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-xl shadow-black/3"
+					className="inline-flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-12 px-6 sm:px-8 py-5 rounded-3xl sm:rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-xl shadow-black/3 w-full sm:w-auto"
 				>
-					<div className="flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange">
-							<HiEnvelope className="text-sm" />
+					<div className="flex items-center gap-3 w-full sm:w-auto">
+						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange shrink-0">
+							<HiEnvelope className="text-sm" aria-hidden="true" />
 						</div>
 						<div className="text-left">
 							<p className="text-[9px] text-gray-400 uppercase font-black tracking-widest">
 								Email
 							</p>
-							<p className="text-xs font-bold text-gray-900 dark:text-white">
-								mohamed20rafat@gmail.com
-							</p>
+							<a href={`mailto:${user?.email || "mohamed20rafat@gmail.com"}`} className="text-xs font-bold text-gray-900 dark:text-white hover:text-orange transition-colors">
+								{user?.email || "mohamed20rafat@gmail.com"}
+							</a>
 						</div>
 					</div>
 
-					<div className="hidden sm:flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange">
-							<HiPhone className="text-sm" />
+					<div className="flex items-center gap-3 w-full sm:w-auto">
+						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange shrink-0">
+							<HiPhone className="text-sm" aria-hidden="true" />
 						</div>
 						<div className="text-left">
 							<p className="text-[9px] text-gray-400 uppercase font-black tracking-widest">
 								Phone
 							</p>
-							<p className="text-xs font-bold text-gray-900 dark:text-white">
-								+20 1050330514
-							</p>
+							<a href={`tel:${user?.phoneNumber || "+201050330514"}`} className="text-xs font-bold text-gray-900 dark:text-white hover:text-orange transition-colors">
+								{user?.phoneNumber || "+20 1050330514"}
+							</a>
 						</div>
 					</div>
 
-					<div className="flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange">
-							<HiMapPin className="text-sm" />
+					<div className="flex items-center gap-3 w-full sm:w-auto">
+						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange shrink-0">
+							<HiMapPin className="text-sm" aria-hidden="true" />
 						</div>
 						<div className="text-left">
 							<p className="text-[9px] text-gray-400 uppercase font-black tracking-widest">
 								Location
 							</p>
 							<p className="text-xs font-bold text-gray-900 dark:text-white">
-								Egypt
+								{user?.infos?.location || "Egypt"}
 							</p>
 						</div>
 					</div>

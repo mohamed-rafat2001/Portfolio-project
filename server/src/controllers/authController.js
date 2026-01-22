@@ -4,32 +4,6 @@ import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
 import sendEmail from "../utils/sendEmail.js";
 
-// sign up func
-export const signUp = catchAsync(async (req, res, next) => {
-	const { name, email, phoneNumber, password, confirmPassword, location } =
-		req.body;
-	const user = new UserModel({
-		name,
-		email,
-		phoneNumber,
-		password,
-		confirmPassword,
-		role: "User",
-		location,
-	});
-
-	//  check if user created
-	if (!user) return next(new appError("user didn't create", 400));
-
-	// create token && cookie
-	const token = user.createToken();
-	user.createCookie(res);
-
-	// save user && send response
-	await user.save();
-	sendResponse(res, 201, { user, token });
-});
-
 // login func
 export const login = catchAsync(async (req, res, next) => {
 	const { password, email } = req.body;
@@ -45,12 +19,11 @@ export const login = catchAsync(async (req, res, next) => {
 	if (!isCorrectPass)
 		return next(new appError("email or password is wrong", 400));
 
-	// create token && cookie
-	const token = user.createToken();
+	// create cookie
 	user.createCookie(res);
 
 	// send response
-	sendResponse(res, 201, { user, token });
+	sendResponse(res, 201, { user });
 });
 // log out func
 export const logOut = catchAsync(async (req, res, next) => {
@@ -115,9 +88,8 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 	user.passwordResetExpires = undefined;
 	await user.save();
 
-	// create token & cookie
-	const token = user.CreateToken();
+	// create cookie
 	user.createCookie(res);
 
-	sendResponse(res, 200, { user, token });
+	sendResponse(res, 200, { user });
 });

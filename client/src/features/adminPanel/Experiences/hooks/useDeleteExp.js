@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { deleteExp } from "../../../../services/experience.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { deleteExperience } from "../services/experience";
 
 export default function useDeleteExp() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		deleteExp,
-		"Experiences"
-	);
-	return { error, isLoading, deleteExp: mutate, data };
+	return useMutationFactory(deleteExperience, "Experiences");
 }

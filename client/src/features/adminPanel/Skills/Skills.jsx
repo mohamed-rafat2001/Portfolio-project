@@ -19,10 +19,16 @@ const Skills = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
 
 	const onSubmit = (data) => {
+		const skillsArray = data.skills.split(",").map(s => s.trim()).filter(s => s !== "");
+		const skillData = {
+			name: data.name,
+			skills: skillsArray
+		};
+
 		if (editingSkill) {
-			updateSkill({ id: editingSkill._id, data });
+			updateSkill({ id: editingSkill._id, data: skillData });
 		} else {
-			createSkill(data);
+			createSkill(skillData);
 		}
 		closeModal();
 	};
@@ -31,7 +37,7 @@ const Skills = () => {
 		if (skill) {
 			setEditingSkill(skill);
 			setValue("name", skill.name);
-			setValue("category", skill.category);
+			setValue("skills", skill.skills.join(", "));
 		} else {
 			setEditingSkill(null);
 			reset();
@@ -53,9 +59,6 @@ const Skills = () => {
 
 	if (isLoading) return <div className="flex items-center justify-center h-64"><div className="w-10 h-10 border-4 border-orange border-t-transparent rounded-full animate-spin"></div></div>;
 
-	// Group skills by category
-	const categories = skills ? [...new Set(skills.map(s => s.category))] : [];
-
 	return (
 		<div className="space-y-12">
 			<div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -73,55 +76,39 @@ const Skills = () => {
 			</div>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-				{categories.map(category => (
-					<div key={category} className="space-y-6">
+				{skills?.map(skillGroup => (
+					<div key={skillGroup._id} className="space-y-6">
 						<div className="flex items-center justify-between px-2">
 								<div className="flex items-center gap-3">
 									<div className="w-1.5 h-6 bg-orange rounded-full" />
-									<h2 className="font-black uppercase tracking-[0.2em] text-[11px] text-gray-400">{category.toUpperCase()}</h2>
+									<h2 className="font-black uppercase tracking-[0.2em] text-[11px] text-gray-400">{skillGroup.name.toUpperCase()}</h2>
 								</div>
 							<div className="flex items-center gap-2">
-								<button className="p-2 text-gray-500 hover:text-orange transition-colors">
+								<button 
+									onClick={() => openModal(skillGroup)}
+									className="p-2 text-gray-500 hover:text-orange transition-colors"
+								>
 									<HiOutlinePencil className="text-sm" />
 								</button>
-								<button className="p-2 text-gray-500 hover:text-red-500 transition-colors">
+								<button 
+									onClick={() => handleDelete(skillGroup._id)}
+									className="p-2 text-gray-500 hover:text-red-500 transition-colors"
+								>
 									<HiOutlineTrash className="text-sm" />
 								</button>
 							</div>
 						</div>
 						
-						<div className="bg-white dark:bg-[#0a0f1c] p-8 rounded-[3rem] border border-gray-100 dark:border-gray-800/50 min-h-[180px] flex flex-wrap gap-3 content-start shadow-sm group-hover:border-orange/30 transition-all duration-500">
-							{skills.filter(s => s.category === category).map(skill => (
+						<div className="bg-white dark:bg-[#0a0f1c] p-8 rounded-[3rem] border border-gray-100 dark:border-gray-800/50 min-h-[180px] flex flex-wrap gap-3 content-start shadow-sm hover:border-orange/30 transition-all duration-500">
+							{skillGroup.skills?.map((skill, index) => (
 								<Motion.div
 									layout
-									key={skill._id}
+									key={index}
 									className="group/item relative px-5 py-2.5 bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-gray-800/50 rounded-2xl flex items-center gap-3 hover:border-orange/30 transition-all cursor-default"
 								>
-									<span className="text-xs font-bold text-gray-600 dark:text-gray-300 tracking-wide">{skill.name}</span>
-									<div className="flex items-center gap-1.5 overflow-hidden w-0 group-hover/item:w-12 transition-all duration-300">
-										<button
-											onClick={() => openModal(skill)}
-											className="p-1 text-gray-400 hover:text-orange transition-colors"
-										>
-											<HiOutlinePencil className="text-[10px]" />
-										</button>
-										<button
-											onClick={() => handleDelete(skill._id)}
-											className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-										>
-											<HiOutlineTrash className="text-[10px]" />
-										</button>
-									</div>
+									<span className="text-xs font-bold text-gray-600 dark:text-gray-300 tracking-wide">{skill}</span>
 								</Motion.div>
 							))}
-							
-							<button
-								onClick={() => openModal({ category })}
-								className="px-5 py-2.5 border-2 border-dashed border-gray-100 dark:border-gray-800/50 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-orange/50 hover:text-orange transition-all flex items-center gap-2"
-							>
-								<HiOutlinePlus />
-								ADD
-							</button>
 						</div>
 					</div>
 				))}
@@ -157,19 +144,19 @@ const Skills = () => {
 								<form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 										<div className="space-y-3">
-											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Skill Name</label>
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Category Name</label>
 											<input
 												{...register("name", { required: true })}
 												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
-												placeholder="e.g. React, Node.js"
+												placeholder="e.g. Frontend"
 											/>
 										</div>
 										<div className="space-y-3">
-											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Category</label>
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Skills (comma separated)</label>
 											<input
-												{...register("category", { required: true })}
+												{...register("skills", { required: true })}
 												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
-												placeholder="e.g. Frontend, Backend"
+												placeholder="React, Vue, Next.js"
 											/>
 										</div>
 									</div>

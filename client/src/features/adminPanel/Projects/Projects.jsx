@@ -19,10 +19,24 @@ const Projects = () => {
 	const { register, handleSubmit, reset, setValue } = useForm();
 
 	const onSubmit = (data) => {
+		const formData = new FormData();
+		formData.append("title", data.title);
+		formData.append("description", data.description);
+		formData.append("githubLink", data.githubLink);
+		formData.append("liveLink", data.liveLink);
+		
+		// Handle techs as JSON string for server
+		const techsArray = data.techs.split(",").map(t => t.trim()).filter(t => t !== "");
+		formData.append("techs", JSON.stringify(techsArray));
+
+		if (data.cover && data.cover[0]) {
+			formData.append("cover", data.cover[0]);
+		}
+
 		if (editingProject) {
-			updateProj({ id: editingProject._id, data });
+			updateProj({ id: editingProject._id, data: formData });
 		} else {
-			createProj(data);
+			createProj(formData);
 		}
 		closeModal();
 	};
@@ -32,10 +46,9 @@ const Projects = () => {
 			setEditingProject(project);
 			setValue("title", project.title);
 			setValue("description", project.description);
-			setValue("techStack", project.techStack.join(", "));
-			setValue("githubUrl", project.githubUrl);
-			setValue("liveUrl", project.liveUrl);
-			setValue("image", project.image);
+			setValue("techs", project.techs.join(", "));
+			setValue("githubLink", project.githubLink);
+			setValue("liveLink", project.liveLink);
 		} else {
 			setEditingProject(null);
 			reset();
@@ -82,7 +95,7 @@ const Projects = () => {
 					>
 						<div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-900">
 							<img
-								src={project.image}
+								src={project.cover?.secure_url}
 								alt={project.title}
 								className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
 							/>
@@ -107,13 +120,13 @@ const Projects = () => {
 							<div className="flex items-center justify-between mb-4">
 								<h3 className="font-black text-xl text-gray-900 dark:text-white uppercase tracking-tight truncate">{project.title}</h3>
 								<div className="flex gap-2">
-									{project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-orange transition-colors"><HiOutlineCodeBracket className="text-xl" /></a>}
-									{project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-orange transition-colors"><HiOutlineGlobeAlt className="text-xl" /></a>}
+									{project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-orange transition-colors"><HiOutlineCodeBracket className="text-xl" /></a>}
+									{project.liveLink && <a href={project.liveLink} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-orange transition-colors"><HiOutlineGlobeAlt className="text-xl" /></a>}
 								</div>
 							</div>
 							<p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 h-10 mb-6 leading-relaxed">{project.description}</p>
 							<div className="flex flex-wrap gap-2">
-								{project.techStack.map((tech) => (
+								{project.techs?.map((tech) => (
 									<span key={tech} className="px-4 py-1.5 bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-400 rounded-xl text-[9px] font-black uppercase tracking-widest border border-gray-100 dark:border-gray-800/50">
 										{tech}
 									</span>
@@ -162,11 +175,11 @@ const Projects = () => {
 											/>
 										</div>
 										<div className="space-y-3">
-											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Thumbnail URL</label>
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Cover Image</label>
 											<input
-												{...register("image", { required: true })}
-												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
-												placeholder="https://..."
+												type="file"
+												{...register("cover")}
+												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange/10 file:text-orange hover:file:bg-orange/20"
 											/>
 										</div>
 									</div>
@@ -184,7 +197,7 @@ const Projects = () => {
 									<div className="space-y-3">
 										<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Tech Stack (comma separated)</label>
 										<input
-											{...register("techStack", { required: true })}
+											{...register("techs", { required: true })}
 											className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
 											placeholder="React, Tailwind, Node.js"
 										/>
@@ -196,20 +209,20 @@ const Projects = () => {
 											<div className="relative">
 												<HiOutlineCodeBracket className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
 												<input
-													{...register("githubUrl")}
+													{...register("githubLink")}
 													className="w-full pl-14 pr-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
-													placeholder="Link to code"
+													placeholder="https://github.com/..."
 												/>
 											</div>
 										</div>
 										<div className="space-y-3">
-											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Live Demo</label>
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Live Demo URL</label>
 											<div className="relative">
 												<HiOutlineGlobeAlt className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
 												<input
-													{...register("liveUrl")}
+													{...register("liveLink")}
 													className="w-full pl-14 pr-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
-													placeholder="Link to site"
+													placeholder="https://..."
 												/>
 											</div>
 										</div>

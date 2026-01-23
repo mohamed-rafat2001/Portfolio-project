@@ -7,6 +7,8 @@ import {
 	FaFacebook,
 	FaGlobe,
 } from "react-icons/fa";
+import useAdminInfo from "../../../hooks/useAdminInfo";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const getIcon = (name) => {
 	const lowerName = name.toLowerCase();
@@ -19,7 +21,11 @@ const getIcon = (name) => {
 	return <FaGlobe />;
 };
 
-const ContactInfo = ({ user }) => {
+const ContactInfo = () => {
+	const { admin, isLoading } = useAdminInfo();
+
+	if (isLoading) return <LoadingState message="Loading contact info..." />;
+
 	return (
 		<div className="lg:col-span-5 space-y-12">
 			<div className="space-y-10">
@@ -31,8 +37,11 @@ const ContactInfo = ({ user }) => {
 						<p className="text-[11px] font-black text-gray-500 uppercase tracking-widest mb-2">
 							Email Me
 						</p>
-						<a href={`mailto:${user?.email || "mohamed20rafat@gmail.com"}`} className="text-base font-bold text-white hover:text-orange transition-colors truncate block">
-							{user?.email || "mohamed20rafat@gmail.com"}
+						<a
+							href={`mailto:${admin?.email || "mohamed20rafat@gmail.com"}`}
+							className="text-base font-bold text-white hover:text-orange transition-colors truncate block"
+						>
+							{admin?.email || "mohamed20rafat@gmail.com"}
 						</a>
 					</div>
 				</div>
@@ -45,8 +54,11 @@ const ContactInfo = ({ user }) => {
 						<p className="text-[11px] font-black text-gray-500 uppercase tracking-widest mb-2">
 							Call Me
 						</p>
-						<a href={`tel:${user?.phoneNumber || "+201050330514"}`} className="text-base font-bold text-white hover:text-orange transition-colors truncate block">
-							{user?.phoneNumber || "+201050330514"}
+						<a
+							href={`tel:${admin?.phoneNumber || "+201050330514"}`}
+							className="text-base font-bold text-white hover:text-orange transition-colors truncate block"
+						>
+							{admin?.phoneNumber || "+201050330514"}
 						</a>
 					</div>
 				</div>
@@ -60,7 +72,7 @@ const ContactInfo = ({ user }) => {
 							Location
 						</p>
 						<p className="text-base font-bold text-white truncate block">
-							{user?.infos?.location || "Egypt"}
+							{admin?.moreInfo?.location || "Egypt"}
 						</p>
 					</div>
 				</div>
@@ -71,8 +83,8 @@ const ContactInfo = ({ user }) => {
 					Follow My Work
 				</p>
 				<div className="flex flex-wrap gap-5">
-					{user?.infos?.socialMedia?.length > 0 ? (
-						user.infos.socialMedia.map((social) => (
+					{admin?.socialMedia?.length > 0 ? (
+						admin.socialMedia.map((social) => (
 							<a
 								key={social._id}
 								href={social.url}
@@ -88,10 +100,16 @@ const ContactInfo = ({ user }) => {
 						))
 					) : (
 						<>
-							<a href="#" className="w-14 h-14 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-orange hover:border-orange transition-all duration-300 group shadow-xl">
+							<a
+								href="#"
+								className="w-14 h-14 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-orange hover:border-orange transition-all duration-300 group shadow-xl"
+							>
 								<FaLinkedin className="text-2xl transition-transform group-hover:scale-110" />
 							</a>
-							<a href="#" className="w-14 h-14 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-orange hover:border-orange transition-all duration-300 group shadow-xl">
+							<a
+								href="#"
+								className="w-14 h-14 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-orange hover:border-orange transition-all duration-300 group shadow-xl"
+							>
 								<FaGithub className="text-2xl transition-transform group-hover:scale-110" />
 							</a>
 						</>

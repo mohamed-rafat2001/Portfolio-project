@@ -31,7 +31,7 @@ const Profile = () => {
 
 	const { fields, append, remove } = useFieldArray({
 		control,
-		name: "infos.socialLinks"
+		name: "socialMedia"
 	});
 
 	const { register: registerPass, handleSubmit: handleSubmitPass, reset: resetPass, formState: { errors: passErrors } } = useForm();
@@ -144,7 +144,7 @@ const Profile = () => {
 											</div>
 										) : null}
 										<img
-											src={user?.infos?.profileImg?.secure_url || "/default-avatar.png"}
+											src={user?.profileImg?.secure_url || "/default-avatar.png"}
 											alt={user?.name}
 											className="w-full h-full object-cover grayscale group-hover/avatar:grayscale-0 transition-all duration-700"
 										/>
@@ -256,7 +256,7 @@ const Profile = () => {
 												<div className="relative">
 													<HiOutlinePhone className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 													<input
-														{...register("phone")}
+														{...register("phoneNumber")}
 														className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner"
 														placeholder="+201050330514"
 													/>
@@ -269,7 +269,7 @@ const Profile = () => {
 														<input 
 															type="checkbox" 
 															className="sr-only peer" 
-															{...register("isAvailable")}
+															{...register("moreInfo.available")}
 														/>
 														<div className="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-orange"></div>
 													</label>
@@ -292,7 +292,7 @@ const Profile = () => {
 												<div className="relative">
 													<HiOutlineUser className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 													<input
-														{...register("infos.jobTitle")}
+														{...register("moreInfo.job.title")}
 														className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner"
 														placeholder="Full Stack Dev"
 													/>
@@ -303,7 +303,7 @@ const Profile = () => {
 												<div className="relative">
 													<HiOutlineGlobeAlt className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 													<input
-														{...register("infos.location")}
+														{...register("moreInfo.location")}
 														className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner"
 														placeholder="Egypt"
 													/>
@@ -314,7 +314,7 @@ const Profile = () => {
 												<div className="relative">
 													<HiOutlineInformationCircle className="absolute left-8 top-8 text-gray-400 text-xl" />
 													<textarea
-														{...register("infos.jobNote")}
+														{...register("moreInfo.job.note")}
 														rows={4}
 														className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner resize-none"
 														placeholder="A short note about your current role..."
@@ -337,7 +337,7 @@ const Profile = () => {
 												<div className="relative">
 													<HiOutlineInformationCircle className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 													<input
-														{...register("infos.aboutMe.title")}
+														{...register("moreInfo.aboutMe.title")}
 														className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner"
 														placeholder="Hello, I'm Mohamed Rafat."
 													/>
@@ -348,7 +348,7 @@ const Profile = () => {
 												<div className="relative">
 													<HiOutlineInformationCircle className="absolute left-8 top-8 text-gray-400 text-xl" />
 													<textarea
-														{...register("infos.aboutMe.message")}
+														{...register("moreInfo.aboutMe.note")}
 														rows={8}
 														className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner resize-none"
 														placeholder="Tell your story..."
@@ -369,7 +369,7 @@ const Profile = () => {
 											<div className="flex items-center gap-4">
 												<button
 													type="button"
-													onClick={() => append({ platform: "", url: "" })}
+													onClick={() => append({ name: "", url: "" })}
 													className="w-12 h-12 rounded-2xl bg-[#030712] border border-gray-800/50 flex items-center justify-center text-gray-400 hover:text-orange hover:border-orange/30 transition-all"
 												>
 													<HiOutlinePlus className="text-xl" />
@@ -385,7 +385,7 @@ const Profile = () => {
 															<div className="relative">
 																<HiOutlineUser className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 																<input
-																	{...register(`infos.socialLinks.${index}.platform`)}
+																	{...register(`socialMedia.${index}.name`)}
 																	className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner"
 																	placeholder="LinkedIn"
 																/>
@@ -396,19 +396,19 @@ const Profile = () => {
 															<div className="relative">
 																<HiOutlineLink className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 																<input
-																	{...register(`infos.socialLinks.${index}.url`)}
+																	{...register(`socialMedia.${index}.url`)}
 																	className="w-full pl-16 pr-8 py-6 bg-gray-50 dark:bg-[#030712] border border-transparent focus:border-orange/30 rounded-[2rem] focus:ring-4 focus:ring-orange/5 transition-all text-sm font-bold dark:text-white placeholder:text-gray-400 shadow-inner"
-																	placeholder="https://..."
+																	placeholder="https://linkedin.com/in/..."
 																/>
 															</div>
 														</div>
-														<div className="md:col-span-1 pb-4">
+														<div className="md:col-span-1">
 															<button
 																type="button"
 																onClick={() => remove(index)}
-																className="w-12 h-12 rounded-2xl flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors"
+																className="w-14 h-14 rounded-2xl bg-red-500/5 border border-red-500/10 flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
 															>
-																<HiOutlineTrash className="text-2xl" />
+																<HiOutlineTrash className="text-xl" />
 															</button>
 														</div>
 													</div>

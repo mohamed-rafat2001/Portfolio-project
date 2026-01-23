@@ -10,9 +10,9 @@ import Textarea from "../../../shared/components/form/Textarea";
 const contactSchema = z.object({
 	userName: z.string().min(3, "Name must be at least 3 characters"),
 	userEmail: z.string().email("Please enter a valid email"),
-	phoneNumber: z.string().optional(),
-	subject: z.string().optional(),
-	emailBody: z.string().min(10, "Message must be at least 10 characters"),
+	phoneNumber: z.string().min(1, "Phone number is required"),
+	subject: z.string().min(3, "Subject must be at least 3 characters"),
+	emailBody: z.string().min(20, "Message must be at least 20 characters"),
 });
 
 const ContactForm = () => {

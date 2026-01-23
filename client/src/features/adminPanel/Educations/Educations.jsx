@@ -59,59 +59,86 @@ const Educations = () => {
 		<div className="space-y-8">
 			<div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 				<div>
-					<h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Educations</h1>
-					<p className="text-gray-500 dark:text-gray-400 mt-2">Manage your academic qualifications.</p>
+					<h1 className="text-4xl font-black uppercase tracking-tighter text-gray-900 dark:text-white">Educations</h1>
+					<p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">Manage your academic qualifications and certifications.</p>
 				</div>
 				<button
 					onClick={() => openModal()}
-					className="flex items-center justify-center gap-2 bg-orange text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-orange/20 hover:scale-105 transition-all"
+					className="flex items-center justify-center gap-2 bg-orange text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-orange/20 hover:scale-105 transition-all active:scale-95"
 				>
 					<HiOutlinePlus className="text-lg" />
-					Add Education
+					ADD EDUCATION
 				</button>
 			</div>
 
-			<div className="space-y-4">
-				{educations?.map((edu) => (
-					<Motion.div
-						layout
-						key={edu._id}
-						className="bg-white dark:bg-gray-900 p-6 rounded-3xl border border-gray-100 dark:border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-6 group"
-					>
-						<div className="flex items-start gap-4">
-							<div className="p-4 bg-gray-50 dark:bg-gray-950 rounded-2xl text-orange">
-								<HiOutlineAcademicCap className="text-2xl" />
-							</div>
-							<div>
-								<h3 className="font-black text-lg text-gray-900 dark:text-white uppercase">{edu.degree}</h3>
-								<div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
-									<span className="font-bold text-orange">{edu.institution}</span>
-									<span className="flex items-center gap-1">
-										<HiOutlineCalendar />
-										{edu.duration}
-									</span>
+			<div className="space-y-6">
+				{educations && educations.length > 0 ? (
+					educations.map((edu) => (
+						<Motion.div
+							layout
+							key={edu._id}
+							className="bg-white dark:bg-[#0a0f1c] p-10 rounded-[2.5rem] border border-gray-100 dark:border-gray-800/50 flex flex-col md:flex-row md:items-center justify-between gap-8 group hover:border-orange/30 hover:shadow-2xl hover:shadow-orange/5 transition-all duration-500"
+						>
+							<div className="flex items-start gap-8">
+								<div className="w-20 h-20 bg-gray-50 dark:bg-[#030712] rounded-[1.5rem] flex items-center justify-center text-orange shadow-inner border border-gray-100 dark:border-gray-800 group-hover:bg-orange group-hover:text-white transition-all duration-500 shrink-0">
+									<HiOutlineAcademicCap className="text-3xl" />
 								</div>
-								{edu.description && (
-									<p className="mt-3 text-sm text-gray-500 dark:text-gray-400 max-w-2xl">{edu.description}</p>
-								)}
+								<div>
+									<h3 className="font-black text-2xl text-gray-900 dark:text-white uppercase tracking-tight mb-2">{edu.degree}</h3>
+									<div className="flex flex-wrap items-center gap-6 text-sm">
+										<span className="font-black text-orange uppercase tracking-widest">{edu.institution}</span>
+										<span className="flex items-center gap-2 text-gray-400 font-bold uppercase tracking-widest text-[11px]">
+											<HiOutlineCalendar className="text-lg text-orange/50" />
+											{edu.duration}
+										</span>
+									</div>
+									{edu.description && (
+										<p className="mt-6 text-base text-gray-500 dark:text-gray-400 max-w-3xl leading-relaxed font-medium">{edu.description}</p>
+									)}
+								</div>
 							</div>
+							<div className="flex items-center gap-4 self-end md:self-center">
+								<button
+									onClick={() => openModal(edu)}
+									className="p-5 bg-gray-50 dark:bg-[#030712] text-gray-400 hover:text-orange hover:bg-orange/10 border border-gray-100 dark:border-gray-800 rounded-2xl transition-all shadow-sm active:scale-95"
+									title="Edit Education"
+								>
+									<HiOutlinePencil className="text-xl" />
+								</button>
+								<button
+									onClick={() => handleDelete(edu._id)}
+									className="p-5 bg-gray-50 dark:bg-[#030712] text-gray-400 hover:text-red-500 hover:bg-red-500/10 border border-gray-100 dark:border-gray-800 rounded-2xl transition-all shadow-sm active:scale-95"
+									title="Delete Education"
+								>
+									<HiOutlineTrash className="text-xl" />
+								</button>
+							</div>
+						</Motion.div>
+					))
+				) : (
+					<Motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						className="bg-white dark:bg-[#0a0f1c] rounded-[3rem] p-24 border border-gray-100 dark:border-gray-800/50 flex flex-col items-center text-center space-y-10 shadow-sm"
+					>
+						<div className="w-32 h-32 bg-gray-50 dark:bg-[#030712] rounded-[2.5rem] flex items-center justify-center text-gray-200 dark:text-gray-800 shadow-inner border border-gray-100 dark:border-gray-800">
+							<HiOutlineAcademicCap className="text-6xl" />
 						</div>
-						<div className="flex items-center gap-2 self-end md:self-center">
-							<button
-								onClick={() => openModal(edu)}
-								className="p-3 bg-gray-50 dark:bg-gray-950 text-gray-400 hover:text-orange hover:bg-orange/10 rounded-xl transition-all"
-							>
-								<HiOutlinePencil />
-							</button>
-							<button
-								onClick={() => handleDelete(edu._id)}
-								className="p-3 bg-gray-50 dark:bg-gray-950 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
-							>
-								<HiOutlineTrash />
-							</button>
+						<div className="space-y-4">
+							<h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">No Academic Records</h3>
+							<p className="text-gray-500 dark:text-gray-500 font-medium max-w-sm mx-auto text-lg">
+								Your educational background is empty. Start by adding your first qualification.
+							</p>
 						</div>
+						<button
+							onClick={() => openModal()}
+							className="flex items-center justify-center gap-3 bg-orange text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-2xl shadow-orange/30 hover:scale-[1.05] active:scale-95 transition-all"
+						>
+							<HiOutlinePlus className="text-xl" />
+							ADD EDUCATION
+						</button>
 					</Motion.div>
-				))}
+				)}
 			</div>
 
 			{/* Modal */}
@@ -123,70 +150,76 @@ const Educations = () => {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							onClick={closeModal}
-							className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
+							className="absolute inset-0 bg-[#030712]/80 backdrop-blur-md"
 						/>
 						<Motion.div
-							initial={{ opacity: 0, scale: 0.95, y: 20 }}
+							initial={{ opacity: 0, scale: 0.9, y: 40 }}
 							animate={{ opacity: 1, scale: 1, y: 0 }}
-							exit={{ opacity: 0, scale: 0.95, y: 20 }}
-							className="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden"
+							exit={{ opacity: 0, scale: 0.9, y: 40 }}
+							className="relative w-full max-w-2xl bg-white dark:bg-[#0a0f1c] rounded-[3rem] shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden"
 						>
-							<div className="p-8">
-								<h2 className="text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white mb-6">
-									{editingEdu ? "Edit Education" : "Add Education"}
-								</h2>
-								<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-										<div className="space-y-2">
-											<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Institution</label>
+							<div className="p-10 md:p-14">
+								<div className="flex items-center gap-6 mb-12">
+									<div className="w-14 h-14 rounded-2xl bg-orange/10 flex items-center justify-center text-orange">
+										<HiOutlineAcademicCap className="text-2xl" />
+									</div>
+									<h2 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">
+										{editingEdu ? "EDIT QUALIFICATION" : "NEW QUALIFICATION"}
+									</h2>
+								</div>
+								
+								<form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+										<div className="space-y-3">
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Institution</label>
 											<input
 												{...register("institution", { required: true })}
-												className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-												placeholder="University/School name"
+												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
+												placeholder="University or School"
 											/>
 										</div>
-										<div className="space-y-2">
-											<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Degree</label>
+										<div className="space-y-3">
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Degree/Field</label>
 											<input
 												{...register("degree", { required: true })}
-												className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-												placeholder="Field of study"
+												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
+												placeholder="e.g. Computer Science"
 											/>
 										</div>
 									</div>
 
-									<div className="space-y-2">
-										<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Duration</label>
+									<div className="space-y-3">
+										<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Duration</label>
 										<input
 											{...register("duration", { required: true })}
-											className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
+											className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
 											placeholder="e.g. 2018 - 2022"
 										/>
 									</div>
 
-									<div className="space-y-2">
-										<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Description (Optional)</label>
+									<div className="space-y-3">
+										<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Additional Info (Optional)</label>
 										<textarea
 											{...register("description")}
-											rows={3}
-											className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm resize-none"
-											placeholder="Honors, GPA, or relevant courses"
+											rows={4}
+											className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white resize-none"
+											placeholder="Honors, GPA, or relevant achievements..."
 										/>
 									</div>
 
-									<div className="flex justify-end gap-4 mt-8">
+									<div className="flex justify-end gap-6 pt-6">
 										<button
 											type="button"
 											onClick={closeModal}
-											className="px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
+											className="px-8 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all"
 										>
-											Cancel
+											DISCARD
 										</button>
 										<button
 											disabled={isCreating || isUpdating}
-											className="bg-orange text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-orange/20 hover:scale-105 transition-all disabled:opacity-50"
+											className="bg-orange text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-2xl shadow-orange/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
 										>
-											{editingEdu ? "Save Changes" : "Create Education"}
+											{editingEdu ? "UPDATE RECORD" : "SAVE RECORD"}
 										</button>
 									</div>
 								</form>

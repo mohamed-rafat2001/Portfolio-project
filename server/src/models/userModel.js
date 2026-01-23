@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 
 const socialMediaSchema = new mongoose.Schema({
 	name: {
@@ -14,7 +15,40 @@ const socialMediaSchema = new mongoose.Schema({
 		trim: true,
 	},
 });
-
+const infoDetailsSchema= new mongoose.Schema({
+	job:{
+		title:{
+			type: String,
+			trim: true,
+			min: 5,
+		},
+		note:{
+			type: String,
+			trim: true,
+			min: 20,}
+	},
+	aboutMe: {
+		title:{
+			type: String,
+			trim: true,
+			min: 5,
+			},
+			note:{
+				type: String,
+				trim: true,
+				min: 20,
+			}
+		},
+		location: {
+			type: String,
+			trim: true,
+			
+		},
+		available:{
+			type: Boolean,
+			default: true,
+		}
+})
 const userSchema = new mongoose.Schema(
 	{
 		name: {
@@ -29,7 +63,10 @@ const userSchema = new mongoose.Schema(
 			required: [true, "email is required"],
 			validate: [validator.isEmail, "please enter the valid email"],
 		},
-		profileImg: String,
+		profileImg: {
+			public_id: String,
+			secure_url: String,
+		},
 		phoneNumber: {
 			type: String,
 			required: [true, "phone number is required"],
@@ -37,16 +74,7 @@ const userSchema = new mongoose.Schema(
 			validate: [validator.isMobilePhone, "please enter valid phone number"],
 		},
 		socialMedia: [socialMediaSchema],
-		aboutMe: {
-			type: String,
-			trim: true,
-			min: 20,
-		},
-		location: {
-			type: String,
-			trim: true,
-			required: [true, "location is required"],
-		},
+		moreInfo:infoDetailsSchema,
 		password: {
 			type: String,
 			trim: true,
@@ -93,8 +121,8 @@ userSchema.pre("save", async function (next) {
 
 // create token using jwt
 userSchema.methods.createToken = function () {
-	return jwt.sign({ _id: this._id }, process.env.JWT_KEY, {
-		expiresIn: process.env.JWT_EXPIRES,
+	return jwt.sign({ _id: this._id }, process.env.USER_KEY_TOKEN, {
+		expiresIn: "90d",
 	});
 };
 
@@ -110,8 +138,8 @@ userSchema.methods.createCookie = function (res) {
 		httpOnly: true,
 		secure: process.env.NODE_MODE === "PRODUCTION" ? true : false,
 		sameSite: "strict",
-		maxAge: new Date(
-			Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+		expires: new Date(
+			Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
 		),
 	});
 };

@@ -43,7 +43,7 @@ export const updateDoc = (Model, fields = []) =>
 // get by id param
 export const getDocById = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.findById(req, params.id);
+		const doc = await Model.findById(req.params.id);
 
 		if (!doc) return next(new appError("doc not found", 400));
 
@@ -53,7 +53,7 @@ export const getDocById = (Model) =>
 // delete doc
 export const deleteDoc = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.findByIdAndDelete(req, params.id);
+		const doc = await Model.findByIdAndDelete(req.params.id);
 
 		if (!doc) return next(new appError("doc not deleted", 400));
 

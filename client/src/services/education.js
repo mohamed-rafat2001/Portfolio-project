@@ -30,7 +30,7 @@ export const getSingleEdu = async (id) => {
 };
 
 // update single education by id
-export const updateEdu = async (id, data) => {
+export const updateEdu = async ({ id, data }) => {
 	try {
 		const res = await mainApi.patch(`educations/${id}`, data);
 		return res;

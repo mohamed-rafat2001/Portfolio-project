@@ -2,6 +2,7 @@ import UserModel from "../models/userModel.js";
 import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
+import { cloudinary } from "../utils/cloudinaryConfig.js";
 
 // get user doc
 export const getMe = catchAsync(async (req, res, next) => {
@@ -35,10 +36,21 @@ export const updateMe = catchAsync(async (req, res, next) => {
 
 // update profile image
 export const profileImg = catchAsync(async (req, res, next) => {
-	const { profileImg } = req.body;
+	if (!req.file) return next(new appError("Please upload an image", 400));
+
+	// If user already has an image, delete it from cloudinary
+	if (req.user.profileImg?.public_id) {
+		await cloudinary.uploader.destroy(req.user.profileImg.public_id);
+	}
+
 	const user = await UserModel.findByIdAndUpdate(
 		req.user._id,
-		{ profileImg },
+		{
+			profileImg: {
+				public_id: req.file.filename,
+				secure_url: req.file.path,
+			},
+		},
 		{ runValidators: true, new: true }
 	);
 
@@ -70,8 +82,7 @@ export const updatePassword = catchAsync(async (req, res, next) => {
 	await user.save();
 
 	// create token & cookie
-	const token = user.CreateToken();
 	user.createCookie(res);
 
-	sendResponse(res, 200, { user, token });
+	sendResponse(res, 200, { user });
 });

@@ -2,11 +2,22 @@ import mongoose from "mongoose";
 
 const educationSchema = new mongoose.Schema(
 	{
-		name: {
+		degree: {
 			type: String,
 			trim: true,
 			min: 3,
-			required: [true, "name is required"],
+			required: [true, "degree is required"],
+		},
+		institution: {
+			type: String,
+			trim: true,
+			min: 3,
+			required: [true, "institution is required"],
+		},
+		duration: {
+			type: String,
+			trim: true,
+			required: [true, "duration is required"],
 		},
 		description: {
 			type: String,
@@ -14,8 +25,6 @@ const educationSchema = new mongoose.Schema(
 			min: 3,
 			required: [true, "description is required"],
 		},
-		date: { type: Date, required: true },
-		files: [String],
 	},
 	{ timestamps: true }
 );

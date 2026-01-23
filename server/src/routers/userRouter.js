@@ -1,5 +1,6 @@
 import express from "express";
 import { protect } from "../middlewares/authMiddleware.js";
+import { upload } from "../utils/cloudinaryConfig.js";
 
 import {
 	getMe,
@@ -14,6 +15,6 @@ const Router = express.Router();
 Router.use(protect);
 
 Router.route("/").get(getMe).patch(updateMe);
-Router.patch("/profileImg", profileImg);
+Router.patch("/profileImg", upload.single("profileImg"), profileImg);
 Router.patch("/updatePassword", updatePassword);
 export default Router;

@@ -1,7 +1,7 @@
 import useMutationFactory from "../../../../hooks/useMutationFactory.js";
 import { updateExp } from "../../../../services/experience.js";
 
-export default function useDeleteExp() {
+export default function useUpdateExp() {
 	const { error, isLoading, mutate, data } = useMutationFactory(
 		updateExp,
 		"Experiences"

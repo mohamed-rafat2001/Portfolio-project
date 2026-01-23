@@ -7,6 +7,8 @@ import {
 	HiCodeBracket,
 	HiUserGroup,
 } from "react-icons/hi2";
+import useSkills from "../../../hooks/useSkills";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const sectionVariants = {
 	hidden: { opacity: 0, y: 50 },
@@ -21,65 +23,9 @@ const sectionVariants = {
 };
 
 const Skills = () => {
-	const skillCategories = [
-		{
-			name: "Frontend & UI",
-			icon: <HiCommandLine />,
-			color: "blue",
-			skills: [
-				"OutSystems",
-				"React.js / Vite",
-				"JavaScript (ES6+)",
-				"TypeScript",
-				"Next.js",
-				"HTML5 & CSS3",
-				"Tailwind CSS",
-				"Bootstrap",
-			],
-		},
-		{
-			name: "State & APIs",
-			icon: <HiArrowsRightLeft />,
-			color: "green",
-			skills: [
-				"Context API",
-				"Redux / Toolkit",
-				"React Query",
-				"RESTful APIs",
-				"Axios",
-			],
-		},
-		{
-			name: "Backend & DB",
-			icon: <HiCircleStack />,
-			color: "purple",
-			skills: ["OutSystems", "Node.js", "Express.js", "MongoDB", "SQL"],
-		},
-		{
-			name: "Tools & Platforms",
-			icon: <HiWrenchScrewdriver />,
-			color: "orange",
-			skills: ["Git & GitHub", "Firebase", "Netlify", "Vercel"],
-		},
-		{
-			name: "Fundamentals",
-			icon: <HiCodeBracket />,
-			color: "blue",
-			skills: ["Data Structures", "Algorithms", "OOP", "Python"],
-		},
-		{
-			name: "Soft Skills",
-			icon: <HiUserGroup />,
-			color: "green",
-			skills: [
-				"Teamwork",
-				"Leadership",
-				"Time Management",
-				"Problem-Solving",
-				"Communication",
-			],
-		},
-	];
+	const { skills, isLoading } = useSkills();
+
+	if (isLoading) return <LoadingState />;
 
 	return (
 		<Motion.section
@@ -88,70 +34,53 @@ const Skills = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.1 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-gray-50 dark:bg-gray-950"
+			className="py-24 md:py-32 bg-[#030712]"
 		>
 			<div className="container mx-auto px-4">
-				<div className="flex items-center gap-8 mb-16">
-					<h2 className="text-3xl md:text-4xl font-black text-[#1a1a1a] dark:text-white uppercase tracking-tighter">
-						Technical Skills
-					</h2>
-					<div className="h-px grow bg-gray-200 dark:bg-gray-800"></div>
-					<span className="text-orange font-black text-sm uppercase tracking-[0.3em]">
+				<div className="flex items-center gap-8 mb-20">
+					<div className="flex flex-col">
+						<span className="text-orange font-black text-[10px] uppercase tracking-[0.4em] mb-2">
+							Abilities
+						</span>
+						<h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+							Technical <span className="text-orange">Skills</span>
+						</h2>
+					</div>
+					<div className="h-px grow bg-gray-800/50"></div>
+					<span className="text-gray-800 font-black text-6xl md:text-8xl select-none">
 						04
 					</span>
 				</div>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-					{skillCategories.map((category, catIndex) => (
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+					{skills?.map((skill, catIndex) => (
 						<Motion.div
-							key={category.name}
+							key={skill._id}
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ delay: catIndex * 0.1 }}
-							className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-xl shadow-black/2 border border-gray-100 dark:border-gray-700/50 group hover:border-orange/20 transition-all"
+							className="space-y-6 group"
 						>
-							<div
-								className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-6 transition-all group-hover:scale-110
-								${
-									category.color === "blue"
-										? "bg-blue-50 text-blue-500 dark:bg-blue-900/20"
-										: ""
-								}
-								${
-									category.color === "green"
-										? "bg-green-50 text-green-500 dark:bg-green-900/20"
-										: ""
-								}
-								${
-									category.color === "purple"
-										? "bg-purple-50 text-purple-500 dark:bg-purple-900/20"
-										: ""
-								}
-								${
-									category.color === "orange"
-										? "bg-orange-50 text-orange-500 dark:bg-orange-900/20"
-										: ""
-								}
-							`}
-							>
-								{category.icon}
+							<div className="flex items-center gap-3 px-2">
+								<div className="w-1.5 h-6 bg-orange rounded-full" />
+								<h3 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em]">
+									{skill.name}
+								</h3>
 							</div>
 
-							<h3 className="text-lg font-black text-[#1a1a1a] dark:text-white mb-6 uppercase tracking-wider">
-								{category.name}
-							</h3>
-
-							<ul className="space-y-4">
-								{category.skills.map((skill) => (
-									<li
-										key={skill}
-										className="flex items-center gap-3 text-gray-500 dark:text-gray-400 font-medium text-sm"
-									>
-										<div className="w-1.5 h-1.5 rounded-full bg-orange/40"></div>
-										{skill}
-									</li>
-								))}
-							</ul>
+							<div className="p-10 bg-[#0a0f1c] rounded-[3rem] border border-gray-800/50 shadow-2xl group-hover:border-orange/30 transition-all duration-500 min-h-[200px]">
+								<div className="flex flex-wrap gap-4">
+									{skill.skills?.map((s, sIndex) => (
+										<Motion.span
+											key={sIndex}
+											whileHover={{ scale: 1.05, y: -2 }}
+											className="px-6 py-3 bg-[#030712] text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-800/50 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
+										>
+											{s}
+										</Motion.span>
+									))}
+								</div>
+							</div>
 						</Motion.div>
 					))}
 				</div>

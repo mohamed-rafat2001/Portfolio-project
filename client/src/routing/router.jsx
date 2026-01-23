@@ -10,6 +10,7 @@ import PublicSkills from "../features/home/PublicSkills.jsx";
 import Login from "../features/auth/Login.jsx";
 import Signup from "../features/auth/Signup.jsx";
 
+import Dashboard from "../features/adminPanel/Dashboard/Dashboard.jsx";
 import Profile from "../features/adminPanel/Profile/Profile.jsx";
 import Projects from "../features/adminPanel/Projects/Projects.jsx";
 import Educations from "../features/adminPanel/Educations/Educations.jsx";
@@ -54,8 +55,12 @@ const router = createBrowserRouter([
 				children: [
 					{
 						index: true,
-						path: "profile",
-						element: <Profile />,
+						path: "dashboard",
+						element: <Dashboard />,
+					},
+					{
+						path: "dashboard",
+						element: <Dashboard />,
 					},
 					{
 						path: "profile",

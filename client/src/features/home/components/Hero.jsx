@@ -6,6 +6,7 @@ import {
 	HiPhone,
 	HiMapPin,
 } from "react-icons/hi2";
+import useAdminInfo from "../../../hooks/useAdminInfo";
 
 const sectionVariants = {
 	hidden: { opacity: 0, y: 50 },
@@ -20,6 +21,8 @@ const sectionVariants = {
 };
 
 const Hero = () => {
+	const { admin } = useAdminInfo();
+
 	return (
 		<Motion.section
 			id="home"
@@ -27,24 +30,24 @@ const Hero = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.2 }}
 			variants={sectionVariants}
-			className="relative min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center pt-10 pb-20 md:pt-20 md:pb-32 overflow-hidden bg-[#fafafa] dark:bg-gray-950"
+			className="relative min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center pt-10 pb-20 md:pt-20 md:pb-32 overflow-hidden bg-[#030712]"
 		>
 			{/* Enhanced Background with Grid and Radial Glow */}
 			<div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
 				{/* The Grid Pattern */}
 				<div
-					className="absolute inset-0 opacity-[0.03] dark:opacity-[0.1] text-black dark:text-white"
+					className="absolute inset-0 opacity-[0.05] text-white"
 					style={{
 						backgroundImage: `
 							linear-gradient(to right, currentColor 1px, transparent 1px),
 							linear-gradient(to bottom, currentColor 1px, transparent 1px)
 						`,
-						backgroundSize: "40px 40px",
+						backgroundSize: "60px 60px",
 					}}
 				></div>
 
 				{/* Center Radial Glow - matching the orange theme */}
-				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[600px] max-h-[600px] md:max-w-[800px] md:max-h-[800px] bg-orange/5 dark:bg-orange/5 blur-[100px] md:blur-[150px] rounded-full opacity-50"></div>
+				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[800px] max-h-[800px] bg-orange/10 blur-[150px] rounded-full opacity-50"></div>
 			</div>
 
 			<div className="container mx-auto px-4 text-center relative z-10">
@@ -53,13 +56,13 @@ const Hero = () => {
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5 }}
-					className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 mb-8 shadow-sm"
+					className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gray-900/50 border border-gray-800 mb-12 shadow-2xl backdrop-blur-sm"
 				>
 					<span className="relative flex h-2 w-2">
 						<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
 						<span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
 					</span>
-					<span className="text-[10px] md:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em]">
+					<span className="text-[10px] md:text-xs font-black text-gray-400 uppercase tracking-[0.3em]">
 						Available for new projects
 					</span>
 				</Motion.div>
@@ -69,13 +72,13 @@ const Hero = () => {
 					initial={{ opacity: 0, scale: 0.95 }}
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ duration: 0.5, delay: 0.2 }}
-					className="mb-8"
+					className="mb-10 space-y-4"
 				>
-					<h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] dark:text-white mb-2 uppercase tracking-tighter">
-						Mohamed Rafat
+					<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter">
+						{admin?.name || "Mohamed Rafat"}
 					</h1>
-					<h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-orange uppercase tracking-tighter leading-[0.9]">
-						Full Stack Dev
+					<h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-orange uppercase tracking-tighter leading-[0.85]">
+						{admin?.aboutMe?.job?.title || "Full Stack Dev"}
 					</h2>
 				</Motion.div>
 
@@ -84,10 +87,9 @@ const Hero = () => {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: 0.4, duration: 0.5 }}
-					className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-medium"
+					className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-16 leading-relaxed font-medium"
 				>
-					Building robust, scalable applications with a focus on seamless user
-					experiences and modern architecture.
+					{admin?.aboutMe?.job?.note || "Building robust, scalable applications with a focus on seamless user experiences and modern architecture."}
 				</Motion.p>
 
 				{/* Action Buttons */}
@@ -95,18 +97,18 @@ const Hero = () => {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.6, duration: 0.5 }}
-					className="flex flex-row items-center justify-center gap-4 mb-20"
+					className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24"
 				>
 					<a
 						href="#projects"
-						className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#1a1a1a] dark:bg-white text-white dark:text-gray-900 font-bold transition-all hover:bg-black dark:hover:bg-gray-100 shadow-xl shadow-black/10 active:scale-95"
+						className="group w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 rounded-2xl bg-white text-gray-900 font-black uppercase tracking-widest transition-all hover:bg-orange hover:text-white shadow-[0_20px_40px_-15px_rgba(255,255,255,0.1)] active:scale-95"
 					>
 						View Projects
 						<HiArrowRight className="text-xl transition-transform group-hover:translate-x-1" />
 					</a>
 					<a
 						href="#contact"
-						className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white font-bold transition-all hover:bg-gray-50 dark:hover:bg-gray-800 shadow-xl shadow-black/5 active:scale-95"
+						className="group w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 rounded-2xl bg-gray-900 border border-gray-800 text-white font-black uppercase tracking-widest transition-all hover:bg-gray-800 shadow-2xl active:scale-95"
 					>
 						Contact Me
 						<HiPaperAirplane className="text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -118,45 +120,45 @@ const Hero = () => {
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.8, duration: 0.6 }}
-					className="inline-flex flex-wrap items-center justify-center gap-8 md:gap-12 px-8 py-5 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-xl shadow-black/3"
+					className="inline-flex flex-wrap items-center justify-center gap-10 md:gap-16 px-10 py-7 rounded-[2.5rem] bg-[#0a0f1c] border border-gray-800/50 shadow-2xl"
 				>
-					<div className="flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange">
-							<HiEnvelope className="text-sm" />
+					<div className="flex items-center gap-4">
+						<div className="w-12 h-12 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-orange">
+							<HiEnvelope className="text-xl" />
 						</div>
 						<div className="text-left">
-							<p className="text-[9px] text-gray-400 uppercase font-black tracking-widest">
+							<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
 								Email
 							</p>
-							<p className="text-xs font-bold text-gray-900 dark:text-white">
+							<p className="text-sm font-bold text-white">
 								mohamed20rafat@gmail.com
 							</p>
 						</div>
 					</div>
 
-					<div className="hidden sm:flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange">
-							<HiPhone className="text-sm" />
+					<div className="hidden sm:flex items-center gap-4">
+						<div className="w-12 h-12 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-orange">
+							<HiPhone className="text-xl" />
 						</div>
 						<div className="text-left">
-							<p className="text-[9px] text-gray-400 uppercase font-black tracking-widest">
+							<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
 								Phone
 							</p>
-							<p className="text-xs font-bold text-gray-900 dark:text-white">
+							<p className="text-sm font-bold text-white">
 								+20 1050330514
 							</p>
 						</div>
 					</div>
 
-					<div className="flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-orange/10 flex items-center justify-center text-orange">
-							<HiMapPin className="text-sm" />
+					<div className="flex items-center gap-4">
+						<div className="w-12 h-12 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-orange">
+							<HiMapPin className="text-xl" />
 						</div>
 						<div className="text-left">
-							<p className="text-[9px] text-gray-400 uppercase font-black tracking-widest">
+							<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
 								Location
 							</p>
-							<p className="text-xs font-bold text-gray-900 dark:text-white">
+							<p className="text-sm font-bold text-white">
 								Egypt
 							</p>
 						</div>

@@ -1,5 +1,8 @@
 import { motion as Motion } from "framer-motion";
 import { HiBriefcase, HiAcademicCap } from "react-icons/hi2";
+import useExperiences from "../../../hooks/useExperiences";
+import useEducations from "../../../hooks/useEducations";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const sectionVariants = {
 	hidden: { opacity: 0, y: 50 },
@@ -14,35 +17,16 @@ const sectionVariants = {
 };
 
 const Experience = () => {
-	const experiences = [
-		{
-			company: "Freelance",
-			role: "Full-Stack Developer",
-			period: "2023 - Present",
-			desc: "Developing custom web solutions for diverse clients, focusing on modern stacks like MERN and Next.js to deliver scalable and performant applications.",
-		},
-		{
-			company: "Self-Employed",
-			role: "Web Developer & UI Designer",
-			period: "2021 - 2023",
-			desc: "Focused on building responsive, user-centric websites with a strong emphasis on clean code and intuitive design principles.",
-		},
-	];
+	const { experiences, isLoading: isExpLoading } = useExperiences();
+	const { educations, isLoading: isEduLoading } = useEducations();
 
-	const education = [
-		{
-			degree: "Bachelor of Electrical and Computer Engineering",
-			school: "Higher Institute of Engineering and Technology in New Minya",
-			period: "2020 - 2025",
-			desc: "Graduation Project: Smart Farm IoT Management System (Grade: Excellent). Focus on hardware-software integration and real-time monitoring.",
-		},
-		{
-			degree: "Web Development & Design Internships",
-			school: "National Telecommunication Institute (NTI)",
-			period: "2022",
-			desc: "Hands-on experience in full-stack development using MERN stack and responsive UI design with modern web technologies.",
-		},
-	];
+	const formatDate = (dateString) => {
+		if (!dateString) return "";
+		const date = new Date(dateString);
+		return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+	};
+
+	if (isExpLoading || isEduLoading) return <LoadingState message="Fetching your journey..." />;
 
 	return (
 		<Motion.section
@@ -51,54 +35,59 @@ const Experience = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.1 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-white dark:bg-gray-900"
+			className="py-24 md:py-32 bg-[#030712] text-white"
 		>
 			<div className="container mx-auto px-4">
-				<div className="flex items-center gap-8 mb-16">
-					<span className="text-orange font-black text-sm uppercase tracking-[0.3em]">
+				<div className="flex items-center gap-8 mb-24">
+					<span className="text-orange font-black text-sm uppercase tracking-[0.4em]">
 						03
 					</span>
-					<div className="h-px grow bg-gray-200 dark:bg-gray-800"></div>
-					<h2 className="text-3xl md:text-4xl font-black text-[#1a1a1a] dark:text-white uppercase tracking-tighter">
-						My Journey
+					<div className="h-px grow bg-gray-800/50"></div>
+					<h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+						My <span className="text-orange">Journey</span>
 					</h2>
 				</div>
 
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
 					{/* Experience Column */}
-					<div className="space-y-12">
-						<div className="flex items-center gap-4 mb-8">
-							<div className="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center text-orange text-xl">
+					<div className="space-y-16">
+						<div className="flex items-center gap-6">
+							<div className="w-16 h-16 rounded-[1.5rem] bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-orange text-3xl shadow-2xl">
 								<HiBriefcase />
 							</div>
-							<h3 className="text-xl font-black text-[#1a1a1a] dark:text-white uppercase tracking-wider">
-								Work History
+							<h3 className="text-3xl font-black text-white uppercase tracking-tighter">
+								Work <span className="text-orange">History</span>
 							</h3>
 						</div>
 
-						<div className="space-y-8 border-l-2 border-gray-100 dark:border-gray-800 ml-5 pl-8">
-							{experiences.map((exp, index) => (
+						<div className="space-y-16 border-l border-gray-800/50 ml-8 pl-12">
+							{experiences?.map((exp, index) => (
 								<Motion.div
-									key={index}
+									key={exp._id}
 									initial={{ opacity: 0, x: -20 }}
 									whileInView={{ opacity: 1, x: 0 }}
-									className="relative"
+									transition={{ delay: index * 0.1 }}
+									className="relative group"
 								>
 									{/* Dot */}
-									<div className="absolute -left-[41px] top-2 w-4 h-4 rounded-full bg-white dark:bg-gray-950 border-4 border-orange shadow-lg shadow-orange/20"></div>
+									<div className="absolute -left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
 
-									<div className="space-y-3">
-										<span className="text-[10px] font-black text-orange uppercase tracking-[0.2em] bg-orange/5 px-3 py-1 rounded-full border border-orange/10">
-											{exp.period}
-										</span>
-										<h4 className="text-xl font-bold text-[#1a1a1a] dark:text-white">
-											{exp.role}
-										</h4>
-										<p className="text-gray-400 font-bold text-sm uppercase tracking-widest">
-											{exp.company}
-										</p>
-										<p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-											{exp.desc}
+									<div className="space-y-6">
+										<div className="inline-block px-5 py-2 rounded-xl bg-orange/5 border border-orange/10 group-hover:border-orange/30 transition-colors">
+											<span className="text-[11px] font-black text-orange uppercase tracking-[0.2em]">
+												{exp.duration}
+											</span>
+										</div>
+										<div>
+											<h4 className="text-2xl font-black text-white mb-2 group-hover:text-orange transition-colors uppercase tracking-tight">
+												{exp.role}
+											</h4>
+											<p className="text-gray-500 font-black text-[10px] uppercase tracking-[0.3em]">
+												{exp.company}
+											</p>
+										</div>
+										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium">
+											{exp.description}
 										</p>
 									</div>
 								</Motion.div>
@@ -107,39 +96,44 @@ const Experience = () => {
 					</div>
 
 					{/* Education Column */}
-					<div className="space-y-12">
-						<div className="flex items-center gap-4 mb-8">
-							<div className="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center text-orange text-xl">
+					<div className="space-y-16">
+						<div className="flex items-center gap-6">
+							<div className="w-16 h-16 rounded-[1.5rem] bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-orange text-3xl shadow-2xl">
 								<HiAcademicCap />
 							</div>
-							<h3 className="text-xl font-black text-[#1a1a1a] dark:text-white uppercase tracking-wider">
-								Education
+							<h3 className="text-3xl font-black text-white uppercase tracking-tighter">
+								Education <span className="text-orange">Level</span>
 							</h3>
 						</div>
 
-						<div className="space-y-8 border-l-2 border-gray-100 dark:border-gray-800 ml-5 pl-8">
-							{education.map((edu, index) => (
+						<div className="space-y-16 border-l border-gray-800/50 ml-8 pl-12">
+							{educations?.map((edu, index) => (
 								<Motion.div
-									key={index}
+									key={edu._id}
 									initial={{ opacity: 0, x: -20 }}
 									whileInView={{ opacity: 1, x: 0 }}
-									className="relative"
+									transition={{ delay: index * 0.1 }}
+									className="relative group"
 								>
 									{/* Dot */}
-									<div className="absolute -left-[41px] top-2 w-4 h-4 rounded-full bg-white dark:bg-gray-950 border-4 border-orange shadow-lg shadow-orange/20"></div>
+									<div className="absolute -left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
 
-									<div className="space-y-3">
-										<span className="text-[10px] font-black text-orange uppercase tracking-[0.2em] bg-orange/5 px-3 py-1 rounded-full border border-orange/10">
-											{edu.period}
-										</span>
-										<h4 className="text-xl font-bold text-[#1a1a1a] dark:text-white">
-											{edu.degree}
-										</h4>
-										<p className="text-gray-400 font-bold text-sm uppercase tracking-widest">
-											{edu.school}
-										</p>
-										<p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-											{edu.desc}
+									<div className="space-y-6">
+										<div className="inline-block px-5 py-2 rounded-xl bg-orange/5 border border-orange/10 group-hover:border-orange/30 transition-colors">
+											<span className="text-[11px] font-black text-orange uppercase tracking-[0.2em]">
+												{edu.duration}
+											</span>
+										</div>
+										<div>
+											<h4 className="text-2xl font-black text-white mb-2 group-hover:text-orange transition-colors uppercase tracking-tight">
+												{edu.degree}
+											</h4>
+											<p className="text-gray-500 font-black text-[10px] uppercase tracking-[0.3em]">
+												{edu.institution}
+											</p>
+										</div>
+										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium">
+											{edu.description}
 										</p>
 									</div>
 								</Motion.div>

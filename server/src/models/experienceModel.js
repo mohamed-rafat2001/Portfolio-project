@@ -20,7 +20,11 @@ const experienceSchema = new mongoose.Schema(
 			min: 3,
 			required: [true, "description is required"],
 		},
-		period: { type: Date, required: true },
+		duration: {
+			type: String,
+			trim: true,
+			required: [true, "duration is required"],
+		},
 		files: [String],
 	},
 	{ timestamps: true }

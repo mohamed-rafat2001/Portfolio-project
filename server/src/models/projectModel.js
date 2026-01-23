@@ -6,7 +6,7 @@ const projectSchema = new mongoose.Schema(
 			type: String,
 			trim: true,
 			min: 3,
-			required: [true, "name is required"],
+			required: [true, "title is required"],
 		},
 		description: {
 			type: String,
@@ -14,18 +14,25 @@ const projectSchema = new mongoose.Schema(
 			min: 20,
 			required: [true, "description is required"],
 		},
-		tech: [String],
-		mainImg: String,
-		images: [String],
-		liveUrl: {
+		techs: [
+			{
+				type: String,
+				trim: true,
+				min: 3,
+				required: [true, "technologies are required"],
+			},
+		],
+		cover: { public_id: String, secure_url: String },
+		images: [{ public_id: String, secure_url: String }],
+		liveLink: {
 			type: String,
 			trim: true,
-			required: [true, "liveUrl is required"],
+			required: [true, "liveLink is required"],
 		},
-		repoUrl: {
+		githubLink: {
 			type: String,
 			trim: true,
-			required: [true, "repoUrl is required"],
+			required: [true, "githubLink is required"],
 		},
 	},
 	{ timestamps: true }

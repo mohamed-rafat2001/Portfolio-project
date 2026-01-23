@@ -29,7 +29,7 @@ export const getSingleProj = async (id) => {
 };
 
 // update single project by id
-export const updateProj = async (id, data) => {
+export const updateProj = async ({ id, data }) => {
 	try {
 		const res = await mainApi.patch(`projects/${id}`, data);
 		return res;

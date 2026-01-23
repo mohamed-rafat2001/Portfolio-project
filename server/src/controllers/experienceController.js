@@ -11,7 +11,7 @@ import {
 export const createExperience = createDoc(ExperienceModel, [
 	"company",
 	"description",
-	"period",
+	"duration",
 	"role",
 	"files",
 ]);
@@ -20,7 +20,7 @@ export const createExperience = createDoc(ExperienceModel, [
 export const updateExperience = updateDoc(ExperienceModel, [
 	"company",
 	"description",
-	"period",
+	"duration",
 	"role",
 	"files",
 ]);

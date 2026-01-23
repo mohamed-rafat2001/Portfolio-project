@@ -29,7 +29,7 @@ export const getSingleExp = async (id) => {
 };
 
 // update single experience by id
-export const updateExp = async (id, data) => {
+export const updateExp = async ({ id, data }) => {
 	try {
 		const res = await mainApi.patch(`experiences/${id}`, data);
 		return res;

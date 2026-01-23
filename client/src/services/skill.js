@@ -29,7 +29,7 @@ export const getSingleSkill = async (id) => {
 };
 
 // update single skill by id
-export const updateSkill = async (id, data) => {
+export const updateSkill = async ({ id, data }) => {
 	try {
 		const res = await mainApi.patch(`skills/${id}`, data);
 		return res;

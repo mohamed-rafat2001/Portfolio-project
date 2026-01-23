@@ -3,6 +3,7 @@ import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
 import sendEmail from "../utils/sendEmail.js";
+import { passwordResetCodeTemplate } from "../utils/emailTemplates.js";
 
 // sign up func
 export const signUp = catchAsync(async (req, res, next) => {
@@ -22,19 +23,18 @@ export const signUp = catchAsync(async (req, res, next) => {
 	if (!user) return next(new appError("user didn't create", 400));
 
 	// create token && cookie
-	const token = user.createToken();
 	user.createCookie(res);
 
 	// save user && send response
 	await user.save();
-	sendResponse(res, 201, { user, token });
+	sendResponse(res, 201, { user });
 });
 
 // login func
 export const login = catchAsync(async (req, res, next) => {
 	const { password, email } = req.body;
-	if (!password && !email)
-		return next(new appError("please provide valid fields ", 400));
+	if (!password || !email)
+		return next(new appError("please provide valid email and password", 400));
 
 	const user = await UserModel.findOne({ email });
 
@@ -46,11 +46,10 @@ export const login = catchAsync(async (req, res, next) => {
 		return next(new appError("email or password is wrong", 400));
 
 	// create token && cookie
-	const token = user.createToken();
 	user.createCookie(res);
 
 	// send response
-	sendResponse(res, 201, { user, token });
+	sendResponse(res, 201, { user });
 });
 // log out func
 export const logOut = catchAsync(async (req, res, next) => {
@@ -116,8 +115,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 	await user.save();
 
 	// create token & cookie
-	const token = user.CreateToken();
 	user.createCookie(res);
 
-	sendResponse(res, 200, { user, token });
+	sendResponse(res, 200, { user });
 });

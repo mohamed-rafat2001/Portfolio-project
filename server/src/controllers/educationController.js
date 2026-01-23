@@ -9,18 +9,18 @@ import {
 
 // add new Education
 export const createEducation = createDoc(EducationModel, [
-	"name",
+	"degree",
+	"institution",
+	"duration",
 	"description",
-	"date",
-	"files",
 ]);
 
 // update Education
 export const updateEducation = updateDoc(EducationModel, [
-	"name",
+	"degree",
+	"institution",
+	"duration",
 	"description",
-	"date",
-	"files",
 ]);
 
 // get Education by id

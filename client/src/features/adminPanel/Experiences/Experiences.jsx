@@ -59,57 +59,84 @@ const Experiences = () => {
 		<div className="space-y-8">
 			<div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 				<div>
-					<h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Experiences</h1>
-					<p className="text-gray-500 dark:text-gray-400 mt-2">Manage your professional work history.</p>
+					<h1 className="text-4xl font-black uppercase tracking-tighter text-gray-900 dark:text-white">Experiences</h1>
+					<p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">Manage your professional work history and career journey.</p>
 				</div>
 				<button
 					onClick={() => openModal()}
-					className="flex items-center justify-center gap-2 bg-orange text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-orange/20 hover:scale-105 transition-all"
+					className="flex items-center justify-center gap-2 bg-orange text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-orange/20 hover:scale-105 transition-all active:scale-95"
 				>
 					<HiOutlinePlus className="text-lg" />
-					Add Experience
+					ADD EXPERIENCE
 				</button>
 			</div>
 
-			<div className="space-y-4">
-				{experiences?.map((exp) => (
-					<Motion.div
-						layout
-						key={exp._id}
-						className="bg-white dark:bg-gray-900 p-6 rounded-3xl border border-gray-100 dark:border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-6 group"
-					>
-						<div className="flex items-start gap-4">
-							<div className="p-4 bg-gray-50 dark:bg-gray-950 rounded-2xl text-orange">
-								<HiOutlineBuildingOffice className="text-2xl" />
-							</div>
-							<div>
-								<h3 className="font-black text-lg text-gray-900 dark:text-white uppercase">{exp.role}</h3>
-								<div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
-									<span className="font-bold text-orange">{exp.company}</span>
-									<span className="flex items-center gap-1">
-										<HiOutlineCalendar />
-										{exp.duration}
-									</span>
+			<div className="space-y-6">
+				{experiences && experiences.length > 0 ? (
+					experiences.map((exp) => (
+						<Motion.div
+							layout
+							key={exp._id}
+							className="bg-white dark:bg-[#0a0f1c] p-10 rounded-[2.5rem] border border-gray-100 dark:border-gray-800/50 flex flex-col md:flex-row md:items-center justify-between gap-8 group hover:border-orange/30 hover:shadow-2xl hover:shadow-orange/5 transition-all duration-500"
+						>
+							<div className="flex items-start gap-8">
+								<div className="w-20 h-20 bg-gray-50 dark:bg-[#030712] rounded-[1.5rem] flex items-center justify-center text-orange shadow-inner border border-gray-100 dark:border-gray-800 group-hover:bg-orange group-hover:text-white transition-all duration-500 shrink-0">
+									<HiOutlineBuildingOffice className="text-3xl" />
 								</div>
-								<p className="mt-3 text-sm text-gray-500 dark:text-gray-400 max-w-2xl">{exp.description}</p>
+								<div>
+									<h3 className="font-black text-2xl text-gray-900 dark:text-white uppercase tracking-tight mb-2">{exp.role}</h3>
+									<div className="flex flex-wrap items-center gap-6 text-sm">
+										<span className="font-black text-orange uppercase tracking-widest">{exp.company}</span>
+										<span className="flex items-center gap-2 text-gray-400 font-bold uppercase tracking-widest text-[11px]">
+											<HiOutlineCalendar className="text-lg text-orange/50" />
+											{exp.duration}
+										</span>
+									</div>
+									<p className="mt-6 text-base text-gray-500 dark:text-gray-400 max-w-3xl leading-relaxed font-medium">{exp.description}</p>
+								</div>
 							</div>
+							<div className="flex items-center gap-4 self-end md:self-center">
+								<button
+									onClick={() => openModal(exp)}
+									className="p-5 bg-gray-50 dark:bg-[#030712] text-gray-400 hover:text-orange hover:bg-orange/10 border border-gray-100 dark:border-gray-800 rounded-2xl transition-all shadow-sm active:scale-95"
+									title="Edit Experience"
+								>
+									<HiOutlinePencil className="text-xl" />
+								</button>
+								<button
+									onClick={() => handleDelete(exp._id)}
+									className="p-5 bg-gray-50 dark:bg-[#030712] text-gray-400 hover:text-red-500 hover:bg-red-500/10 border border-gray-100 dark:border-gray-800 rounded-2xl transition-all shadow-sm active:scale-95"
+									title="Delete Experience"
+								>
+									<HiOutlineTrash className="text-xl" />
+								</button>
+							</div>
+						</Motion.div>
+					))
+				) : (
+					<Motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						className="bg-white dark:bg-[#0a0f1c] rounded-[3rem] p-24 border border-gray-100 dark:border-gray-800/50 flex flex-col items-center text-center space-y-10 shadow-sm"
+					>
+						<div className="w-32 h-32 bg-gray-50 dark:bg-[#030712] rounded-[2.5rem] flex items-center justify-center text-gray-200 dark:text-gray-800 shadow-inner border border-gray-100 dark:border-gray-800">
+							<HiOutlineBuildingOffice className="text-6xl" />
 						</div>
-						<div className="flex items-center gap-2 self-end md:self-center">
-							<button
-								onClick={() => openModal(exp)}
-								className="p-3 bg-gray-50 dark:bg-gray-950 text-gray-400 hover:text-orange hover:bg-orange/10 rounded-xl transition-all"
-							>
-								<HiOutlinePencil />
-							</button>
-							<button
-								onClick={() => handleDelete(exp._id)}
-								className="p-3 bg-gray-50 dark:bg-gray-950 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
-							>
-								<HiOutlineTrash />
-							</button>
+						<div className="space-y-4">
+							<h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">No History Yet</h3>
+							<p className="text-gray-500 dark:text-gray-500 font-medium max-w-sm mx-auto text-lg">
+								Your professional journey is empty. Start by adding your first career milestone.
+							</p>
 						</div>
+						<button
+							onClick={() => openModal()}
+							className="flex items-center justify-center gap-3 bg-orange text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-2xl shadow-orange/30 hover:scale-[1.05] active:scale-95 transition-all"
+						>
+							<HiOutlinePlus className="text-xl" />
+							ADD EXPERIENCE
+						</button>
 					</Motion.div>
-				))}
+				)}
 			</div>
 
 			{/* Modal */}
@@ -121,70 +148,76 @@ const Experiences = () => {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							onClick={closeModal}
-							className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
+							className="absolute inset-0 bg-[#030712]/80 backdrop-blur-md"
 						/>
 						<Motion.div
-							initial={{ opacity: 0, scale: 0.95, y: 20 }}
+							initial={{ opacity: 0, scale: 0.9, y: 40 }}
 							animate={{ opacity: 1, scale: 1, y: 0 }}
-							exit={{ opacity: 0, scale: 0.95, y: 20 }}
-							className="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden"
+							exit={{ opacity: 0, scale: 0.9, y: 40 }}
+							className="relative w-full max-w-2xl bg-white dark:bg-[#0a0f1c] rounded-[3rem] shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden"
 						>
-							<div className="p-8">
-								<h2 className="text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white mb-6">
-									{editingExp ? "Edit Experience" : "Add Experience"}
-								</h2>
-								<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-										<div className="space-y-2">
-											<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Company</label>
+							<div className="p-10 md:p-14">
+								<div className="flex items-center gap-6 mb-12">
+									<div className="w-14 h-14 rounded-2xl bg-orange/10 flex items-center justify-center text-orange">
+										<HiOutlineBuildingOffice className="text-2xl" />
+									</div>
+									<h2 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">
+										{editingExp ? "EDIT RECORD" : "NEW RECORD"}
+									</h2>
+								</div>
+								
+								<form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+										<div className="space-y-3">
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Company Name</label>
 											<input
 												{...register("company", { required: true })}
-												className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-												placeholder="Company name"
+												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
+												placeholder="Where did you work?"
 											/>
 										</div>
-										<div className="space-y-2">
-											<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Role</label>
+										<div className="space-y-3">
+											<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Your Role</label>
 											<input
 												{...register("role", { required: true })}
-												className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
-												placeholder="Job title"
+												className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
+												placeholder="What was your title?"
 											/>
 										</div>
 									</div>
 
-									<div className="space-y-2">
-										<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Duration</label>
+									<div className="space-y-3">
+										<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Time Period</label>
 										<input
 											{...register("duration", { required: true })}
-											className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm"
+											className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white"
 											placeholder="e.g. Jan 2022 - Present"
 										/>
 									</div>
 
-									<div className="space-y-2">
-										<label className="font-black uppercase tracking-widest text-[10px] text-gray-400 ml-4">Description</label>
+									<div className="space-y-3">
+										<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4">Job Description</label>
 										<textarea
 											{...register("description", { required: true })}
-											rows={4}
-											className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-950 border-none rounded-2xl focus:ring-2 focus:ring-orange/20 transition-all text-sm resize-none"
-											placeholder="Key responsibilities and achievements"
+											rows={5}
+											className="w-full px-6 py-4 bg-gray-50 dark:bg-[#030712] border-none rounded-2xl focus:ring-4 focus:ring-orange/5 transition-all text-sm font-medium dark:text-white resize-none"
+											placeholder="Describe your impact and key responsibilities..."
 										/>
 									</div>
 
-									<div className="flex justify-end gap-4 mt-8">
+									<div className="flex justify-end gap-6 pt-6">
 										<button
 											type="button"
 											onClick={closeModal}
-											className="px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
+											className="px-8 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all"
 										>
-											Cancel
+											DISCARD
 										</button>
 										<button
 											disabled={isCreating || isUpdating}
-											className="bg-orange text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-orange/20 hover:scale-105 transition-all disabled:opacity-50"
+											className="bg-orange text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-2xl shadow-orange/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
 										>
-											{editingExp ? "Save Changes" : "Create Experience"}
+											{editingExp ? "UPDATE HISTORY" : "SAVE HISTORY"}
 										</button>
 									</div>
 								</form>

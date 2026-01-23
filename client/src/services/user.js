@@ -10,6 +10,16 @@ export const getMe = async () => {
 	}
 };
 
+// get admin info
+export const getAdminInfo = async () => {
+	try {
+		const res = await mainApi.get("users/admin");
+		return res;
+	} catch (e) {
+		return e;
+	}
+};
+
 // update user data
 export const updateMe = async (data) => {
 	try {

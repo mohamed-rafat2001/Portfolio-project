@@ -1,91 +1,77 @@
 import { motion as Motion } from "framer-motion";
-import { HiArrowTopRightOnSquare, HiOutlineCodeBracket, HiOutlinePencil, HiOutlineTrash, HiOutlineEye } from "react-icons/hi2";
+import { HiOutlinePencil, HiOutlineTrash, HiOutlineRocketLaunch } from "react-icons/hi2";
 
-const ProjectCard = ({ project, onEdit, onDelete }) => {
+const ProjectCard = ({ project, onEdit, onDelete, index }) => {
+	const formattedIndex = String(index + 1).padStart(2, '0');
+
 	return (
 		<Motion.div
 			layout
-			initial={{ opacity: 0, scale: 0.95 }}
-			animate={{ opacity: 1, scale: 1 }}
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-			className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm hover:border-orange/20 transition-all overflow-hidden flex flex-col"
+			className="group bg-white rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col border border-gray-100/50"
 		>
-			{/* Image Container */}
-			<div className="relative aspect-video overflow-hidden">
+			{/* Image/Header Area */}
+			<div className="relative aspect-[16/10] overflow-hidden m-4 rounded-[2.5rem]">
 				<img
-					src={project.cover?.secure_url}
+					src={project.mainImg?.secure_url}
 					alt={project.title}
-					className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+					className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
 				/>
-				<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-					<div className="flex items-center gap-3">
-						{project.liveLink && (
-							<a
-								href={project.liveLink}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="p-3 bg-white/10 backdrop-blur-md text-white rounded-xl hover:bg-orange transition-colors"
-							>
-								<HiArrowTopRightOnSquare className="text-xl" />
-							</a>
-						)}
-						{project.githubLink && (
-							<a
-								href={project.githubLink}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="p-3 bg-white/10 backdrop-blur-md text-white rounded-xl hover:bg-orange transition-colors"
-							>
-								<HiOutlineCodeBracket className="text-xl" />
-							</a>
-						)}
-					</div>
+				
+				{/* Number Overlay */}
+				<div className="absolute top-6 left-6 px-4 py-1.5 bg-black/20 backdrop-blur-md rounded-full">
+					<span className="text-[10px] font-black text-white uppercase tracking-widest">
+						#{formattedIndex}
+					</span>
 				</div>
 
-				{/* Preferred Badge */}
+				{/* Featured Badge */}
 				{project.isPreferred && (
-					<div className="absolute top-4 left-4">
-						<span className="px-4 py-1.5 bg-orange text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full shadow-sm">
-							Featured
-						</span>
+					<div className="absolute top-6 right-6">
+						<div className="bg-orange px-6 py-2 rounded-2xl shadow-xl flex items-center gap-2">
+							<HiOutlineRocketLaunch className="text-white text-sm" />
+							<span className="text-[9px] font-black text-white uppercase tracking-[0.2em]">
+								Featured
+							</span>
+						</div>
 					</div>
 				)}
 
-				{/* Edit/Delete Actions */}
-				<div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+				{/* Action Overlay */}
+				<div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
 					<button
 						onClick={() => onEdit(project)}
-						className="p-2.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md text-blue-500 rounded-xl hover:bg-blue-500 hover:text-white transition-all shadow-sm"
+						className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110"
 					>
-						<HiOutlinePencil className="text-lg" />
+						<HiOutlinePencil className="text-xl" />
 					</button>
 					<button
 						onClick={() => onDelete(project._id)}
-						className="p-2.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm"
+						className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition-all transform hover:scale-110"
 					>
-						<HiOutlineTrash className="text-lg" />
+						<HiOutlineTrash className="text-xl" />
 					</button>
 				</div>
 			</div>
 
-			{/* Content */}
-			<div className="p-8 flex-1 flex flex-col">
-				<div className="mb-4">
-					<h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight group-hover:text-orange transition-colors">
-						{project.title}
-					</h3>
-				</div>
-
-				<p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-6 flex-1">
+			{/* Content Area */}
+			<div className="px-10 pb-10 pt-4 flex-1 flex flex-col">
+				<h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter mb-4 leading-tight group-hover:text-orange transition-colors">
+					{project.title}
+				</h3>
+				
+				<p className="text-sm text-gray-500 font-medium leading-relaxed mb-8 line-clamp-2">
 					{project.description}
 				</p>
 
-				{/* Tech Stack */}
-				<div className="flex flex-wrap gap-2">
-					{project.techs?.slice(0, 5).map((tech, index) => (
-						<span
-							key={`${project._id}-${index}`}
-							className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider rounded-lg"
+				{/* Tech Tags */}
+				<div className="mt-auto flex flex-wrap gap-2">
+					{project.techStack?.[0]?.techs?.slice(0, 3).map((tech, i) => (
+						<span 
+							key={i}
+							className="px-4 py-1.5 bg-gray-50 text-[9px] font-black text-gray-400 uppercase tracking-widest rounded-lg border border-gray-100"
 						>
 							{tech}
 						</span>
@@ -97,3 +83,4 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
 };
 
 export default ProjectCard;
+

@@ -16,8 +16,8 @@ const Projects = () => {
 	const [page, setPage] = useState(1);
 	const limit = 6;
 	const { projects, isLoading: isFetching, totalResults } = useProjects({ page, limit });
-	const { mutate: createProj, isLoading: isCreating } = useCreateProj();
-	const { mutate: updateProj, isLoading: isUpdating } = useUpdateProj();
+	const { mutate: createProj, isLoading: isCreating, progress: createProgress } = useCreateProj();
+	const { mutate: updateProj, isLoading: isUpdating, progress: updateProgress } = useUpdateProj();
 	const { mutate: deleteProj } = useDeleteProj();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +25,7 @@ const Projects = () => {
 
     // Re-check page if results are zero (e.g. after delete)
     useEffect(() => {
-        if (projects.length === 0 && page > 1) setPage(page - 1);
+        if (projects && projects.length === 0 && page > 1) setPage(page - 1);
     }, [projects, page]);
 
 	const handleAdd = () => {
@@ -62,24 +62,33 @@ const Projects = () => {
 	if (isFetching) return <LoadingState message="Loading projects..." />;
 
 	return (
-		<div className="space-y-8">
-			<AdminHeader
-				title="Projects"
-				description="Manage your portfolio projects and case studies"
-				icon={<HiOutlineBriefcase />}
-				action={{
-					label: "Add Project",
-					icon: <HiOutlinePlus />,
-					onClick: handleAdd,
-				}}
-			/>
+		<div className="space-y-14 pb-20">
+            {/* Redesigned Header */}
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-10">
+                <div className="space-y-4">
+                    <h1 className="text-5xl font-black text-gray-900 uppercase tracking-tighter">
+                        Projects
+                    </h1>
+                    <p className="text-gray-500 font-medium text-lg">
+                        Manage your portfolio projects and case studies.
+                    </p>
+                </div>
+                <button 
+                    onClick={handleAdd}
+                    className="px-10 py-5 bg-orange text-white rounded-[2rem] font-black uppercase tracking-widest text-xs flex items-center gap-4 hover:scale-105 transition-transform shadow-2xl shadow-orange/30"
+                >
+                    <HiOutlinePlus className="text-xl" />
+                    Add Project
+                </button>
+            </header>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8">
+			<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-10">
 				<AnimatePresence mode="popLayout">
-					{projects?.map((project) => (
+					{projects?.map((project, index) => (
 						<ProjectCard
 							key={project._id}
 							project={project}
+                            index={index + (page - 1) * limit}
 							onEdit={handleEdit}
 							onDelete={handleDelete}
 						/>
@@ -97,13 +106,15 @@ const Projects = () => {
 			<Modal
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
-				title={editingProject ? "Edit Project" : "Add Project"}
-				maxWidth="max-w-2xl"
+				title={editingProject ? "Edit Project" : "New Project"}
+                hideHeader={true}
+				maxWidth="max-w-3xl"
 			>
 				<ProjectForm
 					project={editingProject}
 					onSubmit={handleSubmit}
 					isLoading={isCreating || isUpdating}
+                    progress={createProgress || updateProgress}
 					onCancel={() => setIsModalOpen(false)}
 				/>
 			</Modal>

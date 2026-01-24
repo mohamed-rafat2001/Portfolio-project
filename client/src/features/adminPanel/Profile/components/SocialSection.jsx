@@ -1,4 +1,4 @@
-import { HiOutlineLink, HiOutlineUser, HiOutlineTrash, HiOutlinePlus } from "react-icons/hi2";
+import { HiOutlineLink, HiOutlineUser, HiOutlineTrash, HiPlus } from "react-icons/hi2";
 import FormCard from "./FormCard";
 import InputField from "./InputField";
 
@@ -18,7 +18,7 @@ const SocialSection = ({ register, errors, isUpdating, isDirty }) => {
 			isDirty={isDirty}
             headerAction={
                 <button type="button" className="w-10 h-10 bg-[#030712] border border-white/5 rounded-xl flex items-center justify-center text-white/40 hover:text-orange transition-colors cursor-pointer">
-                    <HiOutlinePlus className="text-xl" />
+                    <HiPlus className="text-xl" />
                 </button>
             }
 		>

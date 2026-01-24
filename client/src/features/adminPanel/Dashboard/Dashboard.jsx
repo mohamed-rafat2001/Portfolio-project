@@ -47,7 +47,7 @@ const Dashboard = () => {
 	];
 
     const contentStats = [
-        { title: "Projects", value: projects?.length || 0, icon: <HiOutlineRocket />, color: "bg-blue-600" },
+        { title: "Projects", value: projects?.length || 0, icon: <HiOutlineRocketLaunch />, color: "bg-blue-600" },
         { title: "Skills", value: skills?.length || 0, icon: <HiOutlineWrenchScrewdriver />, color: "bg-emerald-600" },
         { title: "Experiences", value: experiences?.length || 0, icon: <HiOutlineBriefcase />, color: "bg-purple-600" },
         { title: "Educations", value: educations?.length || 0, icon: <HiOutlineAcademicCap />, color: "bg-orange" },
@@ -96,10 +96,10 @@ const Dashboard = () => {
                                 to="/adminPanel/projects" 
                                 className="inline-flex items-center justify-center gap-4 bg-white px-10 py-5 rounded-3xl text-orange font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform shadow-xl"
                             >
-                                Add Project <HiOutlineRocket className="text-xl" />
+                                Add Project <HiOutlineRocketLaunch className="text-xl" />
                             </Link>
                         </div>
-                        <HiOutlineRocket className="absolute -right-10 -bottom-10 text-[18rem] text-white/5 -rotate-12 pointer-events-none group-hover:rotate-0 transition-transform duration-1000" />
+                        <HiOutlineRocketLaunch className="absolute -right-10 -bottom-10 text-[18rem] text-white/5 -rotate-12 pointer-events-none group-hover:rotate-0 transition-transform duration-1000" />
                     </div>
 
                     {/* Email Summary Card */}

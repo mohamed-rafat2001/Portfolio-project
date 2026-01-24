@@ -9,11 +9,7 @@ const EmailCard = ({ email, onClick, onDelete }) => {
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-<<<<<<< HEAD
 			className={`group relative p-6 bg-white dark:bg-gray-900 rounded-[2.5rem] border transition-all cursor-pointer shadow-sm hover:shadow-md ${
-=======
-			className={`group relative p-6 bg-white dark:bg-gray-900 rounded-[2rem] border transition-all cursor-pointer shadow-sm hover:shadow-md ${
->>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 				email.read
 					? "border-gray-100 dark:border-gray-800 opacity-75"
 					: "border-orange/20 dark:border-orange/20 bg-orange/5 dark:bg-orange/5"

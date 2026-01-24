@@ -57,13 +57,8 @@ const Login = () => {
 					</p>
 				</div>
 
-<<<<<<< HEAD
-				<div className="bg-white dark:bg-[#0a0f1c] rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-black/[0.03] border border-gray-100 dark:border-gray-800/50">
-					<form onSubmit={handleSubmit} className="space-y-6">
-=======
 				<div className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-black/[0.03] border border-gray-100 dark:border-gray-800">
 					<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
->>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 						<div className="space-y-2">
 							<label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">
 								Email Address
@@ -74,13 +69,9 @@ const Login = () => {
 									{...register("email")}
 									type="email"
 									placeholder="admin@example.com"
-<<<<<<< HEAD
-									className="w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-gray-800/50 focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white"
-=======
 									className={`w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border ${
 										errors.email ? "border-red-500" : "border-gray-100 dark:border-gray-700"
 									} focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white`}
->>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 									disabled={isLoading}
 								/>
 							</div>
@@ -101,13 +92,9 @@ const Login = () => {
 									{...register("password")}
 									type="password"
 									placeholder="••••••••"
-<<<<<<< HEAD
-									className="w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-gray-800/50 focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white"
-=======
 									className={`w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border ${
 										errors.password ? "border-red-500" : "border-gray-100 dark:border-gray-700"
 									} focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white`}
->>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 									disabled={isLoading}
 								/>
 							</div>

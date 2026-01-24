@@ -17,7 +17,6 @@ import Educations from "../features/adminPanel/Educations/Educations.jsx";
 import Experiences from "../features/adminPanel/Experiences/Experiences.jsx";
 import Skills from "../features/adminPanel/Skills/Skills.jsx";
 import Emails from "../features/adminPanel/Emails/Emails.jsx";
-import Dashboard from "../features/adminPanel/Dashboard/Dashboard.jsx";
 
 import NotFound from "../shared/components/ui/NotFound.jsx";
 import ProtectRoute from "./ProtectRoute.jsx";
@@ -57,10 +56,6 @@ const router = createBrowserRouter([
 				children: [
 					{
 						index: true,
-<<<<<<< HEAD
-						path: "dashboard",
-=======
->>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 						element: <Dashboard />,
 					},
 					{

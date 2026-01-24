@@ -13,15 +13,15 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
 			{/* Image Container */}
 			<div className="relative aspect-video overflow-hidden">
 				<img
-					src={project.mainImg?.secure_url}
+					src={project.cover?.secure_url}
 					alt={project.title}
 					className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
 					<div className="flex items-center gap-3">
-						{project.liveUrl && (
+						{project.liveLink && (
 							<a
-								href={project.liveUrl}
+								href={project.liveLink}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="p-3 bg-white/10 backdrop-blur-md text-white rounded-xl hover:bg-orange transition-colors"
@@ -29,9 +29,9 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
 								<HiArrowTopRightOnSquare className="text-xl" />
 							</a>
 						)}
-						{project.repoUrl && (
+						{project.githubLink && (
 							<a
-								href={project.repoUrl}
+								href={project.githubLink}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="p-3 bg-white/10 backdrop-blur-md text-white rounded-xl hover:bg-orange transition-colors"
@@ -82,16 +82,14 @@ const ProjectCard = ({ project, onEdit, onDelete }) => {
 
 				{/* Tech Stack */}
 				<div className="flex flex-wrap gap-2">
-					{project.techStack?.map((group) =>
-						group.techs.slice(0, 3).map((tech, index) => (
-							<span
-								key={`${group._id}-${index}`}
-								className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider rounded-lg"
-							>
-								{tech}
-							</span>
-						))
-					)}
+					{project.techs?.slice(0, 5).map((tech, index) => (
+						<span
+							key={`${project._id}-${index}`}
+							className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider rounded-lg"
+						>
+							{tech}
+						</span>
+					))}
 				</div>
 			</div>
 		</Motion.div>

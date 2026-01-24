@@ -8,15 +8,16 @@ import Textarea from "../../../../shared/components/form/Textarea";
 
 const projectSchema = z.object({
 	title: z.string().min(3, "Title must be at least 3 characters"),
-	description: z.string().min(10, "Description must be at least 10 characters"),
-	techStack: z.string().transform((val) => val.split(",").map((t) => t.trim()).filter(Boolean)),
-	liveUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
-	repoUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
-	mainImg: z.any().optional(),
+	description: z.string().min(20, "Description must be at least 20 characters"),
+	techs: z.string().transform((val) => val.split(",").map((t) => t.trim()).filter(Boolean)),
+	liveLink: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+	githubLink: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+	cover: z.any().optional(),
+	isPreferred: z.boolean().default(false),
 });
 
 const ProjectForm = ({ project, onSubmit, isLoading, onCancel }) => {
-	const [preview, setPreview] = useState(project?.mainImg?.secure_url || null);
+	const [preview, setPreview] = useState(project?.cover?.secure_url || null);
 	const [selectedFile, setSelectedFile] = useState(null);
 
 	const {
@@ -24,21 +25,25 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel }) => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
+		watch,
 	} = useForm({
 		resolver: zodResolver(projectSchema),
 		defaultValues: project
 			? {
 					...project,
-					techStack: project.techStack?.map(group => group.techs.join(", ")).join(", ") || "",
+					techs: project.techs?.join(", ") || "",
 			  }
 			: {
 					title: "",
 					description: "",
-					techStack: "",
-					liveUrl: "",
-					repoUrl: "",
+					techs: "",
+					liveLink: "",
+					githubLink: "",
+					isPreferred: false,
 			  },
 	});
+
+	const isPreferred = watch("isPreferred");
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
@@ -47,21 +52,20 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel }) => {
 			const reader = new FileReader();
 			reader.onloadend = () => setPreview(reader.result);
 			reader.readAsDataURL(file);
-			setValue("mainImg", file);
+			setValue("cover", file);
 		}
 	};
 
 	const onFormSubmit = (data) => {
 		const formData = new FormData();
 		Object.keys(data).forEach((key) => {
-			if (key === "techStack") {
-				// For now, let's send it as a simple array of strings wrapped in the object structure the model expects
-				// Or if the model is intended to be simpler, we should adjust it.
-				// Given the model: techStack: [{ title, techs: [String] }]
-				const formattedTechStack = [{ title: "Technologies", techs: data[key] }];
-				formData.append("techStack", JSON.stringify(formattedTechStack));
-			} else if (key === "mainImg" && selectedFile) {
-				formData.append("mainImg", selectedFile);
+			if (key === "techs") {
+				// Model expects an array of strings for techs
+				data[key].forEach((tech, index) => {
+					formData.append(`techs[${index}]`, tech);
+				});
+			} else if (key === "cover" && selectedFile) {
+				formData.append("cover", selectedFile);
 			} else if (data[key] !== undefined && data[key] !== null) {
 				formData.append(key, data[key]);
 			}
@@ -86,7 +90,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel }) => {
 									onClick={() => {
 										setPreview(null);
 										setSelectedFile(null);
-										setValue("mainImg", null);
+										setValue("cover", null);
 									}}
 									className="p-3 bg-red-500 text-white rounded-2xl hover:bg-red-600 transition-colors"
 								>
@@ -106,12 +110,30 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel }) => {
 				</div>
 			</div>
 
-			<Input
-				label="Project Title"
-				placeholder="e.g. Portfolio Website"
-				error={errors.title?.message}
-				{...register("title")}
-			/>
+			<div className="flex items-center gap-4">
+				<Input
+					label="Project Title"
+					placeholder="e.g. Portfolio Website"
+					error={errors.title?.message}
+					{...register("title")}
+					className="flex-1"
+				/>
+				<div className="flex flex-col gap-2 pt-6">
+					<label className="flex items-center gap-3 cursor-pointer group">
+						<div className={`w-12 h-6 rounded-full transition-colors relative ${isPreferred ? 'bg-orange' : 'bg-gray-200 dark:bg-gray-700'}`}>
+							<div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${isPreferred ? 'left-7' : 'left-1'}`} />
+						</div>
+						<span className="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+							Featured Project
+						</span>
+						<input
+							type="checkbox"
+							className="hidden"
+							{...register("isPreferred")}
+						/>
+					</label>
+				</div>
+			</div>
 
 			<Textarea
 				label="Description"
@@ -124,22 +146,22 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel }) => {
 			<Input
 				label="Tech Stack (comma separated)"
 				placeholder="React, Tailwind, Node.js"
-				error={errors.techStack?.message}
-				{...register("techStack")}
+				error={errors.techs?.message}
+				{...register("techs")}
 			/>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<Input
 					label="Live URL"
 					placeholder="https://example.com"
-					error={errors.liveUrl?.message}
-					{...register("liveUrl")}
+					error={errors.liveLink?.message}
+					{...register("liveLink")}
 				/>
 				<Input
 					label="Repository URL"
 					placeholder="https://github.com/..."
-					error={errors.repoUrl?.message}
-					{...register("repoUrl")}
+					error={errors.githubLink?.message}
+					{...register("githubLink")}
 				/>
 			</div>
 

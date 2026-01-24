@@ -10,7 +10,8 @@ export default function useAdminInfo() {
 		queryKey: ["AdminInfo"],
 		queryFn: getAdminInfo,
 		staleTime: 10 * 60 * 1000,
+		retry: false,
 	});
-	const admin = response?.data?.data;
+	const admin = response?.data?.data || response?.data || null;
 	return { admin, isLoading, error };
 }

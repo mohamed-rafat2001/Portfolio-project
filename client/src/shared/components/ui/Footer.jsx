@@ -9,7 +9,7 @@ import {
 	FaGlobe,
 } from "react-icons/fa";
 import { motion as Motion } from "framer-motion";
-import useAdminInfo from "../../../features/adminPanel/Profile/hooks/useAdminInfo";
+import useAdminInfo from "../../../hooks/useAdminInfo";
 import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
 
 const Footer = () => {

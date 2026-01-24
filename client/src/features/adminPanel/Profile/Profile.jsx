@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,7 +11,10 @@ import {
     HiOutlineCheck,
     HiOutlineUserCircle,
     HiOutlineDevicePhoneMobile,
-    HiOutlineEnvelope
+    HiOutlineEnvelope,
+    HiOutlineLockClosed,
+    HiOutlineCamera,
+    HiOutlineEye
 } from "react-icons/hi2";
 import useCurrentUser from "../../auth/hooks/useCurrentUser";
 import useUpdateUser from "./hooks/useUpdateUser";
@@ -21,6 +24,7 @@ import ProfessionalSection from "./components/ProfessionalSection";
 import SocialSection from "./components/SocialSection";
 import SecuritySection from "./components/SecuritySection";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import ProfileImageModal from "./components/ProfileImageModal";
 
 const profileSchema = z.object({
 	name: z.string().min(3, "Name must be at least 3 characters"),
@@ -49,8 +53,21 @@ const profileSchema = z.object({
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("account");
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [isImageDropdownOpen, setIsImageDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 	const { user, isLoading: userLoading } = useCurrentUser();
 	const { updateUser, isLoading: isUpdating } = useUpdateUser();
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsImageDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
 	// Transform user data for the form
 	const defaultValues = user ? {
@@ -107,6 +124,7 @@ const Profile = () => {
         { id: "professional", label: "Professional", icon: HiOutlineIdentification },
         { id: "about", label: "About Me", icon: HiOutlineInformationCircle },
         { id: "social", label: "Social Media", icon: HiOutlineLink },
+        { id: "security", label: "Security", icon: HiOutlineLockClosed },
     ];
 
 	return (
@@ -116,7 +134,7 @@ const Profile = () => {
                 <div className="absolute top-0 right-0 w-96 h-96 bg-orange/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
                 
                 <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
-                    <div className="relative group">
+                    <div className="relative group" ref={dropdownRef}>
                         <div className="w-32 h-32 md:w-44 md:h-44 rounded-[2.5rem] bg-[#030712] flex items-center justify-center text-orange overflow-hidden border-4 border-white/5 shadow-2xl">
                             {user?.profileImg?.secure_url ? (
                                 <img
@@ -129,9 +147,40 @@ const Profile = () => {
                                 <HiOutlineUserCircle className="text-8xl" />
                             )}
                         </div>
-                        <button className="absolute -bottom-2 -right-2 w-12 h-12 bg-orange rounded-2xl shadow-2xl border-4 border-[#0b1120] flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer">
-                            <HiOutlineUserCircle className="text-2xl" />
+                        <button 
+                            onClick={() => setIsImageDropdownOpen(!isImageDropdownOpen)}
+                            className="absolute -bottom-2 -right-2 w-12 h-12 bg-orange rounded-2xl shadow-2xl border-4 border-[#0b1120] flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer"
+                        >
+                            <HiOutlineCamera className="text-2xl" />
                         </button>
+
+                        <AnimatePresence>
+                            {isImageDropdownOpen && (
+                                <Motion.div
+                                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                                    className="absolute left-full ml-4 top-1/2 -translate-y-1/2 w-56 bg-[#030712] border border-white/10 rounded-3xl shadow-3xl p-3 z-50 overflow-hidden"
+                                >
+                                    <button 
+                                        onClick={() => {
+                                            setIsImageModalOpen(true);
+                                            setIsImageDropdownOpen(false);
+                                        }}
+                                        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-white/5 rounded-2xl transition-colors text-white group"
+                                    >
+                                        <HiOutlineCamera className="text-xl text-orange group-hover:scale-110 transition-transform" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">Upload Photo</span>
+                                    </button>
+                                    <button 
+                                        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-white/5 rounded-2xl transition-colors text-white group"
+                                    >
+                                        <HiOutlineEye className="text-xl text-blue-500 group-hover:scale-110 transition-transform" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">View Pattern</span>
+                                    </button>
+                                </Motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     <div className="text-center md:text-left flex-grow">
@@ -189,10 +238,16 @@ const Profile = () => {
                             {activeTab === "professional" && <ProfessionalSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} />}
                             {activeTab === "about" && <AboutSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} />}
                             {activeTab === "social" && <SocialSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} control={control} watch={watch} />}
+                            {activeTab === "security" && <SecuritySection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} />}
                         </form>
                     </Motion.div>
                 </AnimatePresence>
             </div>
+
+            <ProfileImageModal 
+                isOpen={isImageModalOpen} 
+                onClose={() => setIsImageModalOpen(false)} 
+            />
 		</div>
 	);
 };

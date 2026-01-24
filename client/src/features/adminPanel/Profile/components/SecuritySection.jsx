@@ -1,20 +1,21 @@
-import { HiOutlineLockClosed } from "react-icons/hi2";
+import { HiOutlineLockClosed, HiOutlineKey, HiOutlineShieldCheck } from "react-icons/hi2";
 import FormCard from "./FormCard";
 import InputField from "./InputField";
 
-const SecuritySection = ({ register, errors }) => {
+const SecuritySection = ({ register, errors, isUpdating, isDirty }) => {
 	return (
 		<FormCard
-			title="Security"
-			description="Update your password"
+			title="Security Settings"
 			icon={<HiOutlineLockClosed />}
-			color="bg-red-500"
+            isUpdating={isUpdating}
+            isDirty={isDirty}
 		>
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 				<InputField
 					label="Current Password"
 					type="password"
 					placeholder="••••••••"
+                    icon={HiOutlineKey}
 					error={errors.passwordCurrent?.message}
 					{...register("passwordCurrent")}
 				/>
@@ -22,6 +23,7 @@ const SecuritySection = ({ register, errors }) => {
 					label="New Password"
 					type="password"
 					placeholder="••••••••"
+                    icon={HiOutlineLockClosed}
 					error={errors.password?.message}
 					{...register("password")}
 				/>
@@ -29,6 +31,7 @@ const SecuritySection = ({ register, errors }) => {
 					label="Confirm New Password"
 					type="password"
 					placeholder="••••••••"
+                    icon={HiOutlineShieldCheck}
 					error={errors.passwordConfirm?.message}
 					{...register("passwordConfirm")}
 				/>

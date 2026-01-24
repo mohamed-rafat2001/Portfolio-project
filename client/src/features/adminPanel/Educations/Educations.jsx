@@ -69,7 +69,7 @@ const Educations = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+			<div className="grid grid-cols-1 xl:grid-cols-2 gap-10 pb-20">
 				<AnimatePresence mode="popLayout">
 					{educations?.map((edu) => (
 						<EducationCard
@@ -82,6 +82,26 @@ const Educations = () => {
 				</AnimatePresence>
 			</div>
 
+            {educations?.length === 0 && (
+				<div className="text-center py-24 bg-[#0b1120] rounded-[3rem] border border-white/5 shadow-2xl">
+					<div className="w-24 h-24 bg-[#030712] rounded-[2rem] flex items-center justify-center text-gray-700 text-5xl mx-auto mb-10 border border-white/5">
+						<HiOutlineAcademicCap />
+					</div>
+					<h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">
+						No education records
+					</h3>
+					<p className="text-gray-500 mb-12">
+						Start by adding your first academic qualification.
+					</p>
+                    <button 
+                        onClick={handleAdd}
+                        className="px-12 py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:shadow-orange/20 shadow-2xl transition-all"
+                    >
+                        + Add Education
+                    </button>
+				</div>
+			)}
+
 			<Pagination 
 				page={page} 
 				totalResults={totalResults} 
@@ -93,7 +113,7 @@ const Educations = () => {
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
 				title={editingEdu ? "Edit Education" : "Add Education"}
-				maxWidth="max-w-2xl"
+				maxWidth="max-w-xl"
 			>
 				<EducationForm
 					education={editingEdu}

@@ -1,13 +1,19 @@
-
 import { motion as Motion } from "framer-motion";
 import { HiArrowUpRight, HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+
+import { incrementViews } from "../../../features/adminPanel/Projects/services/project";
 
 const ProjectCard = ({ project, index }) => {
 	const navigate = useNavigate();
 	const navigateUrl = `/projects/${project._id}`;
 
 	const handleCardClick = () => {
+        try {
+            incrementViews(project._id);
+        } catch (error) {
+            console.error("Failed to increment views:", error);
+        }
 		navigate(navigateUrl);
 	};
 
@@ -56,8 +62,8 @@ const ProjectCard = ({ project, index }) => {
                     </p>
 
                     {/* Footer - No extra padding */}
-                    <div className="pt-6 border-t border-gray-800/40 flex items-center justify-between mt-auto">
-                        <div className="flex items-center gap-8" onClick={(e) => e.stopPropagation()}>
+                    <div className="pt-6 border-t border-gray-800/40 flex items-center justify-between mt-auto" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center gap-8">
                             {project.liveUrl && (
                                 <a
                                     href={project.liveUrl}
@@ -81,12 +87,14 @@ const ProjectCard = ({ project, index }) => {
                                 </a>
                             )}
                         </div>
-                        
-                        {/* Circular Action Button */}
-                        <div className="w-11 h-11 rounded-full bg-[#1e293b] border border-gray-800/50 flex items-center justify-center text-gray-500 group-hover/card:bg-[#f97316] group-hover/card:text-white transition-all duration-500 shadow-xl">
-                            <HiArrowUpRight className="text-lg transition-transform" />
-                        </div>
-                    </div>
+						{/* Circular Action Button */}
+						<div 
+                            onClick={handleCardClick}
+                            className="w-11 h-11 rounded-full bg-[#1e293b] border border-gray-800/50 flex items-center justify-center text-gray-500 group-hover/card:bg-[#f97316] group-hover/card:text-white transition-all duration-500 shadow-xl"
+                        >
+							<HiArrowUpRight className="text-lg transition-transform" />
+						</div>
+					</div>
                 </div>
             </div>
         </div>

@@ -69,7 +69,7 @@ const Skills = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10 pb-20">
 				<AnimatePresence mode="popLayout">
 					{skills?.map((skill) => (
 						<SkillCard
@@ -82,6 +82,26 @@ const Skills = () => {
 				</AnimatePresence>
 			</div>
 
+			{skills?.length === 0 && (
+				<div className="text-center py-24 bg-[#0b1120] rounded-[3rem] border border-white/5 shadow-2xl">
+					<div className="w-24 h-24 bg-[#030712] rounded-[2rem] flex items-center justify-center text-gray-700 text-5xl mx-auto mb-10 border border-white/5">
+						<HiOutlineSparkles />
+					</div>
+					<h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">
+						No technical records
+					</h3>
+					<p className="text-gray-500 mb-12">
+						Your technical expertise and tools will be visualized here
+					</p>
+                    <button 
+                        onClick={handleAdd}
+                        className="px-12 py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:shadow-orange/20 shadow-2xl transition-all"
+                    >
+                        + Add First Skill
+                    </button>
+				</div>
+			)}
+
 			<Pagination 
 				page={page} 
 				totalResults={totalResults} 
@@ -92,7 +112,8 @@ const Skills = () => {
 			<Modal
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
-				title={editingSkill ? "Edit Skill" : "Add New Skill"}
+				title={editingSkill ? "Edit Skill" : "Add Skill Category"}
+                maxWidth="max-w-xl"
 			>
 				<SkillForm
 					skill={editingSkill}

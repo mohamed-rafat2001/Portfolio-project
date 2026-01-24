@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import { HiOutlineEnvelope } from "react-icons/hi2";
 import useEmails from "./hooks/useEmails";
 import useUpdateEmailStatus from "./hooks/useUpdateEmailStatus";
@@ -13,86 +13,117 @@ import Pagination from "../../../shared/components/ui/Pagination";
 
 const Emails = () => {
 	const [page, setPage] = useState(1);
-	const limit = 8;
+	const limit = 10;
 	const { emails, isLoading, totalResults } = useEmails({ page, limit });
 	const { mutate: updateStatus } = useUpdateEmailStatus();
 	const { mutate: deleteEmail } = useDeleteEmail();
 
 	const [selectedEmail, setSelectedEmail] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	// Set first email as selected by default when emails load
+	useEffect(() => {
+		if (emails?.length > 0 && !selectedEmail) {
+			setSelectedEmail(emails[0]);
+		}
+	}, [emails, selectedEmail]);
 
 	const handleEmailClick = (email) => {
 		setSelectedEmail(email);
-		setIsModalOpen(true);
-		if (!email.isRead) {
-			updateStatus({ id: email._id, data: { isRead: true } });
+		if (!email.read) {
+			updateStatus({ id: email._id, data: { read: true } });
 		}
 	};
 
 	const handleDelete = (id) => {
 		if (window.confirm("Are you sure you want to delete this email?")) {
-			deleteEmail(id);
+			deleteEmail(id, {
+                onSuccess: () => {
+                    if (selectedEmail?._id === id) {
+                        setSelectedEmail(emails?.find(e => e._id !== id) || null);
+                    }
+                }
+            });
 		}
 	};
 
-	if (isLoading) return <LoadingState message="Loading emails..." />;
+	if (isLoading) return <LoadingState message="Loading your workspace..." />;
 
-	const unreadCount = emails?.filter((e) => !e.isRead).length || 0;
+	const unreadCount = emails?.filter((e) => !e.read).length || 0;
 
 	return (
-		<div className="space-y-8">
+		<div className="flex flex-col h-[calc(100vh-140px)] gap-8">
 			<AdminHeader
-				title="Inbox"
+				title="Messages Hub"
 				description={
 					unreadCount > 0
-						? `You have ${unreadCount} unread messages`
-						: "All caught up! No new messages"
+						? `Strategic Alert: ${unreadCount} new opportunities await your review`
+						: "Performance Peak: All communications are synchronized"
 				}
 				icon={<HiOutlineEnvelope />}
 			/>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				<AnimatePresence mode="popLayout">
-					{emails?.map((email) => (
-						<EmailCard
-							key={email._id}
-							email={email}
-							onClick={handleEmailClick}
-							onDelete={handleDelete}
-						/>
-					))}
-				</AnimatePresence>
-			</div>
+			<div className="flex-1 flex gap-8 min-h-0 overflow-hidden">
+				{/* Left Sidebar: Email List */}
+				<div className="w-[380px] flex flex-col gap-6 h-full">
+                    <div className="flex-1 overflow-y-auto pr-4 space-y-4 custom-scrollbar">
+                        <AnimatePresence mode="popLayout">
+                            {emails?.map((email) => (
+                                <EmailCard
+                                    key={email._id}
+                                    email={email}
+                                    isSelected={selectedEmail?._id === email._id}
+                                    onClick={handleEmailClick}
+                                    onDelete={handleDelete}
+                                />
+                            ))}
+                        </AnimatePresence>
 
-			<Pagination 
-				page={page} 
-				totalResults={totalResults} 
-				limit={limit} 
-				setPage={setPage} 
-			/>
-
-			{emails?.length === 0 && (
-				<div className="text-center py-20 bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800">
-					<div className="w-20 h-20 bg-gray-50 dark:bg-gray-800 rounded-3xl flex items-center justify-center text-gray-400 text-3xl mx-auto mb-6">
-						<HiOutlineEnvelope />
-					</div>
-					<h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
-						No emails yet
-					</h3>
-					<p className="text-gray-500 dark:text-gray-400">
-						Messages from your contact form will appear here
-					</p>
+                        {emails?.length === 0 && (
+                            <div className="text-center py-10 opacity-40">
+                                <HiOutlineEnvelope className="text-4xl mx-auto mb-2" />
+                                <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Inbox is empty</p>
+                            </div>
+                        )}
+                    </div>
+                    
+                    <div className="pt-2">
+                        <Pagination 
+                            page={page} 
+                            totalResults={totalResults} 
+                            limit={limit} 
+                            setPage={setPage} 
+                            size="small"
+                        />
+                    </div>
 				</div>
-			)}
 
-			<Modal
-				isOpen={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
-				title="Email Message"
-				maxWidth="max-w-3xl"
-			>
-				<EmailDetails email={selectedEmail} />
-			</Modal>
+				{/* Right main: Email content details */}
+				<div className="flex-1 h-full bg-white dark:bg-[#0b1120] rounded-[3rem] border border-gray-100 dark:border-white/5 overflow-y-auto custom-scrollbar shadow-2xl p-12">
+					<AnimatePresence mode="wait">
+						{selectedEmail ? (
+							<Motion.div
+								key={selectedEmail._id}
+								initial={{ opacity: 0, x: 20 }}
+								animate={{ opacity: 1, x: 0 }}
+								exit={{ opacity: 0, x: -20 }}
+								transition={{ duration: 0.3 }}
+							>
+								<EmailDetails 
+                                    email={selectedEmail} 
+                                    onMarkAsRead={() => updateStatus({ id: selectedEmail._id, data: { read: true } })}
+                                />
+							</Motion.div>
+						) : (
+							<div className="h-full flex flex-col items-center justify-center text-center opacity-20">
+								<HiOutlineEnvelope className="text-8xl mb-6 text-gray-400" />
+								<h3 className="text-xl font-black text-gray-400 uppercase tracking-widest">
+									Select a message to view details
+								</h3>
+							</div>
+						)}
+					</AnimatePresence>
+				</div>
+			</div>
 		</div>
 	);
 };

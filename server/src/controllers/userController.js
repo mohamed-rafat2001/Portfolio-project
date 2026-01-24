@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import UserModel from "../models/userModel.js";
 import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
@@ -11,7 +12,7 @@ export const getMe = catchAsync(async (req, res, next) => {
 
 export const getAdminInfo = catchAsync(async (req, res, next) => {
 	const admin = await UserModel.findOne({ role: "Admin" }).select(
-		"name email phoneNumber location aboutMe infos profileImg"
+		"name email phoneNumber location aboutMe infos profileImg socialMedia"
 	);
 
 	if (!admin) return next(new appError("admin not found", 404));
@@ -21,21 +22,52 @@ export const getAdminInfo = catchAsync(async (req, res, next) => {
 
 // update user info (basic info)
 export const updateMe = catchAsync(async (req, res, next) => {
-	const { name, email, phoneNumber, location, aboutMe } = req.body;
+	const { 
+        name, 
+        email, 
+        phoneNumber, 
+        location, 
+        aboutMe, 
+        socialMedia, 
+        infos,
+        password,
+        confirmPassword,
+        passwordCurrent 
+    } = req.body;
 
-	const updateData = {};
-	if (name) updateData.name = name;
-	if (location) updateData.location = location;
-	if (aboutMe) updateData.aboutMe = aboutMe;
-	if (email) updateData.email = email;
-	if (phoneNumber) updateData.phoneNumber = phoneNumber;
+    const user = await UserModel.findById(req.user._id).select("+password");
+    if (!user) return next(new appError("user not found", 404));
 
-	const user = await UserModel.findByIdAndUpdate(
-		req.user._id,
-		{ $set: updateData },
-		{ runValidators: true, new: true }
-	);
-	if (!user) return next(new appError("user not updated", 400));
+    // If password update is requested (check if the password field actually has content)
+    const isPasswordUpdate = password && typeof password === 'string' && password.trim().length > 0;
+
+    if (isPasswordUpdate) {
+        if (!passwordCurrent || !confirmPassword) {
+            return next(new appError("please provide current password and confirmation", 400));
+        }
+        
+        // Use your method to check if the current password is correct
+        if (!(await user.correctPassword(passwordCurrent, user.password))) {
+            return next(new appError("current password is wrong", 401));
+        }
+        
+        user.password = password;
+        user.confirmPassword = confirmPassword;
+    }
+
+	if (name) user.name = name;
+	if (email) user.email = email;
+	if (phoneNumber) user.phoneNumber = phoneNumber;
+	if (location) user.location = location;
+	if (aboutMe) user.aboutMe = aboutMe;
+    if (socialMedia) user.socialMedia = socialMedia;
+    if (infos) user.infos = infos;
+
+    await user.save();
+    
+    // Hide password for response
+    user.password = undefined;
+
 	sendResponse(res, 200, user);
 });
 
@@ -81,14 +113,14 @@ export const profileImg = catchAsync(async (req, res, next) => {
 
 // update password
 export const updatePassword = catchAsync(async (req, res, next) => {
-	const { currentPassword, password, confirmPassword } = req.body;
+	const { passwordCurrent, password, confirmPassword } = req.body;
 
-	if (!currentPassword || !password || !confirmPassword)
+	if (!passwordCurrent || !password || !confirmPassword)
 		return next(new appError("please provide all fields", 400));
 
 	const user = await UserModel.findById(req.user._id).select("+password");
 
-	if (!(await user.correctPassword(currentPassword, user.password)))
+	if (!(await user.correctPassword(passwordCurrent, user.password)))
 		return next(new appError("current password is wrong", 401));
 
 	user.password = password;

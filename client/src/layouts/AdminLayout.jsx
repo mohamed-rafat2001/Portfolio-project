@@ -144,8 +144,8 @@ const AdminLayout = () => {
 				</div>
 			</aside>
 
-			{/* Main Content */}
-			<div className="flex-1 flex flex-col min-w-0 h-screen">
+			{/* Main Content Area Wrapper */}
+			<div className="flex-1 flex flex-col min-w-0 h-full">
 				{/* Top Header */}
 				<header className="flex items-center justify-between px-8 h-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
 					<div className="flex items-center gap-4">
@@ -193,7 +193,7 @@ const AdminLayout = () => {
 							</div>
 							<div className="w-10 h-10 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 border-2 border-white dark:border-gray-950 shadow-sm">
 								<img
-									src={user?.infos?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+									src={user?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
 									alt={user?.name}
 									className="w-full h-full object-cover"
 									crossOrigin="anonymous"

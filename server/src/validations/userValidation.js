@@ -12,6 +12,41 @@ export const updateMeValidation = [
 	body("phoneNumber")
 		.optional()
 		.trim(),
+    body("location")
+        .optional()
+        .trim(),
+    body("aboutMe")
+        .optional()
+        .trim(),
+    body("socialMedia")
+        .optional()
+        .isArray().withMessage("Social media must be an array"),
+    body("socialMedia.*.name")
+        .optional()
+        .trim(),
+    body("socialMedia.*.url")
+        .optional()
+        .trim()
+        .isURL().withMessage("Please enter a valid URL"),
+    body("infos.job.title")
+        .optional()
+        .trim()
+        .isLength({ min: 3 }).withMessage("Job title must be at least 3 characters"),
+    body("infos.job.note")
+        .optional()
+        .trim()
+        .isLength({ min: 10 }).withMessage("Job note must be at least 10 characters"),
+    body("infos.aboutMe.title")
+        .optional()
+        .trim()
+        .isLength({ min: 3 }).withMessage("About title must be at least 3 characters"),
+    body("infos.aboutMe.message")
+        .optional()
+        .trim()
+        .isLength({ min: 10 }).withMessage("About message must be at least 10 characters"),
+    body("infos.available")
+        .optional()
+        .isBoolean().withMessage("Available must be a boolean"),
 ];
 
 export const updateInfosValidation = [

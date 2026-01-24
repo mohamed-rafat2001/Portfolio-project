@@ -15,23 +15,23 @@ const ProfessionalSection = ({ register, errors, isUpdating, isDirty }) => {
 					label="Job Title"
 					placeholder="Full Stack Dev"
                     icon={HiOutlineUser}
-					error={errors.moreInfo?.job?.title?.message}
-					{...register("moreInfo.job.title")}
+					error={errors.infos?.job?.title?.message}
+					{...register("infos.job.title")}
 				/>
 				<InputField
 					label="Location"
 					placeholder="Egypt"
                     icon={HiOutlineMapPin}
-					error={errors.moreInfo?.location?.message}
-					{...register("moreInfo.location")}
+					error={errors.location?.message}
+					{...register("location")}
 				/>
                 <div className="md:col-span-2">
                     <InputField
                         label="Job Note"
                         placeholder="Building robust, scalable applications..."
                         icon={HiOutlineInformationCircle}
-                        error={errors.moreInfo?.job?.note?.message}
-                        {...register("moreInfo.job.note")}
+                        error={errors.infos?.job?.note?.message}
+                        {...register("infos.job.note")}
                     />
                 </div>
 			</div>

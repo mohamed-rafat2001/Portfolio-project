@@ -26,33 +26,41 @@ const SkillForm = ({ skill, onSubmit, isLoading, onCancel }) => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-			<Input
-				label="Category Name"
-				placeholder="e.g. Frontend"
-				error={errors.name?.message}
-				{...register("name")}
-			/>
-			<Input
-				label="Skills (comma separated)"
-				placeholder="e.g. React, Vue, Angular"
-				error={errors.skills?.message}
-				{...register("skills")}
-			/>
+			<div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Category Name</label>
+                <Input
+                    placeholder="e.g. Frontend, Backend, Tools"
+                    error={errors.name?.message}
+                    {...register("name")}
+                />
+            </div>
+			
+            <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Skills</label>
+                    <span className="text-[8px] font-black text-orange uppercase tracking-widest">+ Add Skill</span>
+                </div>
+                <Input
+                    placeholder="e.g. React, Vue (comma separated)"
+                    error={errors.skills?.message}
+                    {...register("skills")}
+                />
+            </div>
 
-			<div className="flex items-center gap-4 pt-4">
+			<div className="flex items-center justify-end gap-6 pt-10">
 				<button
 					type="button"
 					onClick={onCancel}
-					className="flex-1 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-xs text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+					className="px-8 py-4 font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 hover:text-white transition-all cursor-pointer"
 				>
 					Cancel
 				</button>
 				<button
 					type="submit"
 					disabled={isLoading}
-					className="flex-1 px-6 py-3 bg-orange text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-orange/90 transition-all shadow-lg shadow-orange/20 disabled:opacity-50"
+					className="px-10 py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:shadow-orange/20 shadow-2xl transition-all disabled:opacity-50 min-w-[200px]"
 				>
-					{isLoading ? "Saving..." : skill ? "Update Skill" : "Add Skill"}
+					{isLoading ? "Synchronizing..." : skill ? "Update Category" : "Create Category"}
 				</button>
 			</div>
 		</form>

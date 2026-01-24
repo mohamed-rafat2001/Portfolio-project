@@ -25,36 +25,39 @@ import SocialSection from "./components/SocialSection";
 import SecuritySection from "./components/SecuritySection";
 import LoadingState from "../../../shared/components/ui/LoadingState";
 import ProfileImageModal from "./components/ProfileImageModal";
+import Modal from "../../../shared/components/ui/Modal";
 
 const profileSchema = z.object({
 	name: z.string().min(3, "Name must be at least 3 characters"),
 	email: z.string().email("Invalid email address"),
 	phoneNumber: z.string().min(10, "Phone number must be at least 10 characters"),
-	moreInfo: z.object({
+    location: z.string().min(2, "Location is required"),
+    aboutMe: z.string().optional(),
+	infos: z.object({
 		job: z.object({
 			title: z.string().min(3, "Job title must be at least 3 characters"),
 			note: z.string().min(10, "Job note must be at least 10 characters"),
 		}),
 		aboutMe: z.object({
 			title: z.string().min(3, "About title must be at least 3 characters"),
-			note: z.string().min(10, "About message must be at least 10 characters"),
+			message: z.string().min(10, "About message must be at least 10 characters"),
 		}),
-		location: z.string().min(2, "Location is required"),
 		available: z.boolean().default(true),
 	}),
-	github: z.string().url("Invalid URL").optional().or(z.literal("")),
-	linkedin: z.string().url("Invalid URL").optional().or(z.literal("")),
-	twitter: z.string().url("Invalid URL").optional().or(z.literal("")),
-	portfolio: z.string().url("Invalid URL").optional().or(z.literal("")),
+    socialMedia: z.array(z.object({
+        name: z.string().min(1, "Name is required"),
+        url: z.string().url("Invalid URL"),
+    })).optional().default([]),
 	passwordCurrent: z.string().optional(),
 	password: z.string().min(8, "Password must be at least 8 characters").optional().or(z.literal("")),
-	passwordConfirm: z.string().optional(),
+	confirmPassword: z.string().optional(),
 });
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("account");
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
     const [isImageDropdownOpen, setIsImageDropdownOpen] = useState(false);
+    const [isViewPhotoOpen, setIsViewPhotoOpen] = useState(false);
     const dropdownRef = useRef(null);
 	const { user, isLoading: userLoading } = useCurrentUser();
 	const { updateUser, isLoading: isUpdating } = useUpdateUser();
@@ -72,10 +75,17 @@ const Profile = () => {
 	// Transform user data for the form
 	const defaultValues = user ? {
 		...user,
-		github: user.socialMedia?.find(s => s.name.toLowerCase() === 'github')?.url || "",
-		linkedin: user.socialMedia?.find(s => s.name.toLowerCase() === 'linkedin')?.url || "",
-		twitter: user.socialMedia?.find(s => s.name.toLowerCase() === 'twitter')?.url || "",
-		portfolio: user.socialMedia?.find(s => s.name.toLowerCase() === 'portfolio')?.url || "",
+        password: "",
+        passwordCurrent: "",
+        confirmPassword: "",
+        infos: {
+            ...user.infos,
+            aboutMe: {
+                title: user.infos?.aboutMe?.title || "",
+                message: user.infos?.aboutMe?.message || "",
+            }
+        },
+        socialMedia: user.socialMedia || [],
 	} : {};
 
 	const {
@@ -91,25 +101,20 @@ const Profile = () => {
 	});
 
 	const onSubmit = (data) => {
-		const socialMedia = [
-			{ name: 'LinkedIn', url: data.linkedin },
-			{ name: 'GitHub', url: data.github },
-			{ name: 'Twitter', url: data.twitter },
-			{ name: 'Portfolio', url: data.portfolio },
-		].filter(s => s.url);
-
 		const payload = {
 			name: data.name,
 			email: data.email,
 			phoneNumber: data.phoneNumber,
-			moreInfo: { ...data.moreInfo },
-			socialMedia
+            location: data.location,
+            aboutMe: data.aboutMe,
+			infos: { ...data.infos },
+			socialMedia: data.socialMedia
 		};
 
 		if (data.password) {
 			payload.passwordCurrent = data.passwordCurrent;
 			payload.password = data.password;
-			payload.passwordConfirm = data.passwordConfirm;
+			payload.confirmPassword = data.confirmPassword;
 		}
 
 		updateUser(payload, {
@@ -173,6 +178,12 @@ const Profile = () => {
                                         <span className="text-[10px] font-black uppercase tracking-widest">Upload Photo</span>
                                     </button>
                                     <button 
+                                        onClick={() => {
+                                            if (user?.profileImg?.secure_url) {
+                                                setIsViewPhotoOpen(true);
+                                                setIsImageDropdownOpen(false);
+                                            }
+                                        }}
                                         className="w-full flex items-center gap-4 px-5 py-4 hover:bg-white/5 rounded-2xl transition-colors text-white group"
                                     >
                                         <HiOutlineEye className="text-xl text-blue-500 group-hover:scale-110 transition-transform" />
@@ -248,6 +259,22 @@ const Profile = () => {
                 isOpen={isImageModalOpen} 
                 onClose={() => setIsImageModalOpen(false)} 
             />
+
+            <Modal
+                isOpen={isViewPhotoOpen}
+                onClose={() => setIsViewPhotoOpen(false)}
+                title="Profile Photo"
+                maxWidth="max-w-2xl"
+            >
+                <div className="p-2.5 bg-[#030712] rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl">
+                    <img 
+                        src={user?.profileImg?.secure_url} 
+                        alt={user?.name} 
+                        className="w-full h-full object-contain rounded-[2.2rem]"
+                        crossOrigin="anonymous"
+                    />
+                </div>
+            </Modal>
 		</div>
 	);
 };

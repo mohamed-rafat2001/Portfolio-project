@@ -24,11 +24,11 @@ export const projectValidation = [
 			}
 			return true;
 		}),
-	body("liveLink")
+	body("liveUrl")
 		.optional()
 		.trim()
 		.isURL().withMessage("Please enter a valid URL for the live link"),
-	body("githubLink")
+	body("repoUrl")
 		.optional()
 		.trim()
 		.isURL().withMessage("Please enter a valid URL for the GitHub link"),

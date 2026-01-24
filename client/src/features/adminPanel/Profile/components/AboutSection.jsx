@@ -15,16 +15,16 @@ const AboutSection = ({ register, errors, isUpdating, isDirty }) => {
 					label="Section Title"
 					placeholder="Hello, I'm Mohamed Rafat."
                     icon={HiOutlineInformationCircle}
-					error={errors.moreInfo?.aboutMe?.title?.message}
-					{...register("moreInfo.aboutMe.title")}
+					error={errors.infos?.aboutMe?.title?.message}
+					{...register("infos.aboutMe.title")}
 				/>
 				<InputField
 					label="Short Biography"
 					placeholder="I am a dedicated Full Stack Developer..."
                     icon={HiOutlineUser}
-					error={errors.moreInfo?.aboutMe?.note?.message}
+					error={errors.infos?.aboutMe?.message?.message}
                     className="min-h-[150px]"
-					{...register("moreInfo.aboutMe.note")}
+					{...register("infos.aboutMe.message")}
 				/>
 			</div>
 		</FormCard>

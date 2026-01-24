@@ -39,3 +39,9 @@ export const deleteProject = async (id) => {
 	const res = await mainApi.delete(`projects/${id}`);
 	return res.data;
 };
+
+// increment views
+export const incrementViews = async (id) => {
+    const res = await mainApi.patch(`projects/${id}/views`);
+    return res.data;
+};

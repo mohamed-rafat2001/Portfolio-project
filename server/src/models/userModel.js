@@ -98,7 +98,12 @@ const userSchema = new mongoose.Schema(
 		confirmPassword: {
 			type: String,
 			trim: true,
-			required: [true, "confirm password is required"],
+			required: [
+				function () {
+					return this.isModified("password");
+				},
+				"confirm password is required",
+			],
 			validate: {
 				validator: function (value) {
 					return value === this.password;

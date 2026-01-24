@@ -1,4 +1,6 @@
+import jwt from "jsonwebtoken";
 import ProjectModel from "../models/projectModel.js";
+import UserModel from "../models/userModel.js";
 import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 import { cloudinary } from "../utils/cloudinaryConfig.js";
@@ -14,15 +16,10 @@ import {
 
 // upload project images
 export const uploadProjectImages = catchAsync(async (req, res, next) => {
-	// Parse techs if it's a string (from FormData)
-	if (typeof req.body.techs === "string") {
-		req.body.techs = req.body.techs.split(",").map((t) => t.trim());
-	}
-
-	// 1) Cover Image
-	if (req.files && req.files.cover && req.files.cover.length > 0) {
-		const result = await uploadToCloudinary(req.files.cover[0].buffer, "projects");
-		req.body.cover = {
+	// 1) Main Image
+	if (req.files && req.files.mainImg && req.files.mainImg.length > 0) {
+		const result = await uploadToCloudinary(req.files.mainImg[0].buffer, "projects");
+		req.body.mainImg = {
 			public_id: result.public_id,
 			secure_url: result.secure_url,
 		};
@@ -48,11 +45,11 @@ export const uploadProjectImages = catchAsync(async (req, res, next) => {
 // add new project
 export const createProject = createDoc(ProjectModel, [
 	"title",
-	"techs",
+	"techStack",
 	"description",
-	"liveLink",
-	"githubLink",
-	"cover",
+	"liveUrl",
+	"repoUrl",
+	"mainImg",
 	"images",
 	"isPreferred",
 ]);
@@ -60,11 +57,11 @@ export const createProject = createDoc(ProjectModel, [
 // update project
 export const updateProject = updateDoc(ProjectModel, [
 	"title",
-	"techs",
+	"techStack",
 	"description",
-	"liveLink",
-	"githubLink",
-	"cover",
+	"liveUrl",
+	"repoUrl",
+	"mainImg",
 	"images",
 	"isPreferred",
 ]);
@@ -78,9 +75,9 @@ export const deleteProject = catchAsync(async (req, res, next) => {
 
 	if (!project) return next(new appError("Project not found", 404));
 
-	// 1. Delete cover from Cloudinary
-	if (project.cover?.public_id) {
-		await cloudinary.uploader.destroy(project.cover.public_id);
+	// 1. Delete mainImg from Cloudinary
+	if (project.mainImg?.public_id) {
+		await cloudinary.uploader.destroy(project.mainImg.public_id);
 	}
 
 	// 2. Delete images from Cloudinary
@@ -94,6 +91,42 @@ export const deleteProject = catchAsync(async (req, res, next) => {
 	await ProjectModel.findByIdAndDelete(req.params.id);
 
 	sendResponse(res, 200, {});
+});
+
+// increment project views
+export const incrementProjectViews = catchAsync(async (req, res, next) => {
+    // Check if the request is from an admin (using the token cookie)
+    let isAdmin = false;
+    const token = req.cookies?.token;
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.USER_KEY_TOKEN);
+            const user = await UserModel.findById(decoded._id);
+            if (user?.role === "Admin") {
+                isAdmin = true;
+            }
+        } catch (err) {
+            // Token invalid or expired, treat as regular visitor
+        }
+    }
+
+    let project;
+    if (isAdmin) {
+        // Just return the project without incrementing
+        project = await ProjectModel.findById(req.params.id);
+    } else {
+        // Increment for regular visitors
+        project = await ProjectModel.findByIdAndUpdate(
+            req.params.id,
+            { $inc: { views: 1 } },
+            { new: true }
+        );
+    }
+
+	if (!project) return next(new appError("Project not found", 404));
+
+	sendResponse(res, 200, { project });
 });
 
 // get all Projects

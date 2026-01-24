@@ -82,7 +82,7 @@ const Projects = () => {
                 </button>
             </header>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-10">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 				<AnimatePresence mode="popLayout">
 					{projects?.map((project, index) => (
 						<ProjectCard
@@ -108,7 +108,7 @@ const Projects = () => {
 				onClose={() => setIsModalOpen(false)}
 				title={editingProject ? "Edit Project" : "New Project"}
                 hideHeader={true}
-				maxWidth="max-w-3xl"
+				maxWidth="max-w-2xl"
 			>
 				<ProjectForm
 					project={editingProject}

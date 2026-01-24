@@ -1,50 +1,61 @@
 import { HiOutlineLink, HiOutlineUser, HiOutlineTrash, HiPlus } from "react-icons/hi2";
+import { useFieldArray } from "react-hook-form";
 import FormCard from "./FormCard";
 import InputField from "./InputField";
 
-const SocialSection = ({ register, errors, isUpdating, isDirty }) => {
-	const socialFields = [
-		{ id: "linkedin", label: "LinkedIn", placeholder: "https://www.linkedin.com/in/mohamed-rafat-1904" },
-		{ id: "github", label: "GitHub", placeholder: "https://github.com/mohamed-rafat2001" },
-		{ id: "twitter", label: "Twitter", placeholder: "https://twitter.com/username" },
-		{ id: "portfolio", label: "Portfolio", placeholder: "https://yourportfolio.com" },
-	];
+const SocialSection = ({ register, errors, isUpdating, isDirty, control }) => {
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "socialMedia"
+    });
 
 	return (
 		<FormCard
-			title="Social Media"
+			title="Social Media Presence"
 			icon={<HiOutlineLink />}
 			isUpdating={isUpdating}
 			isDirty={isDirty}
             headerAction={
-                <button type="button" className="w-10 h-10 bg-[#030712] border border-white/5 rounded-xl flex items-center justify-center text-white/40 hover:text-orange transition-colors cursor-pointer">
-                    <HiPlus className="text-xl" />
+                <button 
+                    type="button" 
+                    onClick={() => append({ name: "", url: "" })}
+                    className="flex items-center gap-2 px-4 py-2 bg-orange/10 border border-orange/20 rounded-xl text-orange hover:bg-orange hover:text-white transition-all cursor-pointer group"
+                >
+                    <HiPlus className="text-lg group-hover:rotate-90 transition-transform" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Add Platform</span>
                 </button>
             }
 		>
-			<div className="space-y-12">
-				{socialFields.map((field) => (
-					<div key={field.id} className="grid grid-cols-1 md:grid-cols-2 gap-10 items-end group/social">
+			<div className="space-y-10">
+                {fields.length === 0 && (
+                    <div className="py-10 text-center border-2 border-dashed border-white/5 rounded-[2rem]">
+                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest">No social platforms added yet</p>
+                    </div>
+                )}
+
+				{fields.map((field, index) => (
+					<div key={field.id} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end group/social relative p-8 bg-[#030712] border border-white/5 rounded-[2rem] hover:border-orange/20 transition-all">
 						<InputField
-							label="Platform"
-							placeholder={field.label}
+							label={`Platform #${index + 1}`}
+							placeholder="e.g. LinkedIn, GitHub"
 							icon={HiOutlineUser}
-							readOnly
-							className="opacity-60"
+							error={errors.socialMedia?.[index]?.name?.message}
+							{...register(`socialMedia.${index}.name`)}
 						/>
 						<div className="relative">
 							<InputField
 								label="Profile URL"
-								placeholder={field.placeholder}
+								placeholder="https://..."
 								icon={HiOutlineLink}
-								error={errors[field.id]?.message}
-								{...register(field.id)}
+								error={errors.socialMedia?.[index]?.url?.message}
+								{...register(`socialMedia.${index}.url`)}
 							/>
 							<button 
                                 type="button"
-                                className="absolute -right-12 top-11 p-2 text-gray-600 hover:text-red-500 transition-colors cursor-pointer opacity-0 group-hover/social:opacity-100"
+                                onClick={() => remove(index)}
+                                className="absolute -top-3 -right-3 w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white shadow-xl opacity-0 group-hover/social:opacity-100 transition-all hover:scale-110 cursor-pointer"
                             >
-								<HiOutlineTrash className="text-xl" />
+								<HiOutlineTrash className="text-sm" />
 							</button>
 						</div>
 					</div>

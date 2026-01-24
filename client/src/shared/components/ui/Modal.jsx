@@ -20,17 +20,17 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 						initial={{ opacity: 0, scale: 0.9, y: 20 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.9, y: 20 }}
-						className={`relative w-full ${maxWidth} bg-[#0b1120] rounded-[3rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 flex flex-col max-h-[95vh]`}
+						className={`relative w-full ${maxWidth} bg-[#030712] rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 flex flex-col max-h-[95vh]`}
 					>
 						{/* Header */}
 						{!hideHeader && title && (
-							<div className="flex items-center justify-between px-10 py-8 border-b border-white/5">
-								<h3 className="text-xl font-black uppercase tracking-tight text-white">
+							<div className="flex items-center justify-between px-12 py-10">
+								<h3 className="text-2xl font-black uppercase tracking-tight text-white mb-0">
 									{title}
 								</h3>
 								<button
 									onClick={onClose}
-									className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-gray-400 hover:text-white transition-colors cursor-pointer"
+									className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-gray-400 hover:text-white transition-all cursor-pointer"
 								>
 									<HiOutlineXMark className="text-2xl" />
 								</button>
@@ -38,7 +38,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 						)}
 
 						{/* Body */}
-						<div className="p-10 overflow-y-auto custom-scrollbar">
+						<div className="px-12 pb-12 overflow-y-auto custom-scrollbar">
 							{children}
 						</div>
 					</Motion.div>

@@ -32,8 +32,8 @@ const SecuritySection = ({ register, errors, isUpdating, isDirty }) => {
 					type="password"
 					placeholder="••••••••"
                     icon={HiOutlineShieldCheck}
-					error={errors.passwordConfirm?.message}
-					{...register("passwordConfirm")}
+					error={errors.confirmPassword?.message}
+					{...register("confirmPassword")}
 				/>
 			</div>
 		</FormCard>

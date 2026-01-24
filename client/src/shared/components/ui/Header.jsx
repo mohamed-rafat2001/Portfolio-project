@@ -83,14 +83,21 @@ const Header = () => {
 							<div className="flex items-center gap-4">
 								<Link
 									to="/adminPanel/profile"
-									className="flex items-center gap-2 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-orange transition-all"
+									className="flex items-center gap-3 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-orange transition-all group"
 								>
-									<HiUserCircle className="text-xl" />
-									<span className="hidden lg:inline uppercase tracking-widest">Dashboard</span>
+                                    <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-gray-100 dark:border-white/5 group-hover:border-orange transition-colors">
+                                        <img
+                                            src={user?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+                                            alt={user?.name}
+                                            className="w-full h-full object-cover"
+                                            crossOrigin="anonymous"
+                                        />
+                                    </div>
+									<span className="hidden lg:inline uppercase tracking-[0.2em] text-[10px] font-black">Dashboard</span>
 								</Link>
 								<button
 									onClick={() => logoutFunc()}
-									className="p-2 rounded-xl cursor-pointer text-gray-500 hover:text-red-500 transition-all"
+									className="p-2 rounded-xl cursor-pointer text-gray-400 hover:text-red-500 transition-all hover:bg-red-50 dark:hover:bg-red-500/10"
 									title="Logout"
 								>
 									<HiArrowRightOnRectangle className="text-xl" />

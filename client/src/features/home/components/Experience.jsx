@@ -102,7 +102,7 @@ const Experience = () => {
 								<HiAcademicCap />
 							</div>
 							<h3 className="text-3xl font-black text-white uppercase tracking-tighter">
-								Education <span className="text-orange">Level</span>
+								<span className="text-orange">Education</span>
 							</h3>
 						</div>
 

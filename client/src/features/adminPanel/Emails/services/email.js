@@ -7,8 +7,8 @@ export const createEmail = async (data) => {
 };
 
 // get all emails
-export const getAllEmails = async () => {
-	const res = await mainApi.get("emails");
+export const getAllEmails = async (params) => {
+	const res = await mainApi.get("emails", { params });
 	return res.data;
 };
 

@@ -11,7 +11,7 @@ export const getMe = catchAsync(async (req, res, next) => {
 
 export const getAdminInfo = catchAsync(async (req, res, next) => {
 	const admin = await UserModel.findOne({ role: "Admin" }).select(
-		"name email phoneNumber moreInfo profileImg"
+		"name email phoneNumber location aboutMe infos profileImg"
 	);
 
 	if (!admin) return next(new appError("admin not found", 404));
@@ -21,10 +21,12 @@ export const getAdminInfo = catchAsync(async (req, res, next) => {
 
 // update user info (basic info)
 export const updateMe = catchAsync(async (req, res, next) => {
-	const { name, email, phoneNumber } = req.body;
+	const { name, email, phoneNumber, location, aboutMe } = req.body;
 
 	const updateData = {};
 	if (name) updateData.name = name;
+	if (location) updateData.location = location;
+	if (aboutMe) updateData.aboutMe = aboutMe;
 	if (email) updateData.email = email;
 	if (phoneNumber) updateData.phoneNumber = phoneNumber;
 
@@ -39,13 +41,13 @@ export const updateMe = catchAsync(async (req, res, next) => {
 
 // update user nested infos
 export const updateInfos = catchAsync(async (req, res, next) => {
-	const { moreInfo } = req.body;
+	const { infos } = req.body;
 
-	if (!moreInfo) return next(new appError("please provide infos to update", 400));
+	if (!infos) return next(new appError("please provide infos to update", 400));
 
 	const user = await UserModel.findByIdAndUpdate(
 		req.user._id,
-		{ $set: { moreInfo } },
+		{ $set: { infos } },
 		{ runValidators: true, new: true }
 	);
 

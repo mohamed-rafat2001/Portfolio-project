@@ -2,7 +2,7 @@ import { motion as Motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi2";
 import profileImg from "../../../shared/assets/profissionalMe.png";
 import useAdminInfo from "../../../hooks/useAdminInfo";
-import useProjects from "../../adminPanel/Projects/hooks/useProjects";
+
 import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const sectionVariants = {
@@ -18,12 +18,9 @@ const sectionVariants = {
 };
 
 const About = () => {
-	const { admin, isLoading: isAdminLoading } = useAdminInfo();
-	const { projects, isLoading: isProjectsLoading } = useProjects();
+	const { admin, isLoading } = useAdminInfo();
 
-	if (isAdminLoading || isProjectsLoading) return <LoadingState message="Loading about info..." />;
-
-	const projectsCount = projects?.length || 0;
+	if (isLoading) return <LoadingState message="Loading about info..." />;
 
 	return (
 		<Motion.section
@@ -58,6 +55,7 @@ const About = () => {
 									src={admin?.profileImg?.secure_url || profileImg}
 									alt={admin?.name || "Mohamed Rafat"}
 									className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+									crossOrigin="anonymous"
 								/>
 								<div className="absolute inset-0 bg-gradient-to-t from-[#030712]/80 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700"></div>
 							</div>
@@ -66,45 +64,30 @@ const About = () => {
 
 					{/* Text Content */}
 					<div className="flex-1 space-y-10">
-						<div className="space-y-6">
+						<div className="space-y-4">
 							<h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight">
-								{admin?.moreInfo?.aboutMe?.title || (
-									<>
-										I build <span className="text-orange">digital products</span> that users love.
-									</>
-								)}
+								Hello, I'm<br />
+								<span className="text-orange">{admin?.name || "Mohamed Rafat"}</span>.
 							</h3>
 						</div>
 
 						<div className="space-y-8 text-gray-400">
-							<div className="text-xl md:text-2xl leading-relaxed font-medium">
-								{admin?.moreInfo?.aboutMe?.note ? (
-									<p>{admin.moreInfo.aboutMe.note}</p>
+							<div className="text-lg md:text-xl leading-relaxed font-medium">
+								{admin?.infos?.aboutMe?.message ? (
+									<p>{admin.infos.aboutMe.message}</p>
 								) : (
 									<p>
-										I am a dedicated{" "}
-										<span className="text-white font-bold underline decoration-orange decoration-4 underline-offset-8">
-											Full Stack Developer
-										</span>{" "}
-										with a deep passion for creating seamless digital experiences.
-										I bridge the gap between complex backend systems and intuitive frontend interfaces.
+										I am a dedicated Full Stack Developer with a deep passion for creating seamless digital experiences.
+										My journey began with a curiosity for how things work on the web, which quickly evolved into a career building robust applications.
+										With a strong foundation in both frontend and backend technologies, I enjoy bridging the gap between design and technical implementation.
+										I thrive in collaborative environments where I can solve complex problems and contribute to innovative solutions.
 									</p>
 								)}
 							</div>
 							
-							<div className="grid grid-cols-2 gap-8 pt-4">
-								<div className="space-y-2">
-									<p className="text-orange font-black text-3xl">4+</p>
-									<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Years Experience</p>
-								</div>
-								<div className="space-y-2">
-									<p className="text-orange font-black text-3xl">{projectsCount}+</p>
-									<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Projects Done</p>
-								</div>
 							</div>
-						</div>
 
-						<div className="pt-8">
+						<div className="pt-4">
 							<a
 								href="#contact"
 								className="group inline-flex items-center gap-4 text-orange font-black uppercase tracking-[0.3em] text-[11px] hover:gap-6 transition-all bg-orange/5 px-8 py-4 rounded-full border border-orange/10 hover:bg-orange/10"

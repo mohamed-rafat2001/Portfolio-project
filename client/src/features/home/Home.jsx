@@ -11,14 +11,14 @@ import LoadingState from "../../shared/components/ui/LoadingState";
 
 const Home = () => {
 	const { admin, isLoading: isAdminLoading } = useAdminInfo();
-	const { user, isLoading: isUserLoading } = useCurrentUser();
+	const { user } = useCurrentUser();
 
-	useTrackVisit(user, isUserLoading);
+	useTrackVisit(user, false);
 
-	if (isAdminLoading || isUserLoading) return <LoadingState message="Loading Portfolio..." />;
+	if (isAdminLoading) return <LoadingState message="Loading Portfolio..." />;
 
-	// Priority: Logged in user (if any), otherwise Admin Info
-	const displayUser = user || admin;
+	// Always show admin info for all visitors - user is optional
+	const displayUser = admin;
 
 	return (
 		<div className="flex flex-col">

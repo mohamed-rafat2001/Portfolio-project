@@ -7,8 +7,8 @@ export const createSkill = async (data) => {
 };
 
 // get all skills
-export const getAllSkills = async () => {
-	const res = await mainApi.get("skills");
+export const getAllSkills = async (params) => {
+	const res = await mainApi.get("skills", { params });
 	return res.data;
 };
 

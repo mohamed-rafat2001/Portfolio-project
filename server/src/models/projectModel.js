@@ -14,25 +14,41 @@ const projectSchema = new mongoose.Schema(
 			min: 20,
 			required: [true, "description is required"],
 		},
-		techs: [
+		techStack: [
 			{
-				type: String,
-				trim: true,
-				min: 3,
-				required: [true, "technologies are required"],
+				title: {
+					type: String,
+					required: true,
+				},
+				techs: [String],
 			},
 		],
-		cover: { public_id: String, secure_url: String },
-		images: [{ public_id: String, secure_url: String }],
-		liveLink: {
+		mainImg: { public_id: String, secure_url: String },
+		images: [
+			{
+				public_id: String,
+				secure_url: String,
+			},
+		],
+		liveUrl: {
 			type: String,
 			trim: true,
-			required: [true, "liveLink is required"],
+			required: [true, "liveUrl is required"],
 		},
-		githubLink: {
+		repoUrl: {
 			type: String,
 			trim: true,
-			required: [true, "githubLink is required"],
+			required: [true, "repoUrl is required"],
+		},
+		status: {
+			type: String,
+			trim: true,
+			default: "Completed & Live"
+		},
+		architecture: {
+			type: String,
+			trim: true,
+			default: "Full Stack Web App"
 		},
 		isPreferred: {
 			type: Boolean,

@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllSkills } from "../services/skill.js";
 
-export default function useSkills() {
+export default function useSkills(params) {
 	const {
 		data: response,
 		isLoading,
 		error,
 	} = useQuery({
-		queryKey: ["Skills"],
-		queryFn: getAllSkills,
+		queryKey: ["Skills", params],
+		queryFn: () => getAllSkills(params),
 	});
 	const skills = response?.data?.skills || [];
-	return { skills, isLoading, error };
+	const totalResults = response?.totalResults || 0;
+	return { skills, isLoading, error, totalResults };
 }

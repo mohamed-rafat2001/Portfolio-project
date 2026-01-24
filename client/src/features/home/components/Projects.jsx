@@ -1,7 +1,14 @@
 import { motion as Motion } from "framer-motion";
-import { HiArrowUpRight } from "react-icons/hi2";
+import { HiArrowUpRight, HiArrowLongRight, HiArrowLongLeft } from "react-icons/hi2";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import useProjects from "../../adminPanel/Projects/hooks/useProjects";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import ProjectCard from "../../../shared/components/ui/ProjectCard";
 
 const sectionVariants = {
 	hidden: { opacity: 0, y: 50 },
@@ -27,103 +34,73 @@ const Projects = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.1 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-[#030712] text-white"
+			className="py-24 md:py-32 bg-[#030712] text-white overflow-hidden"
 		>
 			<div className="container mx-auto px-4">
-				<div className="flex items-center gap-8 mb-24">
-					<h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
-						Featured <span className="text-orange">Projects</span>
-					</h2>
-					<div className="h-px grow bg-gray-800/50"></div>
-					<span className="text-orange font-black text-sm uppercase tracking-[0.4em]">
-						02
-					</span>
-				</div>
-
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-					{projects?.map((project, index) => (
-						<Motion.div
-							key={project._id}
-							initial={{ opacity: 0, y: 30 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ delay: index * 0.1 }}
-							className="group relative bg-[#0a0f1c] rounded-[3rem] border border-gray-800/50 overflow-hidden flex flex-col h-full hover:border-orange/30 transition-all duration-700 hover:shadow-2xl hover:shadow-orange/5"
-						>
-							{/* Project Image Container */}
-							<div className="relative aspect-[16/10] overflow-hidden">
-								<img
-									src={project.cover?.secure_url}
-									alt={project.title}
-									className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1c] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
-								
-								{/* Floating Badge */}
-								<div className="absolute top-8 left-8">
-									<div className="px-5 py-2.5 bg-[#030712]/80 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl">
-										<span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange flex items-center gap-2">
-											<div className="w-1.5 h-1.5 rounded-full bg-orange animate-pulse"></div>
-											Featured Project
-										</span>
-									</div>
-								</div>
-							</div>
-
-							{/* Project Info */}
-							<div className="p-10 flex flex-col flex-grow relative">
-								<div className="mb-6 flex items-start justify-between gap-4">
-									<h3 className="text-2xl font-black text-white uppercase tracking-tighter group-hover:text-orange transition-colors duration-300">
-										{project.title}
-									</h3>
-									<span className="text-[10px] font-black text-gray-700 uppercase tracking-widest mt-2 shrink-0">
-										NO. {index + 1 < 10 ? `0${index + 1}` : index + 1}
-									</span>
-								</div>
-								
-								<p className="text-gray-400 text-sm font-medium leading-relaxed mb-10 line-clamp-3 group-hover:text-gray-300 transition-colors duration-300">
-									{project.description}
-								</p>
-								
-								{/* Footer */}
-								<div className="mt-auto pt-8 border-t border-gray-800/50 flex items-center justify-between">
-									<div className="flex items-center gap-8">
-										{project.liveLink && (
-											<a
-												href={project.liveLink}
-												target="_blank"
-												rel="noreferrer"
-												className="group/link text-orange font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2"
-											>
-												Live Demo 
-												<div className="w-8 h-8 rounded-xl bg-orange/5 border border-orange/10 flex items-center justify-center group-hover/link:bg-orange group-hover/link:text-white transition-all duration-300">
-													<HiArrowUpRight className="text-sm" />
-												</div>
-											</a>
-										)}
-										{project.githubLink && (
-											<a
-												href={project.githubLink}
-												target="_blank"
-												rel="noreferrer"
-												className="text-gray-500 hover:text-white transition-colors duration-300"
-											>
-												<span className="text-[10px] font-black uppercase tracking-widest">Code</span>
-											</a>
-										)}
-									</div>
-								</div>
-							</div>
-						</Motion.div>
-					))}
-				</div>
-
-				<div className="mt-24 text-center">
-					<button className="group relative px-12 py-5 bg-white text-gray-950 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl shadow-white/5">
-						<span className="relative z-10 flex items-center gap-3">
-							Explore Full Portfolio <HiArrowUpRight className="text-lg" />
+				<div className="flex items-center justify-between mb-20">
+					<div className="flex items-baseline gap-6 overflow-hidden">
+                        <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
+                            Featured Projects
+                        </h2>
+                    </div>
+					<div className="flex-grow mx-10 h-px bg-white/10 relative hidden md:block">
+						<span className="absolute right-0 top-1/2 -translate-y-1/2 text-[10px] font-black text-white/20 uppercase tracking-[0.5em] pl-6 bg-[#030712]">
+							{projects?.length || 0}
 						</span>
-						<div className="absolute inset-0 bg-orange translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-					</button>
+					</div>
+                    
+                    {/* Navigation Buttons */}
+                    <div className="flex gap-3">
+                        <button className="projects-prev-btn w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:bg-orange hover:border-orange hover:text-white transition-all cursor-pointer shadow-xl disabled:opacity-10">
+                            <HiArrowLongLeft className="text-xl" />
+                        </button>
+                        <button className="projects-next-btn w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:bg-orange hover:border-orange hover:text-white transition-all cursor-pointer shadow-xl disabled:opacity-10">
+                            <HiArrowLongRight className="text-xl" />
+                        </button>
+                    </div>
+				</div>
+
+				{/* Slider Container */}
+				<div className="-mx-4 px-4">
+                    <Swiper
+                        modules={[Navigation, Autoplay]}
+                        spaceBetween={30}
+                        slidesPerView={1}
+                        grabCursor={true}
+                        navigation={{
+                            prevEl: '.projects-prev-btn',
+                            nextEl: '.projects-next-btn',
+                        }}
+                        breakpoints={{
+                            768: {
+                                slidesPerView: 2,
+                            },
+                            1280: {
+                                slidesPerView: 3,
+                            },
+                        }}
+                        autoplay={{
+                            delay: 6000,
+                            disableOnInteraction: false,
+                        }}
+                        className="pb-24"
+                    >
+                        {projects?.map((project, index) => (
+                            <SwiperSlide key={project._id} className="h-auto">
+                                <ProjectCard project={project} index={index} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+				</div>
+
+				<div className="text-center mt-16">
+					<Link 
+						to="/projects"
+						className="inline-flex items-center gap-4 px-14 py-6 bg-white text-black rounded-full font-black uppercase tracking-[0.34em] text-[10px] hover:bg-orange hover:text-white transition-all duration-700 shadow-2xl hover:-translate-y-2 group"
+					>
+						View All Projects 
+						<HiArrowUpRight className="text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+					</Link>
 				</div>
 			</div>
 		</Motion.section>

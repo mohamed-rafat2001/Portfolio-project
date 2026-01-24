@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { HiOutlineEnvelope } from "react-icons/hi2";
 import useEmails from "./hooks/useEmails";
@@ -9,9 +9,12 @@ import EmailDetails from "./components/EmailDetails";
 import Modal from "../../../shared/components/ui/Modal";
 import AdminHeader from "../../../shared/components/ui/AdminHeader";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import Pagination from "../../../shared/components/ui/Pagination";
 
 const Emails = () => {
-	const { emails, isLoading } = useEmails();
+	const [page, setPage] = useState(1);
+	const limit = 8;
+	const { emails, isLoading, totalResults } = useEmails({ page, limit });
 	const { mutate: updateStatus } = useUpdateEmailStatus();
 	const { mutate: deleteEmail } = useDeleteEmail();
 
@@ -60,6 +63,13 @@ const Emails = () => {
 					))}
 				</AnimatePresence>
 			</div>
+
+			<Pagination 
+				page={page} 
+				totalResults={totalResults} 
+				limit={limit} 
+				setPage={setPage} 
+			/>
 
 			{emails?.length === 0 && (
 				<div className="text-center py-20 bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800">

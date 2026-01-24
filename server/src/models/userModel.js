@@ -35,17 +35,13 @@ const infoDetailsSchema = new mongoose.Schema({
 			trim: true,
 			min: 5,
 		},
-		note: {
+		message: {
 			type: String,
 			trim: true,
 			min: 20,
 		},
 	},
-	location: {
-		type: String,
-		trim: true,
-		required: [true, "location is required"],
-	},
+
 	available: {
 		type: Boolean,
 		default: true,
@@ -82,8 +78,17 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			validate: [validator.isMobilePhone, "please enter valid phone number"],
 		},
+		location: {
+			type: String,
+			trim: true,
+			required: [true, "location is required"],
+		},
+		aboutMe: {
+			type: String,
+			trim: true,
+		},
 		socialMedia: [socialMediaSchema],
-		moreInfo: infoDetailsSchema,
+		infos: infoDetailsSchema,
 		password: {
 			type: String,
 			trim: true,

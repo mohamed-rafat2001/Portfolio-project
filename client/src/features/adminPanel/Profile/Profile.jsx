@@ -105,6 +105,7 @@ const Profile = () => {
 									src={user.profileImg.secure_url}
 									alt={user.name}
 									className="w-full h-full object-cover"
+									crossOrigin="anonymous"
 								/>
 							) : (
 								<HiOutlineUserCircle className="text-6xl md:text-8xl" />

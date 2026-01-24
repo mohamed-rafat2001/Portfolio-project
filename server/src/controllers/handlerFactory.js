@@ -2,6 +2,7 @@ import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
 import validationBody from "../utils/validationBody.js";
+import APIFeatures from "../utils/apiFeatures.js";
 
 // create doc
 export const createDoc = (Model, fields = []) =>
@@ -43,11 +44,22 @@ export const updateDoc = (Model, fields = []) =>
 // get by id param
 export const getDocById = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.findById(req.params.id);
+		try {
+			const doc = await Model.findById(req.params.id);
 
-		if (!doc) return next(new appError("doc not found", 400));
+			if (!doc) return next(new appError("doc not found", 400));
 
-		sendResponse(res, 201, doc);
+			let modelName = Model.modelName;
+			if (modelName.endsWith("Model")) modelName = modelName.slice(0, -5);
+			modelName = modelName.toLowerCase();
+
+			const responseData = { [modelName]: doc };
+			sendResponse(res, 200, responseData);
+		} catch (error) {
+			const fs = await import('fs');
+			fs.appendFileSync('server_error_details.log', `${new Date().toISOString()} - Error in getDocById (${Model.modelName}): ${error.stack}\n`);
+			return next(new appError(error.message, 500));
+		}
 	});
 
 // delete doc
@@ -63,9 +75,34 @@ export const deleteDoc = (Model) =>
 // get all docs
 export const getAllDocs = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const docs = await Model.find({});
+		// Build query
+		const features = new APIFeatures(Model.find(), req.query)
+			.filter()
+			.sort()
+			.limitFields()
+			.paginate();
+
+		const docs = await features.query;
+		const totalResults = await Model.countDocuments();
 
 		if (!docs) return next(new appError("no docs found", 404));
 
-		sendResponse(res, 200, docs);
+		// Get the model name in lowercase plural form
+		let modelName = Model.modelName; 
+		if (modelName.endsWith("Model")) {
+			modelName = modelName.slice(0, -5);
+		}
+		
+		// Handle confusing naming like "SkillsModel" which pluralizes to "skillss"
+		if (modelName.endsWith("s")) {
+			// If it already ends in s (like Skills), just lowercase it
+			modelName = modelName.toLowerCase();
+		} else {
+			// Otherwise append s
+			modelName = modelName.toLowerCase() + 's';
+		}
+
+		const responseData = { [modelName]: docs, totalResults };
+
+		sendResponse(res, 200, responseData);
 	});

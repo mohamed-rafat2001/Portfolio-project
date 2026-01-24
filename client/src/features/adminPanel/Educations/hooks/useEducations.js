@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllEducations } from "../services/education.js";
 
-export default function useEducations() {
+export default function useEducations(params) {
 	const {
 		data: response,
 		isLoading,
 		error,
 	} = useQuery({
-		queryKey: ["Educations"],
-		queryFn: getAllEducations,
+		queryKey: ["Educations", params],
+		queryFn: () => getAllEducations(params),
 	});
 
 	const educations = response?.data?.educations || [];
-	return { educations, isLoading, error };
+	const totalResults = response?.totalResults || 0;
+	return { educations, isLoading, error, totalResults };
 }

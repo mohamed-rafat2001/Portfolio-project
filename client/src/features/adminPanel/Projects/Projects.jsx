@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { HiOutlinePlus, HiOutlineBriefcase } from "react-icons/hi2";
 import useProjects from "./hooks/useProjects";
@@ -10,15 +10,23 @@ import ProjectForm from "./components/ProjectForm";
 import Modal from "../../../shared/components/ui/Modal";
 import AdminHeader from "../../../shared/components/ui/AdminHeader";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import Pagination from "../../../shared/components/ui/Pagination";
 
 const Projects = () => {
-	const { projects, isLoading: isFetching } = useProjects();
+	const [page, setPage] = useState(1);
+	const limit = 6;
+	const { projects, isLoading: isFetching, totalResults } = useProjects({ page, limit });
 	const { mutate: createProj, isLoading: isCreating } = useCreateProj();
 	const { mutate: updateProj, isLoading: isUpdating } = useUpdateProj();
 	const { mutate: deleteProj } = useDeleteProj();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingProject, setEditingProject] = useState(null);
+
+    // Re-check page if results are zero (e.g. after delete)
+    useEffect(() => {
+        if (projects.length === 0 && page > 1) setPage(page - 1);
+    }, [projects, page]);
 
 	const handleAdd = () => {
 		setEditingProject(null);
@@ -78,6 +86,13 @@ const Projects = () => {
 					))}
 				</AnimatePresence>
 			</div>
+
+			<Pagination 
+				page={page} 
+				totalResults={totalResults} 
+				limit={limit} 
+				setPage={setPage} 
+			/>
 
 			<Modal
 				isOpen={isModalOpen}

@@ -1,24 +1,24 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import AppLayout from "../layouts/AppLayout.jsx";
-import AdminLayout from "../layouts/AdminLayout.jsx";
+import AppLayout from "../layouts/AppLayout";
+import AdminLayout from "../layouts/AdminLayout";
 
-import Home from "../features/home/Home.jsx";
-import PublicProjects from "../features/home/PublicProjects.jsx";
-import ProjectDetails from "../features/home/ProjectDetails.jsx";
-import PublicSkills from "../features/home/PublicSkills.jsx";
+import Home from "../features/home/Home";
+import PublicProjects from "../features/home/PublicProjects";
+import ProjectDetails from "../features/home/ProjectDetails";
+import PublicSkills from "../features/home/PublicSkills";
 
-import Login from "../features/auth/Login.jsx";
+import Login from "../features/auth/Login";
 
-import Dashboard from "../features/adminPanel/Dashboard/Dashboard.jsx";
-import Profile from "../features/adminPanel/Profile/Profile.jsx";
-import Projects from "../features/adminPanel/Projects/Projects.jsx";
-import Educations from "../features/adminPanel/Educations/Educations.jsx";
-import Experiences from "../features/adminPanel/Experiences/Experiences.jsx";
-import Skills from "../features/adminPanel/Skills/Skills.jsx";
-import Emails from "../features/adminPanel/Emails/Emails.jsx";
+import Dashboard from "../features/adminPanel/Dashboard/Dashboard";
+import Profile from "../features/adminPanel/Profile/Profile";
+import Projects from "../features/adminPanel/Projects/Projects";
+import Educations from "../features/adminPanel/Educations/Educations";
+import Experiences from "../features/adminPanel/Experiences/Experiences";
+import Skills from "../features/adminPanel/Skills/Skills";
+import Emails from "../features/adminPanel/Emails/Emails";
 
-import NotFound from "../shared/components/ui/NotFound.jsx";
+import NotFound from "../shared/components/ui/NotFound";
 import ProtectRoute from "./ProtectRoute.jsx";
 
 const router = createBrowserRouter([

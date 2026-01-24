@@ -7,8 +7,8 @@ export const createEducation = async (data) => {
 };
 
 // get all educations
-export const getAllEducations = async () => {
-	const res = await mainApi.get("educations");
+export const getAllEducations = async (params) => {
+	const res = await mainApi.get("educations", { params });
 	return res.data;
 };
 

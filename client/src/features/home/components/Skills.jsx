@@ -27,6 +27,33 @@ const Skills = () => {
 
 	if (isLoading) return <LoadingState />;
 
+	// Custom sort logic to prioritize specific categories
+	const priorityOrder = [
+		"frontend", 
+		"backend", 
+		"state & api", 
+		"state & apis",
+		"fundamental",
+		"fundamentals"
+	];
+
+	const sortedSkills = [...(skills || [])].sort((a, b) => {
+		const nameA = a.name.toLowerCase();
+		const nameB = b.name.toLowerCase();
+		
+		const indexA = priorityOrder.findIndex(p => nameA.includes(p));
+		const indexB = priorityOrder.findIndex(p => nameB.includes(p));
+		
+		// If both are in priority list, sort by priority
+		if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+		// If only A is in priority list, it comes first
+		if (indexA !== -1) return -1;
+		// If only B is in priority list, it comes first
+		if (indexB !== -1) return 1;
+		// Otherwise keep original order or alphabetical
+		return 0;
+	});
+
 	return (
 		<Motion.section
 			id="skills"
@@ -51,9 +78,9 @@ const Skills = () => {
 						04
 					</span>
 				</div>
-
+ 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-					{skills?.map((skill, catIndex) => (
+					{sortedSkills.map((skill, catIndex) => (
 						<Motion.div
 							key={skill._id}
 							initial={{ opacity: 0, y: 20 }}

@@ -7,8 +7,8 @@ export const createExperience = async (data) => {
 };
 
 // get all experiences
-export const getAllExperiences = async () => {
-	const res = await mainApi.get("experiences");
+export const getAllExperiences = async (params) => {
+	const res = await mainApi.get("experiences", { params });
 	return res.data;
 };
 

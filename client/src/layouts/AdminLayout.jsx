@@ -196,6 +196,7 @@ const AdminLayout = () => {
 									src={user?.infos?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
 									alt={user?.name}
 									className="w-full h-full object-cover"
+									crossOrigin="anonymous"
 								/>
 							</div>
 						</div>

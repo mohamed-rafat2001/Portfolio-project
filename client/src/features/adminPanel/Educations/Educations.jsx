@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {  AnimatePresence } from "framer-motion";
 import { HiOutlinePlus, HiOutlineAcademicCap } from "react-icons/hi2";
 import useEducations from "./hooks/useEducations";
@@ -10,9 +10,12 @@ import EducationForm from "./components/EducationForm";
 import Modal from "../../../shared/components/ui/Modal";
 import AdminHeader from "../../../shared/components/ui/AdminHeader";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import Pagination from "../../../shared/components/ui/Pagination";
 
 const Educations = () => {
-	const { educations, isLoading: isFetching } = useEducations();
+	const [page, setPage] = useState(1);
+	const limit = 6;
+	const { educations, isLoading: isFetching, totalResults } = useEducations({ page, limit });
 	const { mutate: createEdu, isLoading: isCreating } = useCreateEdu();
 	const { mutate: updateEdu, isLoading: isUpdating } = useUpdateEdu();
 	const { mutate: deleteEdu } = useDeleteEdu();
@@ -78,6 +81,13 @@ const Educations = () => {
 					))}
 				</AnimatePresence>
 			</div>
+
+			<Pagination 
+				page={page} 
+				totalResults={totalResults} 
+				limit={limit} 
+				setPage={setPage} 
+			/>
 
 			<Modal
 				isOpen={isModalOpen}

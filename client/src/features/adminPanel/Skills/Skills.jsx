@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { HiOutlinePlus, HiOutlineSparkles } from "react-icons/hi2";
 import useSkills from "./hooks/useSkills";
@@ -10,9 +10,12 @@ import SkillForm from "./components/SkillForm";
 import Modal from "../../../shared/components/ui/Modal";
 import AdminHeader from "../../../shared/components/ui/AdminHeader";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import Pagination from "../../../shared/components/ui/Pagination";
 
 const Skills = () => {
-	const { skills, isLoading: isFetching } = useSkills();
+	const [page, setPage] = useState(1);
+	const limit = 8;
+	const { skills, isLoading: isFetching, totalResults } = useSkills({ page, limit });
 	const { mutate: createSkill, isLoading: isCreating } = useCreateSkill();
 	const { mutate: updateSkill, isLoading: isUpdating } = useUpdateSkill();
 	const { mutate: deleteSkill } = useDeleteSkill();
@@ -78,6 +81,13 @@ const Skills = () => {
 					))}
 				</AnimatePresence>
 			</div>
+
+			<Pagination 
+				page={page} 
+				totalResults={totalResults} 
+				limit={limit} 
+				setPage={setPage} 
+			/>
 
 			<Modal
 				isOpen={isModalOpen}

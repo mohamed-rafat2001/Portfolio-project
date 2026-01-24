@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { HiOutlinePlus, HiOutlineBriefcase } from "react-icons/hi2";
 import useExperiences from "./hooks/useExperiences";
@@ -10,9 +10,12 @@ import ExperienceForm from "./components/ExperienceForm";
 import Modal from "../../../shared/components/ui/Modal";
 import AdminHeader from "../../../shared/components/ui/AdminHeader";
 import LoadingState from "../../../shared/components/ui/LoadingState";
+import Pagination from "../../../shared/components/ui/Pagination";
 
 const Experiences = () => {
-	const { experiences, isLoading: isFetching } = useExperiences();
+	const [page, setPage] = useState(1);
+	const limit = 6;
+	const { experiences, isLoading: isFetching, totalResults } = useExperiences({ page, limit });
 	const { mutate: createExp, isLoading: isCreating } = useCreateExp();
 	const { mutate: updateExp, isLoading: isUpdating } = useUpdateExp();
 	const { mutate: deleteExp } = useDeleteExp();
@@ -78,6 +81,13 @@ const Experiences = () => {
 					))}
 				</AnimatePresence>
 			</div>
+
+			<Pagination 
+				page={page} 
+				totalResults={totalResults} 
+				limit={limit} 
+				setPage={setPage} 
+			/>
 
 			<Modal
 				isOpen={isModalOpen}

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMe } from "../../adminPanel/Profile/services/user.js";
+import { getMe } from "../../../services/user";
 
 export default function useCurrentUser() {
 	const {

@@ -1,29 +1,32 @@
-import { HiOutlineIdentification } from "react-icons/hi2";
+import { HiOutlineUser, HiOutlineInformationCircle } from "react-icons/hi2";
 import FormCard from "./FormCard";
 import InputField from "./InputField";
-import Textarea from "../../../../shared/components/form/Textarea";
 
-const AboutSection = ({ register, errors }) => {
+const AboutSection = ({ register, errors, isUpdating, isDirty }) => {
 	return (
 		<FormCard
-			title="Professional Info"
-			description="Tell us about yourself and what you do"
-			icon={<HiOutlineIdentification />}
-			color="bg-blue-500"
+			title="About Me"
+			icon={<HiOutlineInformationCircle />}
+            isUpdating={isUpdating}
+            isDirty={isDirty}
 		>
-			<InputField
-				label="About Title"
-				placeholder="e.g. About Me"
-				error={errors.infos?.aboutMe?.title?.message}
-				{...register("infos.aboutMe.title")}
-			/>
-			<Textarea
-				label="About Message"
-				placeholder="Write a brief introduction..."
-				error={errors.infos?.aboutMe?.message?.message}
-				{...register("infos.aboutMe.message")}
-				rows={4}
-			/>
+			<div className="space-y-10">
+				<InputField
+					label="Section Title"
+					placeholder="Hello, I'm Mohamed Rafat."
+                    icon={HiOutlineInformationCircle}
+					error={errors.moreInfo?.aboutMe?.title?.message}
+					{...register("moreInfo.aboutMe.title")}
+				/>
+				<InputField
+					label="Short Biography"
+					placeholder="I am a dedicated Full Stack Developer..."
+                    icon={HiOutlineUser}
+					error={errors.moreInfo?.aboutMe?.note?.message}
+                    className="min-h-[150px]"
+					{...register("moreInfo.aboutMe.note")}
+				/>
+			</div>
 		</FormCard>
 	);
 };

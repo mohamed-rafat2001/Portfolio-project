@@ -1,45 +1,39 @@
-import { HiOutlineBriefcase } from "react-icons/hi2";
+import { HiOutlineUser, HiOutlineMapPin, HiOutlineInformationCircle } from "react-icons/hi2";
 import FormCard from "./FormCard";
 import InputField from "./InputField";
 
-const ProfessionalSection = ({ register, errors }) => {
+const ProfessionalSection = ({ register, errors, isUpdating, isDirty }) => {
 	return (
 		<FormCard
-			title="Expertise"
-			description="Specific professional details"
-			icon={<HiOutlineBriefcase />}
-			color="bg-purple-500"
+			title="Professional Details"
+			icon={<HiOutlineInformationCircle />}
+            isUpdating={isUpdating}
+            isDirty={isDirty}
 		>
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 				<InputField
 					label="Job Title"
-					placeholder="e.g. Full Stack Developer"
-					error={errors.infos?.job?.title?.message}
-					{...register("infos.job.title")}
-				/>
-				<InputField
-					label="Job Note"
-					placeholder="e.g. Building modern web applications"
-					error={errors.infos?.job?.note?.message}
-					{...register("infos.job.note")}
+					placeholder="Full Stack Dev"
+                    icon={HiOutlineUser}
+					error={errors.moreInfo?.job?.title?.message}
+					{...register("moreInfo.job.title")}
 				/>
 				<InputField
 					label="Location"
-					placeholder="e.g. New York, USA"
-					error={errors.infos?.location?.message}
-					{...register("infos.location")}
+					placeholder="Egypt"
+                    icon={HiOutlineMapPin}
+					error={errors.moreInfo?.location?.message}
+					{...register("moreInfo.location")}
 				/>
-				<div className="flex items-center gap-3 mt-8">
-					<input
-						type="checkbox"
-						id="available"
-						className="w-5 h-5 rounded border-gray-300 text-orange focus:ring-orange"
-						{...register("infos.available")}
-					/>
-					<label htmlFor="available" className="text-sm font-medium text-gray-700 dark:text-gray-300">
-						Available for work
-					</label>
-				</div>
+                <div className="md:col-span-2">
+                    <InputField
+                        label="Job Note"
+                        placeholder="Building robust, scalable applications..."
+                        icon={HiOutlineInformationCircle}
+                        error={errors.moreInfo?.job?.note?.message}
+                        {...register("moreInfo.job.note")}
+                    />
+                </div>
 			</div>
 		</FormCard>
 	);

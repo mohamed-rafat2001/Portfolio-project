@@ -1,8 +1,18 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion as Motion } from "framer-motion";
-import { HiOutlineCheck, HiOutlineUserCircle } from "react-icons/hi2";
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import { 
+    HiOutlineUser, 
+    HiOutlineIdentification, 
+    HiOutlineInformationCircle, 
+    HiOutlineLink,
+    HiOutlineCheck,
+    HiOutlineUserCircle,
+    HiOutlineDevicePhoneMobile,
+    HiOutlineEnvelope
+} from "react-icons/hi2";
 import useCurrentUser from "../../auth/hooks/useCurrentUser";
 import useUpdateUser from "./hooks/useUpdateUser";
 import AccountSection from "./components/AccountSection";
@@ -38,6 +48,7 @@ const profileSchema = z.object({
 });
 
 const Profile = () => {
+    const [activeTab, setActiveTab] = useState("account");
 	const { user, isLoading: userLoading } = useCurrentUser();
 	const { updateUser, isLoading: isUpdating } = useUpdateUser();
 
@@ -55,16 +66,17 @@ const Profile = () => {
 		handleSubmit,
 		formState: { errors, isDirty },
 		reset,
+        control,
+        watch
 	} = useForm({
 		resolver: zodResolver(profileSchema),
 		values: defaultValues,
 	});
 
 	const onSubmit = (data) => {
-		// Transform data back for the backend
 		const socialMedia = [
-			{ name: 'GitHub', url: data.github },
 			{ name: 'LinkedIn', url: data.linkedin },
+			{ name: 'GitHub', url: data.github },
 			{ name: 'Twitter', url: data.twitter },
 			{ name: 'Portfolio', url: data.portfolio },
 		].filter(s => s.url);
@@ -73,13 +85,10 @@ const Profile = () => {
 			name: data.name,
 			email: data.email,
 			phoneNumber: data.phoneNumber,
-			moreInfo: {
-				...data.moreInfo,
-			},
+			moreInfo: { ...data.moreInfo },
 			socialMedia
 		};
 
-		// If password is being changed
 		if (data.password) {
 			payload.passwordCurrent = data.passwordCurrent;
 			payload.password = data.password;
@@ -93,76 +102,97 @@ const Profile = () => {
 
 	if (userLoading) return <LoadingState message="Loading your profile..." />;
 
+    const tabs = [
+        { id: "account", label: "Account", icon: HiOutlineUser },
+        { id: "professional", label: "Professional", icon: HiOutlineIdentification },
+        { id: "about", label: "About Me", icon: HiOutlineInformationCircle },
+        { id: "social", label: "Social Media", icon: HiOutlineLink },
+    ];
+
 	return (
-		<div className="max-w-5xl mx-auto space-y-12">
-			{/* Header */}
-			<section className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-				<div className="flex items-center gap-6">
-					<div className="relative group">
-						<div className="w-24 h-24 md:w-32 md:h-32 rounded-[2.5rem] bg-orange/10 flex items-center justify-center text-orange overflow-hidden border-4 border-white dark:border-gray-950 shadow-xl">
-							{user?.profileImg?.secure_url ? (
-								<img
-									src={user.profileImg.secure_url}
-									alt={user.name}
-									className="w-full h-full object-cover"
-									crossOrigin="anonymous"
-								/>
-							) : (
-								<HiOutlineUserCircle className="text-6xl md:text-8xl" />
-							)}
-						</div>
-						<button className="absolute -bottom-2 -right-2 w-10 h-10 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange hover:scale-110 transition-transform cursor-pointer">
-							<HiOutlineUserCircle className="text-xl" />
-						</button>
-					</div>
-					<div>
-						<Motion.div
-							initial={{ opacity: 0, x: -20 }}
-							animate={{ opacity: 1, x: 0 }}
-							className="flex items-center gap-3 mb-2"
-						>
-							<span className="text-xs font-black uppercase tracking-widest text-orange bg-orange/5 px-3 py-1 rounded-full border border-orange/10">
-								Admin Profile
-							</span>
-						</Motion.div>
-						<h1 className="text-4xl font-black text-gray-900 dark:text-white">
-							{user?.name}
-						</h1>
-						<p className="text-gray-500 dark:text-gray-400 font-medium">
-							{user?.moreInfo?.job?.title || "Portfolio Administrator"}
-						</p>
-					</div>
-				</div>
+		<div className="max-w-6xl mx-auto pb-20">
+            {/* Upper Profile Box (matches Image 5) */}
+            <section className="bg-[#0b1120] rounded-[2.5rem] p-10 border border-white/5 mb-14 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-orange/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+                
+                <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                    <div className="relative group">
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-[2.5rem] bg-[#030712] flex items-center justify-center text-orange overflow-hidden border-4 border-white/5 shadow-2xl">
+                            {user?.profileImg?.secure_url ? (
+                                <img
+                                    src={user.profileImg.secure_url}
+                                    alt={user.name}
+                                    className="w-full h-full object-cover"
+                                    crossOrigin="anonymous"
+                                />
+                            ) : (
+                                <HiOutlineUserCircle className="text-8xl" />
+                            )}
+                        </div>
+                        <button className="absolute -bottom-2 -right-2 w-12 h-12 bg-orange rounded-2xl shadow-2xl border-4 border-[#0b1120] flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer">
+                            <HiOutlineUserCircle className="text-2xl" />
+                        </button>
+                    </div>
 
-				<Motion.button
-					whileHover={{ scale: 1.02 }}
-					whileTap={{ scale: 0.98 }}
-					onClick={handleSubmit(onSubmit)}
-					disabled={!isDirty || isUpdating}
-					className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all shadow-xl shadow-orange/20 cursor-pointer ${
-						isDirty && !isUpdating
-							? "bg-orange text-white hover:bg-orange/90"
-							: "bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
-					}`}
-				>
-					{isUpdating ? (
-						<div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-					) : (
-						<HiOutlineCheck className="text-xl" />
-					)}
-					Save Changes
-				</Motion.button>
-			</section>
+                    <div className="text-center md:text-left flex-grow">
+                        <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+                            {user?.name}
+                        </h1>
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-gray-400">
+                             <div className="flex items-center gap-2 px-4 py-1.5 bg-orange/10 border border-orange/20 rounded-full">
+                                <HiOutlineEnvelope className="text-orange" />
+                                <span className="text-[10px] font-black uppercase tracking-widest text-orange">{user?.email}</span>
+                             </div>
+                             <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Admin</span>
+                             </div>
+                             <div className="flex items-center gap-2 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-green-500">Active Account</span>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-			<form className="grid grid-cols-1 lg:grid-cols-2 gap-8" onSubmit={e => e.preventDefault()}>
-				<AccountSection register={register} errors={errors} />
-				<AboutSection register={register} errors={errors} />
-				<ProfessionalSection register={register} errors={errors} />
-				<SocialSection register={register} errors={errors} />
-				<div className="lg:col-span-2">
-					<SecuritySection register={register} errors={errors} />
-				</div>
-			</form>
+            {/* Navigation Tabs (matches top of Images 0-4) */}
+            <div className="flex justify-center mb-10 px-4">
+                <div className="inline-flex p-1.5 bg-[#0b1120] border border-white/5 rounded-full shadow-2xl">
+                    {tabs.map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`flex items-center gap-3 px-8 py-3.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all relative overflow-hidden ${
+                                activeTab === tab.id 
+                                    ? "bg-orange/10 text-orange border border-orange/20" 
+                                    : "text-white/40 hover:text-white"
+                            }`}
+                        >
+                            <tab.icon className={`text-lg ${activeTab === tab.id ? "text-orange" : "text-white/20"}`} />
+                            {tab.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Form Content */}
+            <div className="px-4">
+                <AnimatePresence mode="wait">
+                    <Motion.div
+                        key={activeTab}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            {activeTab === "account" && <AccountSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} />}
+                            {activeTab === "professional" && <ProfessionalSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} />}
+                            {activeTab === "about" && <AboutSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} />}
+                            {activeTab === "social" && <SocialSection register={register} errors={errors} isUpdating={isUpdating} isDirty={isDirty} control={control} watch={watch} />}
+                        </form>
+                    </Motion.div>
+                </AnimatePresence>
+            </div>
 		</div>
 	);
 };

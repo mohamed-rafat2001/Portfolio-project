@@ -28,49 +28,58 @@ const ExperienceForm = ({ experience, onSubmit, isLoading, onCancel }) => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<Input
-					label="Job Role"
-					placeholder="e.g. Senior Frontend Developer"
-					error={errors.role?.message}
-					{...register("role")}
-				/>
-				<Input
-					label="Company"
-					placeholder="e.g. Google"
-					error={errors.company?.message}
-					{...register("company")}
-				/>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Company</label>
+                    <Input
+                        placeholder="Company name"
+                        error={errors.company?.message}
+                        {...register("company")}
+                    />
+                </div>
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Role</label>
+                    <Input
+                        placeholder="Job title"
+                        error={errors.role?.message}
+                        {...register("role")}
+                    />
+                </div>
 			</div>
-			<Input
-				label="Duration"
-				placeholder="e.g. 2020 - Present"
-				error={errors.duration?.message}
-				{...register("duration")}
-			/>
 
-			<Textarea
-				label="Description"
-				placeholder="Briefly describe your responsibilities and achievements..."
-				error={errors.description?.message}
-				{...register("description")}
-				rows={4}
-			/>
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Duration</label>
+                <Input
+                    placeholder="e.g. Jan 2022 - Present"
+                    error={errors.duration?.message}
+                    {...register("duration")}
+                />
+            </div>
 
-			<div className="flex items-center gap-4 pt-4">
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Description</label>
+                <Textarea
+                    placeholder="Key responsibilities and achievements"
+                    error={errors.description?.message}
+                    {...register("description")}
+                    rows={6}
+                />
+            </div>
+
+			<div className="flex items-center justify-end gap-6 pt-10">
 				<button
 					type="button"
 					onClick={onCancel}
-					className="flex-1 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-xs text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+					className="px-8 py-4 font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 hover:text-white transition-all cursor-pointer"
 				>
 					Cancel
 				</button>
 				<button
 					type="submit"
 					disabled={isLoading}
-					className="flex-1 px-6 py-3 bg-orange text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-orange/90 transition-all shadow-lg shadow-orange/20 disabled:opacity-50"
+					className="px-10 py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:shadow-orange/20 shadow-2xl transition-all disabled:opacity-50 min-w-[200px]"
 				>
-					{isLoading ? "Saving..." : experience ? "Update Experience" : "Add Experience"}
+					{isLoading ? "Synchronizing..." : experience ? "Update Experience" : "Create Experience"}
 				</button>
 			</div>
 		</form>

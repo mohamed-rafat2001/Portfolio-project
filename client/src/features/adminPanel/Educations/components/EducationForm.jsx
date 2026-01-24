@@ -28,49 +28,60 @@ const EducationForm = ({ education, onSubmit, isLoading, onCancel }) => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<Input
-					label="Degree / Certificate"
-					placeholder="e.g. B.S. in Computer Science"
-					error={errors.degree?.message}
-					{...register("degree")}
-				/>
-				<Input
-					label="Institution"
-					placeholder="e.g. University of Technology"
-					error={errors.institution?.message}
-					{...register("institution")}
-				/>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Institution</label>
+                    <Input
+                        placeholder="University/School name"
+                        error={errors.institution?.message}
+                        {...register("institution")}
+                    />
+                </div>
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Degree</label>
+                    <Input
+                        placeholder="Field of study"
+                        error={errors.degree?.message}
+                        {...register("degree")}
+                    />
+                </div>
 			</div>
-			<Input
-				label="Duration"
-				placeholder="e.g. 2018 - 2022"
-				error={errors.duration?.message}
-				{...register("duration")}
-			/>
 
-			<Textarea
-				label="Description"
-				placeholder="Briefly describe your studies..."
-				error={errors.description?.message}
-				{...register("description")}
-				rows={4}
-			/>
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Duration</label>
+                <div className="relative">
+                    <Input
+                        placeholder="e.g. 2018 - 2022"
+                        error={errors.duration?.message}
+                        {...register("duration")}
+                    />
+                </div>
+            </div>
 
-			<div className="flex items-center gap-4 pt-4">
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-4">Description (Optional)</label>
+                <Textarea
+                    placeholder="Honors, GPA, or relevant courses"
+                    error={errors.description?.message}
+                    {...register("description")}
+                    rows={6}
+                />
+            </div>
+
+			<div className="flex items-center justify-end gap-6 pt-10">
 				<button
 					type="button"
 					onClick={onCancel}
-					className="flex-1 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-xs text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+					className="px-8 py-4 font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 hover:text-white transition-all cursor-pointer"
 				>
 					Cancel
 				</button>
 				<button
 					type="submit"
 					disabled={isLoading}
-					className="flex-1 px-6 py-3 bg-orange text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-orange/90 transition-all shadow-lg shadow-orange/20 disabled:opacity-50"
+					className="px-10 py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:shadow-orange/20 shadow-2xl transition-all disabled:opacity-50 min-w-[200px]"
 				>
-					{isLoading ? "Saving..." : education ? "Update Education" : "Add Education"}
+					{isLoading ? "Synchronizing..." : education ? "Update Education" : "Create Education"}
 				</button>
 			</div>
 		</form>

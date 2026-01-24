@@ -147,51 +147,56 @@ const AdminLayout = () => {
 			{/* Main Content Area Wrapper */}
 			<div className="flex-1 flex flex-col min-w-0 h-full">
 				{/* Top Header */}
-				<header className="flex items-center justify-between px-8 h-20 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
-					<div className="flex items-center gap-4">
+				<header className="flex items-center justify-between px-10 h-24 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-100 dark:border-white/5 flex-shrink-0 z-50">
+					<div className="flex items-center gap-6">
 						<button
 							onClick={() => setIsSidebarOpen(true)}
-							className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl cursor-pointer"
+							className="lg:hidden p-3 text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition-all cursor-pointer"
 						>
 							<HiBars3BottomLeft className="text-2xl" />
 						</button>
-						<h2 className="text-sm font-black uppercase tracking-widest text-gray-400">
-							{currentRoute}
-						</h2>
+						<div className="hidden sm:block">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                Navigator / <span className="text-orange">{currentRoute}</span>
+                            </h2>
+                        </div>
 					</div>
 
-					<div className="flex items-center gap-4">
-						<Motion.button
-							whileHover={{ scale: 1.1, rotate: 5 }}
-							whileTap={{ scale: 0.9 }}
-							onClick={toggleTheme}
-							className="p-2.5 rounded-xl cursor-pointer bg-white dark:bg-gray-900 text-gray-500 hover:text-orange transition-all border border-gray-100 dark:border-gray-800 shadow-sm"
-							aria-label="Toggle theme"
-						>
-							{isDark ? (
-								<HiSun className="text-xl" />
-							) : (
-								<HiMoon className="text-xl" />
-							)}
-						</Motion.button>
-
-						<button className="relative p-2.5 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
-							<HiOutlineBell className="text-xl" />
-							<span className="absolute top-2.5 right-2.5 w-2 h-2 bg-orange rounded-full border-2 border-white dark:border-gray-900" />
-						</button>
-						
-						<div className="h-8 w-[1px] bg-gray-100 dark:bg-gray-800 mx-2" />
-
+					<div className="flex items-center gap-6">
 						<div className="flex items-center gap-3">
+                            <Motion.button
+                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={toggleTheme}
+                                className="p-3 rounded-2xl cursor-pointer bg-gray-50 dark:bg-white/5 text-gray-500 hover:text-orange transition-all border border-gray-100 dark:border-white/5 shadow-sm"
+                                aria-label="Toggle theme"
+                            >
+                                {isDark ? (
+                                    <HiSun className="text-lg" />
+                                ) : (
+                                    <HiMoon className="text-lg" />
+                                shade: 100
+                                )}
+                            </Motion.button>
+
+                            <button className="relative p-3 text-gray-400 hover:text-orange transition-all cursor-pointer bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm">
+                                <HiOutlineBell className="text-lg" />
+                                <span className="absolute top-3.5 right-3.5 w-1.5 h-1.5 bg-orange rounded-full" />
+                            </button>
+                        </div>
+						
+						<div className="h-8 w-[1px] bg-gray-100 dark:bg-white/5" />
+
+						<Link to="profile" className="flex items-center gap-4 group cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5 p-2 pr-4 rounded-2xl transition-all">
 							<div className="text-right hidden sm:block">
-								<p className="text-xs font-black uppercase tracking-tight text-gray-900 dark:text-white leading-none">
+								<p className="text-[11px] font-black uppercase tracking-tight text-gray-900 dark:text-white leading-none">
 									{user?.name}
 								</p>
-								<p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest">
+								<p className="text-[8px] font-black text-orange mt-1.5 uppercase tracking-widest opacity-80">
 									Administrator
 								</p>
 							</div>
-							<div className="w-10 h-10 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 border-2 border-white dark:border-gray-950 shadow-sm">
+							<div className="w-11 h-11 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 border-2 border-white dark:border-white/5 shadow-2xl group-hover:scale-105 transition-transform">
 								<img
 									src={user?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
 									alt={user?.name}
@@ -199,7 +204,7 @@ const AdminLayout = () => {
 									crossOrigin="anonymous"
 								/>
 							</div>
-						</div>
+						</Link>
 					</div>
 				</header>
 

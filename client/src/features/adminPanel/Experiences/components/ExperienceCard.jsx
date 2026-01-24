@@ -1,5 +1,5 @@
 import { motion as Motion } from "framer-motion";
-import { HiOutlineBriefcase, HiOutlinePencil, HiOutlineTrash, HiOutlineCalendar, HiOutlineMapPin } from "react-icons/hi2";
+import { HiOutlineBriefcase, HiOutlinePencil, HiOutlineTrash, HiOutlineCalendar } from "react-icons/hi2";
 
 const ExperienceCard = ({ experience, onEdit, onDelete }) => {
 	return (
@@ -8,52 +8,54 @@ const ExperienceCard = ({ experience, onEdit, onDelete }) => {
 			initial={{ opacity: 0, scale: 0.95 }}
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-			className="group bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 border border-gray-100 dark:border-gray-800 shadow-sm hover:border-orange/20 transition-all relative overflow-hidden"
+			className="group bg-[#0b1120] rounded-[2.5rem] p-10 border border-white/5 transition-all shadow-2xl relative overflow-hidden"
 		>
-			<div className="absolute top-0 right-0 w-32 h-32 bg-orange opacity-[0.02] -mr-16 -mt-16 rounded-full group-hover:opacity-[0.05] transition-opacity" />
+			<div className="absolute top-0 right-0 w-40 h-40 bg-orange/5 -mr-20 -mt-20 rounded-full blur-[60px]" />
 
-			<div className="flex items-start justify-between gap-4 relative">
-				<div className="flex items-start gap-6">
-					<div className="w-16 h-16 rounded-2xl bg-orange/10 flex items-center justify-center text-3xl text-orange group-hover:scale-110 transition-transform">
+			<div className="flex items-start justify-between gap-4 relative z-10">
+				<div className="flex items-start gap-8">
+					<div className="w-20 h-20 rounded-3xl bg-[#030712] border border-white/5 flex items-center justify-center text-4xl text-orange group-hover:scale-110 transition-transform">
 						<HiOutlineBriefcase />
 					</div>
-					<div className="space-y-1">
-						<h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+					<div className="space-y-2">
+						<h3 className="text-2xl font-black text-white uppercase tracking-tight">
 							{experience.role}
 						</h3>
-						<p className="text-orange font-bold text-sm">
+						<p className="text-orange font-black text-[10px] uppercase tracking-[0.2em]">
 							{experience.company}
 						</p>
 					</div>
 				</div>
 
-				<div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+				<div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all">
 					<button
 						onClick={() => onEdit(experience)}
-						className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-500 rounded-xl transition-colors"
+						className="p-3 hover:bg-white/5 text-gray-500 hover:text-white rounded-2xl transition-all"
 					>
 						<HiOutlinePencil className="text-lg" />
 					</button>
 					<button
 						onClick={() => onDelete(experience._id)}
-						className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 rounded-xl transition-colors"
+						className="p-3 hover:bg-red-500/10 text-gray-500 hover:text-red-500 rounded-2xl transition-all"
 					>
 						<HiOutlineTrash className="text-lg" />
 					</button>
 				</div>
 			</div>
 
-			<div className="mt-8">
-				<div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
-					<HiOutlineCalendar className="text-lg text-orange" />
-					<span className="text-xs font-bold uppercase tracking-widest">
-						{experience.duration}
-					</span>
+			<div className="mt-10 relative z-10">
+				<div className="flex items-center gap-4 text-gray-400">
+					<div className="px-4 py-2 bg-white/5 rounded-full flex items-center gap-3 border border-white/5">
+                        <HiOutlineCalendar className="text-orange" />
+                        <span className="text-[10px] font-black uppercase tracking-widest">
+                            {experience.duration}
+                        </span>
+                    </div>
 				</div>
 			</div>
 
 			{experience.description && (
-				<p className="mt-6 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+				<p className="mt-8 text-gray-400 leading-bold font-medium opacity-60 line-clamp-3 pl-4 border-l-2 border-white/5">
 					{experience.description}
 				</p>
 			)}

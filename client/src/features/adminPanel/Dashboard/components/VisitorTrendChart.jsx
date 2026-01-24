@@ -8,7 +8,7 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 import { motion as Motion } from "framer-motion";
-import { HiOutlineTrendingUp } from "react-icons/hi2";
+import { HiArrowTrendingUp } from "react-icons/hi2";
 
 const VisitorTrendChart = ({ data }) => {
 	return (
@@ -27,7 +27,7 @@ const VisitorTrendChart = ({ data }) => {
 					</p>
 				</div>
                 <div className="w-12 h-12 bg-orange/10 border border-orange/20 rounded-2xl flex items-center justify-center text-orange shadow-2xl">
-                    <HiOutlineTrendingUp className="text-2xl" />
+                    <HiArrowTrendingUp className="text-2xl" />
                 </div>
 			</div>
 

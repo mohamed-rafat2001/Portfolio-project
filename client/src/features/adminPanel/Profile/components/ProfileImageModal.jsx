@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { HiOutlineArrowUpTray, HiOutlineCloudArrowUp, HiOutlineXCircle } from "react-icons/hi2";
 import { motion as Motion } from "framer-motion";
-import Modal from "../../../shared/components/ui/Modal";
+import Modal from "../../../../shared/components/ui/Modal";
 import { updateProfileImg } from "../services/profile"; // I'll create this service
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";

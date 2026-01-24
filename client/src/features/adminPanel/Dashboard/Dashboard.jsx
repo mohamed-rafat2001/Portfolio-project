@@ -2,12 +2,9 @@ import {
 	HiOutlineBriefcase,
 	HiOutlineAcademicCap,
 	HiOutlineEnvelope,
-	HiOutlineCodeBracket,
-	HiOutlineWrenchScrewdriver,
-    HiOutlineArrowUpRight,
-    HiOutlineCommandLine,
-    HiOutlineRocket,
-    HiOutlineChartBar
+	HiRocket,
+    HiWrenchScrewdriver,
+    HiChartBar
 } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import useProjects from "../Projects/hooks/useProjects";
@@ -42,16 +39,16 @@ const Dashboard = () => {
 	if (isLoading) return <LoadingState message="Loading your dashboard..." />;
 
 	const visitorStats = [
-		{ title: "Today's Visits", value: analytics?.todayVisits || 0, icon: <HiOutlineChartBar />, color: "bg-orange" },
-		{ title: "Last 7 Days", value: analytics?.last7Days || 0, icon: <HiOutlineChartBar />, color: "bg-blue-600" },
-		{ title: "Last 30 Days", value: analytics?.last30Days || 0, icon: <HiOutlineChartBar />, color: "bg-purple-600" },
-		{ title: "Last Year", value: analytics?.lastYear || 0, icon: <HiOutlineChartBar />, color: "bg-emerald-600" },
-		{ title: "Total Visits", value: analytics?.totalViews || 0, icon: <HiOutlineChartBar />, color: "bg-rose-600" },
+		{ title: "Today's Visits", value: analytics?.todayVisits || 0, icon: <HiChartBar />, color: "bg-orange" },
+		{ title: "Last 7 Days", value: analytics?.last7Days || 0, icon: <HiChartBar />, color: "bg-blue-600" },
+		{ title: "Last 30 Days", value: analytics?.last30Days || 0, icon: <HiChartBar />, color: "bg-purple-600" },
+		{ title: "Last Year", value: analytics?.lastYear || 0, icon: <HiChartBar />, color: "bg-emerald-600" },
+		{ title: "Total Visits", value: analytics?.totalViews || 0, icon: <HiChartBar />, color: "bg-rose-600" },
 	];
 
     const contentStats = [
-        { title: "Projects", value: projects?.length || 0, icon: <HiOutlineRocket />, color: "bg-blue-600" },
-        { title: "Skills", value: skills?.length || 12, icon: <HiOutlineWrenchScrewdriver />, color: "bg-emerald-600" },
+        { title: "Projects", value: projects?.length || 0, icon: <HiRocket />, color: "bg-blue-600" },
+        { title: "Skills", value: skills?.length || 0, icon: <HiWrenchScrewdriver />, color: "bg-emerald-600" },
         { title: "Experiences", value: experiences?.length || 0, icon: <HiOutlineBriefcase />, color: "bg-purple-600" },
         { title: "Educations", value: educations?.length || 0, icon: <HiOutlineAcademicCap />, color: "bg-orange" },
     ];
@@ -83,7 +80,7 @@ const Dashboard = () => {
 
 			{/* 2. Main Visualization & Sidebar Cards */}
 			<div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-				<div className="lg:col-span-8">
+				<div className="lg:col-span-8 min-w-0">
 					<VisitorTrendChart data={analytics?.visitorTrends || []} />
 				</div>
                 
@@ -99,10 +96,10 @@ const Dashboard = () => {
                                 to="/adminPanel/projects" 
                                 className="inline-flex items-center justify-center gap-4 bg-white px-10 py-5 rounded-3xl text-orange font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform shadow-xl"
                             >
-                                Add Project <HiOutlineRocket className="text-xl" />
+                                Add Project <HiRocket className="text-xl" />
                             </Link>
                         </div>
-                        <HiOutlineCommandLine className="absolute -right-10 -bottom-10 text-[18rem] text-white/10 -rotate-12 pointer-events-none group-hover:rotate-0 transition-transform duration-1000" />
+                        <HiRocket className="absolute -right-10 -bottom-10 text-[18rem] text-white/5 -rotate-12 pointer-events-none group-hover:rotate-0 transition-transform duration-1000" />
                     </div>
 
                     {/* Email Summary Card */}

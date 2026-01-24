@@ -32,14 +32,14 @@ const profileSchema = z.object({
 	phoneNumber: z.string().min(10, "Phone number must be at least 10 characters"),
 	moreInfo: z.object({
 		job: z.object({
-			title: z.string().min(5, "Job title must be at least 5 characters"),
-			note: z.string().min(20, "Job note must be at least 20 characters"),
+			title: z.string().min(3, "Job title must be at least 3 characters"),
+			note: z.string().min(10, "Job note must be at least 10 characters"),
 		}),
 		aboutMe: z.object({
-			title: z.string().min(5, "About title must be at least 5 characters"),
-			note: z.string().min(20, "About message must be at least 20 characters"),
+			title: z.string().min(3, "About title must be at least 3 characters"),
+			note: z.string().min(10, "About message must be at least 10 characters"),
 		}),
-		location: z.string().min(3, "Location is required"),
+		location: z.string().min(2, "Location is required"),
 		available: z.boolean().default(true),
 	}),
 	github: z.string().url("Invalid URL").optional().or(z.literal("")),
@@ -129,7 +129,7 @@ const Profile = () => {
 
 	return (
 		<div className="max-w-6xl mx-auto pb-20">
-            {/* Upper Profile Box (matches Image 5) */}
+            {/* Upper Profile Box */}
             <section className="bg-[#0b1120] rounded-[2.5rem] p-10 border border-white/5 mb-14 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-orange/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
                 
@@ -176,7 +176,7 @@ const Profile = () => {
                                         className="w-full flex items-center gap-4 px-5 py-4 hover:bg-white/5 rounded-2xl transition-colors text-white group"
                                     >
                                         <HiOutlineEye className="text-xl text-blue-500 group-hover:scale-110 transition-transform" />
-                                        <span className="text-[10px] font-black uppercase tracking-widest">View Pattern</span>
+                                        <span className="text-[10px] font-black uppercase tracking-widest">View Photo</span>
                                     </button>
                                 </Motion.div>
                             )}
@@ -203,7 +203,7 @@ const Profile = () => {
                 </div>
             </section>
 
-            {/* Navigation Tabs (matches top of Images 0-4) */}
+            {/* Navigation Tabs */}
             <div className="flex justify-center mb-10 px-4">
                 <div className="inline-flex p-1.5 bg-[#0b1120] border border-white/5 rounded-full shadow-2xl">
                     {tabs.map((tab) => (

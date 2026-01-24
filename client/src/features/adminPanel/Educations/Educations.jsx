@@ -69,7 +69,7 @@ const Educations = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-20">
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-20 auto-rows-fr">
 				<AnimatePresence mode="popLayout">
 					{educations?.map((edu) => (
 						<EducationCard

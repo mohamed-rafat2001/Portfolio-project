@@ -8,54 +8,52 @@ const ExperienceCard = ({ experience, onEdit, onDelete }) => {
 			initial={{ opacity: 0, scale: 0.95 }}
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-			className="group bg-[#0b1120] rounded-[2.5rem] p-10 border border-white/5 transition-all shadow-2xl relative overflow-hidden"
+			className="group bg-[#0b1120] rounded-[2rem] p-6 border border-white/5 transition-all shadow-xl relative overflow-hidden"
 		>
-			<div className="absolute top-0 right-0 w-40 h-40 bg-orange/5 -mr-20 -mt-20 rounded-full blur-[60px]" />
+			<div className="absolute top-0 right-0 w-32 h-32 bg-orange opacity-[0.02] -mr-16 -mt-16 rounded-full group-hover:opacity-[0.05] transition-opacity" />
 
 			<div className="flex items-start justify-between gap-4 relative z-10">
-				<div className="flex items-start gap-8">
-					<div className="w-20 h-20 rounded-3xl bg-[#030712] border border-white/5 flex items-center justify-center text-4xl text-orange group-hover:scale-110 transition-transform">
+				<div className="flex items-start gap-4">
+					<div className="w-12 h-12 rounded-xl bg-[#030712] border border-white/5 flex items-center justify-center text-xl text-orange group-hover:scale-110 transition-transform shrink-0">
 						<HiOutlineBriefcase />
 					</div>
-					<div className="space-y-2">
-						<h3 className="text-2xl font-black text-white uppercase tracking-tight">
+					<div className="space-y-1">
+						<h3 className="text-base font-black text-white uppercase tracking-tight">
 							{experience.role}
 						</h3>
-						<p className="text-orange font-black text-[10px] uppercase tracking-[0.2em]">
+						<p className="text-orange font-black text-[9px] uppercase tracking-[0.2em] opacity-80">
 							{experience.company}
 						</p>
 					</div>
 				</div>
 
-				<div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all">
+				<div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
 					<button
 						onClick={() => onEdit(experience)}
-						className="p-3 hover:bg-white/5 text-gray-500 hover:text-white rounded-2xl transition-all"
+						className="p-1.5 hover:bg-white/5 text-gray-500 hover:text-white rounded-lg transition-all cursor-pointer"
 					>
-						<HiOutlinePencil className="text-lg" />
+						<HiOutlinePencil className="text-sm" />
 					</button>
 					<button
 						onClick={() => onDelete(experience._id)}
-						className="p-3 hover:bg-red-500/10 text-gray-500 hover:text-red-500 rounded-2xl transition-all"
+						className="p-1.5 hover:bg-red-500/10 text-gray-500 hover:text-red-500 rounded-lg transition-all cursor-pointer"
 					>
-						<HiOutlineTrash className="text-lg" />
+						<HiOutlineTrash className="text-sm" />
 					</button>
 				</div>
 			</div>
 
-			<div className="mt-10 relative z-10">
-				<div className="flex items-center gap-4 text-gray-400">
-					<div className="px-4 py-2 bg-white/5 rounded-full flex items-center gap-3 border border-white/5">
-                        <HiOutlineCalendar className="text-orange" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">
-                            {experience.duration}
-                        </span>
-                    </div>
+			<div className="mt-6 relative z-10">
+				<div className="flex items-center gap-3 text-gray-400">
+                    <HiOutlineCalendar className="text-base text-orange/60" />
+                    <span className="text-[9px] font-black uppercase tracking-widest opacity-60">
+                        {experience.duration}
+                    </span>
 				</div>
 			</div>
 
 			{experience.description && (
-				<p className="mt-8 text-gray-400 leading-bold font-medium opacity-60 line-clamp-3 pl-4 border-l-2 border-white/5">
+				<p className="mt-4 text-[11px] text-gray-500 leading-relaxed font-medium opacity-60 line-clamp-2 pl-3 border-l-2 border-white/5">
 					{experience.description}
 				</p>
 			)}

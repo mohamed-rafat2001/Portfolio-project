@@ -175,7 +175,6 @@ const AdminLayout = () => {
                                     <HiSun className="text-lg" />
                                 ) : (
                                     <HiMoon className="text-lg" />
-                                shade: 100
                                 )}
                             </Motion.button>
 

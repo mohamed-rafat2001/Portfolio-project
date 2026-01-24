@@ -69,7 +69,7 @@ const Experiences = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 xl:grid-cols-2 gap-10 pb-20">
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-20">
 				<AnimatePresence mode="popLayout">
 					{experiences?.map((exp) => (
 						<ExperienceCard

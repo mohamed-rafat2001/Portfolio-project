@@ -1,4 +1,10 @@
+import Skills from "./components/Skills";
+
 const PublicSkills = () => {
-	return <h1>Skills</h1>;
+	return (
+		<div className="pt-20">
+			<Skills />
+		</div>
+	);
 };
 export default PublicSkills;

@@ -15,7 +15,14 @@ const visitorSchema = new mongoose.Schema(
 			default: Date.now,
 		},
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+	}
 );
 
-export default mongoose.model("VisitorModel", visitorSchema);
+// Index for faster queries on timestamp
+visitorSchema.index({ timestamp: 1 });
+
+const VisitorModel = mongoose.model("VisitorModel", visitorSchema);
+
+export default VisitorModel;

@@ -15,40 +15,43 @@ const socialMediaSchema = new mongoose.Schema({
 		trim: true,
 	},
 });
-const infoDetailsSchema= new mongoose.Schema({
-	job:{
-		title:{
+
+const infoDetailsSchema = new mongoose.Schema({
+	job: {
+		title: {
 			type: String,
 			trim: true,
 			min: 5,
 		},
-		note:{
+		note: {
 			type: String,
 			trim: true,
-			min: 20,}
+			min: 20,
+		},
 	},
 	aboutMe: {
-		title:{
+		title: {
 			type: String,
 			trim: true,
 			min: 5,
-			},
-			note:{
-				type: String,
-				trim: true,
-				min: 20,
-			}
 		},
-		location: {
+		note: {
 			type: String,
 			trim: true,
-			
+			min: 20,
 		},
-		available:{
-			type: Boolean,
-			default: true,
-		}
-})
+	},
+	location: {
+		type: String,
+		trim: true,
+		required: [true, "location is required"],
+	},
+	available: {
+		type: Boolean,
+		default: true,
+	},
+});
+
 const userSchema = new mongoose.Schema(
 	{
 		name: {
@@ -64,8 +67,14 @@ const userSchema = new mongoose.Schema(
 			validate: [validator.isEmail, "please enter the valid email"],
 		},
 		profileImg: {
-			public_id: String,
-			secure_url: String,
+			public_id: {
+				type: String,
+				default: null,
+			},
+			secure_url: {
+				type: String,
+				default: null,
+			},
 		},
 		phoneNumber: {
 			type: String,
@@ -74,7 +83,7 @@ const userSchema = new mongoose.Schema(
 			validate: [validator.isMobilePhone, "please enter valid phone number"],
 		},
 		socialMedia: [socialMediaSchema],
-		moreInfo:infoDetailsSchema,
+		moreInfo: infoDetailsSchema,
 		password: {
 			type: String,
 			trim: true,
@@ -92,7 +101,6 @@ const userSchema = new mongoose.Schema(
 				message: "passwords are not the same",
 			},
 		},
-
 		role: {
 			type: String,
 			enum: ["User", "Admin"],
@@ -136,11 +144,9 @@ userSchema.methods.createCookie = function (res) {
 	const token = this.createToken();
 	res.cookie("token", token, {
 		httpOnly: true,
-		secure: process.env.NODE_MODE === "PRODUCTION" ? true : false,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "strict",
-		expires: new Date(
-			Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-		),
+		maxAge: (process.env.COOKIE_EXPIRE || 7) * 24 * 60 * 60 * 1000,
 	});
 };
 
@@ -148,11 +154,12 @@ userSchema.methods.createCookie = function (res) {
 userSchema.methods.removeCookie = function (res) {
 	res.cookie("token", "", {
 		httpOnly: true,
-		secure: process.env.NODE_MODE === "PRODUCTION" ? true : false,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "strict",
 		maxAge: 0,
 	});
 };
+
 // create passwordResetToken
 userSchema.methods.createPasswordResetCode = function () {
 	const buffer = crypto.randomBytes(6);

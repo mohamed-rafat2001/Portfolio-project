@@ -5,13 +5,14 @@ import UserModel from "../models/userModel.js";
 
 export const protect = catchAsync(async (req, res, next) => {
 	let token;
-	// get token from cookies
-	if (req.cookies.token) {
+
+	// get token only from cookies
+	if (req.cookies && req.cookies.token) {
 		token = req.cookies.token;
 	}
 
 	if (!token) {
-		return next(new appError("no token", 404));
+		return next(new appError("no token", 401));
 	}
 
 	// verification token
@@ -22,7 +23,7 @@ export const protect = catchAsync(async (req, res, next) => {
 
 	if (!user)
 		return next(
-			new appError("the user belong to this token does'nt exist", 400)
+			new appError("the user belong to this token does'nt exist", 401)
 		);
 
 	req.user = user;

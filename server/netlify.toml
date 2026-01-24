@@ -1,0 +1,21 @@
+[build]
+  command = "npm install --prefix ../client && npm run build --prefix ../client && npm install"
+  publish = "../client/dist"
+  functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  external_node_modules = ["express", "serverless-http", "mongoose", "bcryptjs", "cloudinary", "cookie-parser", "cors", "dotenv", "jsonwebtoken", "multer", "nodemailer", "validator", "zod"]
+  node_bundle = true
+
+[[redirects]]
+  from = "/api/v1/*"
+  to = "/.netlify/functions/api/api/v1/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

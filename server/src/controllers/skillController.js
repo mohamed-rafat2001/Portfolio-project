@@ -7,16 +7,16 @@ import {
 	updateDoc,
 } from "./handlerFactory.js";
 
-// add new Skill
+// add new skill
 export const createSkill = createDoc(SkillModel, ["name", "skills"]);
 
-// update Skill
+// update skill
 export const updateSkill = updateDoc(SkillModel, ["name", "skills"]);
 
-// get Skill by id
+// get skill by id
 export const getSkill = getDocById(SkillModel);
 
-// delete Skill by id
+// delete skill by id
 export const deleteSkill = deleteDoc(SkillModel);
 
 // get all skills

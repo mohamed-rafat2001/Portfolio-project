@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { createProj } from "../../../../services/project.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { createProject } from "../services/project";
 
 export default function useCreateProj() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		createProj,
-		"Projects"
-	);
-	return { error, isLoading, createProj: mutate, data };
+	return useMutationFactory(createProject, "Projects");
 }

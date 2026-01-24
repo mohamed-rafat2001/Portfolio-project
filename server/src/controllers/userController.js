@@ -8,29 +8,48 @@ import { cloudinary } from "../utils/cloudinaryConfig.js";
 export const getMe = catchAsync(async (req, res, next) => {
 	sendResponse(res, 200, req.user);
 });
+
 export const getAdminInfo = catchAsync(async (req, res, next) => {
 	const admin = await UserModel.findOne({ role: "Admin" }).select(
-		"name",
-		"email",
-		"phoneNumber",
-		"profileImg",
-		"aboutMe",
-		"socialMedia"
+		"name email phoneNumber moreInfo profileImg"
 	);
 
 	if (!admin) return next(new appError("admin not found", 404));
 
 	sendResponse(res, 200, admin);
 });
-// update user info
+
+// update user info (basic info)
 export const updateMe = catchAsync(async (req, res, next) => {
-	const { name, email, phoneNumber, aboutMe, location } = req.body;
+	const { name, email, phoneNumber } = req.body;
+
+	const updateData = {};
+	if (name) updateData.name = name;
+	if (email) updateData.email = email;
+	if (phoneNumber) updateData.phoneNumber = phoneNumber;
+
 	const user = await UserModel.findByIdAndUpdate(
 		req.user._id,
-		{ name, email, phoneNumber, aboutMe, location },
+		{ $set: updateData },
 		{ runValidators: true, new: true }
 	);
 	if (!user) return next(new appError("user not updated", 400));
+	sendResponse(res, 200, user);
+});
+
+// update user nested infos
+export const updateInfos = catchAsync(async (req, res, next) => {
+	const { moreInfo } = req.body;
+
+	if (!moreInfo) return next(new appError("please provide infos to update", 400));
+
+	const user = await UserModel.findByIdAndUpdate(
+		req.user._id,
+		{ $set: { moreInfo } },
+		{ runValidators: true, new: true }
+	);
+
+	if (!user) return next(new appError("user infos not updated", 400));
 	sendResponse(res, 200, user);
 });
 
@@ -54,35 +73,26 @@ export const profileImg = catchAsync(async (req, res, next) => {
 		{ runValidators: true, new: true }
 	);
 
-	if (!user) return next(new appError("profile image not updated", 400));
-
+	if (!user) return next(new appError("user not updated", 400));
 	sendResponse(res, 200, user);
 });
+
 // update password
 export const updatePassword = catchAsync(async (req, res, next) => {
-	const { newPassword, currentPassword, confirmPassword } = req.body;
+	const { currentPassword, password, confirmPassword } = req.body;
 
-	// check if newPassword, currentPassword, confirmPassword are provided
-	if (!newPassword || !currentPassword || !confirmPassword)
+	if (!currentPassword || !password || !confirmPassword)
 		return next(new appError("please provide all fields", 400));
 
-	const user = await UserModel.findById(req.user._id);
-	const isPasswordCorrect = await user.correctPassword(
-		currentPassword,
-		user.password
-	);
+	const user = await UserModel.findById(req.user._id).select("+password");
 
-	// check if password is correct
-	if (!user || !isPasswordCorrect)
-		return next(new appError("invalid credentials", 400));
+	if (!(await user.correctPassword(currentPassword, user.password)))
+		return next(new appError("current password is wrong", 401));
 
-	// update the password
-	user.password = newPassword;
+	user.password = password;
 	user.confirmPassword = confirmPassword;
 	await user.save();
 
-	// create token & cookie
 	user.createCookie(res);
-
 	sendResponse(res, 200, { user });
 });

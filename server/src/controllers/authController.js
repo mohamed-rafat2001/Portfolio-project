@@ -5,31 +5,6 @@ import appError from "../utils/appError.js";
 import sendEmail from "../utils/sendEmail.js";
 import { passwordResetCodeTemplate } from "../utils/emailTemplates.js";
 
-// sign up func
-export const signUp = catchAsync(async (req, res, next) => {
-	const { name, email, phoneNumber, password, confirmPassword, location } =
-		req.body;
-	const user = new UserModel({
-		name,
-		email,
-		phoneNumber,
-		password,
-		confirmPassword,
-		role: "User",
-		location,
-	});
-
-	//  check if user created
-	if (!user) return next(new appError("user didn't create", 400));
-
-	// create token && cookie
-	user.createCookie(res);
-
-	// save user && send response
-	await user.save();
-	sendResponse(res, 201, { user });
-});
-
 // login func
 export const login = catchAsync(async (req, res, next) => {
 	const { password, email } = req.body;
@@ -45,12 +20,13 @@ export const login = catchAsync(async (req, res, next) => {
 	if (!isCorrectPass)
 		return next(new appError("email or password is wrong", 400));
 
-	// create token && cookie
+	// create cookie
 	user.createCookie(res);
 
 	// send response
 	sendResponse(res, 201, { user });
 });
+
 // log out func
 export const logOut = catchAsync(async (req, res, next) => {
 	const user = await UserModel.findById(req.user._id);
@@ -92,30 +68,28 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 	sendResponse(res, 200, {});
 });
 
-// reset password
+// reset password func
 export const resetPassword = catchAsync(async (req, res, next) => {
-	// get resetCode and password from req.body
-	const { resetCode, password, confirmPassword } = req.body;
-	// check if resetCode and password are provided
-	if (!resetCode || !password || !confirmPassword)
+	const { email, resetCode, password, confirmPassword } = req.body;
+
+	if (!email || !resetCode || !password || !confirmPassword)
 		return next(new appError("please provide all fields", 400));
 
-	// find the user using resetCode
 	const user = await UserModel.findOne({
+		email,
 		passwordResetCode: resetCode,
 		passwordResetExpires: { $gt: Date.now() },
 	});
-	if (!user) return next(new appError("invalid reset code", 400));
 
-	// update the user password
+	if (!user) return next(new appError("invalid or expired reset code", 400));
+
 	user.password = password;
 	user.confirmPassword = confirmPassword;
 	user.passwordResetCode = undefined;
 	user.passwordResetExpires = undefined;
+
 	await user.save();
 
-	// create token & cookie
 	user.createCookie(res);
-
 	sendResponse(res, 200, { user });
 });

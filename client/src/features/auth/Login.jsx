@@ -1,19 +1,39 @@
-import { useState } from "react";
 import { motion as Motion } from "framer-motion";
 import { HiEnvelope, HiLockClosed, HiArrowRight } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import toast from "react-hot-toast";
 import useLogin from "./hooks/useLogin";
-import Logo from "../../ui/Logo";
+import Logo from "../../shared/components/ui/Logo";
+
+const loginSchema = z.object({
+	email: z.string().email("Please enter a valid email"),
+	password: z.string().min(1, "Password is required"),
+});
 
 const Login = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
 	const { loginFunc, isLoading } = useLogin();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: zodResolver(loginSchema),
+		mode: "onChange",
+	});
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (!email || !password) return;
-		loginFunc({ email, password });
+	const onSubmit = (data) => {
+		loginFunc(data, {
+			onSuccess: () => {
+				toast.success("Welcome back!");
+				navigate("/adminPanel/dashboard");
+			},
+			onError: (err) =>
+				toast.error(err?.response?.data?.message || "Login failed"),
+		});
 	};
 
 	return (
@@ -25,7 +45,9 @@ const Login = () => {
 			>
 				<div className="text-center mb-10">
 					<div className="inline-block mb-6">
-						<Logo textSize="text-2xl" iconSize="text-3xl" />
+						<Link to="/">
+							<Logo textSize="text-2xl" iconSize="text-3xl" />
+						</Link>
 					</div>
 					<h1 className="text-3xl font-black text-[#1a1a1a] dark:text-white uppercase tracking-tighter">
 						Welcome Back
@@ -35,8 +57,13 @@ const Login = () => {
 					</p>
 				</div>
 
+<<<<<<< HEAD
 				<div className="bg-white dark:bg-[#0a0f1c] rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-black/[0.03] border border-gray-100 dark:border-gray-800/50">
 					<form onSubmit={handleSubmit} className="space-y-6">
+=======
+				<div className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-black/[0.03] border border-gray-100 dark:border-gray-800">
+					<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 						<div className="space-y-2">
 							<label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">
 								Email Address
@@ -44,14 +71,24 @@ const Login = () => {
 							<div className="relative">
 								<HiEnvelope className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
 								<input
+									{...register("email")}
 									type="email"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
 									placeholder="admin@example.com"
+<<<<<<< HEAD
 									className="w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-gray-800/50 focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white"
+=======
+									className={`w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border ${
+										errors.email ? "border-red-500" : "border-gray-100 dark:border-gray-700"
+									} focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white`}
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 									disabled={isLoading}
 								/>
 							</div>
+							{errors.email && (
+								<p className="text-[10px] text-red-500 ml-4 font-bold uppercase tracking-widest">
+									{errors.email.message}
+								</p>
+							)}
 						</div>
 
 						<div className="space-y-2">
@@ -61,14 +98,24 @@ const Login = () => {
 							<div className="relative">
 								<HiLockClosed className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
 								<input
+									{...register("password")}
 									type="password"
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
 									placeholder="••••••••"
+<<<<<<< HEAD
 									className="w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-gray-800/50 focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white"
+=======
+									className={`w-full pl-14 pr-6 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border ${
+										errors.password ? "border-red-500" : "border-gray-100 dark:border-gray-700"
+									} focus:border-orange/30 focus:outline-none transition-all text-sm font-medium dark:text-white`}
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 									disabled={isLoading}
 								/>
 							</div>
+							{errors.password && (
+								<p className="text-[10px] text-red-500 ml-4 font-bold uppercase tracking-widest">
+									{errors.password.message}
+								</p>
+							)}
 						</div>
 
 						<button
@@ -80,18 +127,6 @@ const Login = () => {
 							{!isLoading && <HiArrowRight className="text-lg" />}
 						</button>
 					</form>
-
-					<div className="mt-8 text-center">
-						<p className="text-sm text-gray-500 font-medium">
-							Don't have an account?{" "}
-							<Link
-								to="/signup"
-								className="text-orange font-black uppercase tracking-widest text-[10px] hover:underline"
-							>
-								Sign Up
-							</Link>
-						</p>
-					</div>
 				</div>
 			</Motion.div>
 		</div>

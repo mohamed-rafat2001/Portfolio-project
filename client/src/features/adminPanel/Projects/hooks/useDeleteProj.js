@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { deleteProj } from "../../../../services/project.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { deleteProject } from "../services/project";
 
 export default function useDeleteProj() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		deleteProj,
-		"Projects"
-	);
-	return { error, isLoading, deleteProj: mutate, data };
+	return useMutationFactory(deleteProject, "Projects");
 }

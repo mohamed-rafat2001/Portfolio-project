@@ -1,4 +1,7 @@
 import express from "express";
+import { protect, restrictTo } from "../middlewares/authMiddleware.js";
+import { validate } from "../middlewares/validateMiddleware.js";
+import { skillValidation } from "../validations/skillValidation.js";
 import {
 	createSkill,
 	deleteSkill,
@@ -6,17 +9,17 @@ import {
 	getSkill,
 	updateSkill,
 } from "../controllers/skillController.js";
-import { protect, restrictTo } from "../middlewares/authMiddleware.js";
 
-const router = express.Router();
+const Router = express.Router();
 
-router.get("/", getAllSkills);
-router.get("/:id", getSkill);
+// Public routes
+Router.get("/", getAllSkills);
+Router.get("/:id", getSkill);
 
 // Protected routes
-router.use(protect, restrictTo("Admin"));
-router.post("/", createSkill);
-router.patch("/:id", updateSkill);
-router.delete("/:id", deleteSkill);
+Router.use(protect, restrictTo("Admin"));
+Router.post("/", skillValidation, validate, createSkill);
+Router.patch("/:id", skillValidation, validate, updateSkill);
+Router.delete("/:id", deleteSkill);
 
-export default router;
+export default Router;

@@ -25,6 +25,19 @@ const educationSchema = new mongoose.Schema(
 			min: 3,
 			required: [true, "description is required"],
 		},
+		images: [
+			{
+				public_id: String,
+				secure_url: String,
+			},
+		],
+		attachments: [
+			{
+				public_id: String,
+				secure_url: String,
+				originalName: String,
+			},
+		],
 	},
 	{ timestamps: true }
 );

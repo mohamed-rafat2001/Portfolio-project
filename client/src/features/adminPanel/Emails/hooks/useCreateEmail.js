@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { createEmail } from "../../../../services/email.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { createEmail } from "../services/email";
 
 export default function useCreateEmail() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		createEmail,
-		"Emails"
-	);
-	return { error, isLoading, createEmail: mutate, data };
+	return useMutationFactory(createEmail, "Emails");
 }

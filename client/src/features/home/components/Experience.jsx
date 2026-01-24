@@ -1,7 +1,12 @@
 import { motion as Motion } from "framer-motion";
 import { HiBriefcase, HiAcademicCap } from "react-icons/hi2";
+<<<<<<< HEAD
 import useExperiences from "../../../hooks/useExperiences";
 import useEducations from "../../../hooks/useEducations";
+=======
+import useExperiences from "../../adminPanel/Experiences/hooks/useExperiences";
+import useEducations from "../../adminPanel/Educations/hooks/useEducations";
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const sectionVariants = {
@@ -35,7 +40,11 @@ const Experience = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.1 }}
 			variants={sectionVariants}
+<<<<<<< HEAD
 			className="py-24 md:py-32 bg-[#030712] text-white"
+=======
+			className="py-12 md:py-16 bg-white dark:bg-gray-900"
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		>
 			<div className="container mx-auto px-4">
 				<div className="flex items-center gap-8 mb-24">
@@ -60,13 +69,18 @@ const Experience = () => {
 							</h3>
 						</div>
 
+<<<<<<< HEAD
 						<div className="space-y-16 border-l border-gray-800/50 ml-8 pl-12">
+=======
+						<div className="space-y-8 border-l-2 border-gray-100 dark:border-gray-800 ml-5 pl-6 md:pl-8">
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 							{experiences?.map((exp, index) => (
 								<Motion.div
 									key={exp._id}
 									initial={{ opacity: 0, x: -20 }}
 									whileInView={{ opacity: 1, x: 0 }}
 									transition={{ delay: index * 0.1 }}
+<<<<<<< HEAD
 									className="relative group"
 								>
 									{/* Dot */}
@@ -87,6 +101,24 @@ const Experience = () => {
 											</p>
 										</div>
 										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium">
+=======
+									className="relative"
+								>
+									{/* Dot */}
+									<div className="absolute -left-[33px] md:-left-[41px] top-2 w-4 h-4 rounded-full bg-white dark:bg-gray-950 border-4 border-orange shadow-lg shadow-orange/20"></div>
+
+									<div className="space-y-3">
+										<span className="text-[10px] font-black text-orange uppercase tracking-[0.2em] bg-orange/5 px-3 py-1 rounded-full border border-orange/10">
+											{exp.duration}
+										</span>
+										<h4 className="text-xl font-bold text-[#1a1a1a] dark:text-white">
+											{exp.role}
+										</h4>
+										<p className="text-gray-400 font-bold text-sm uppercase tracking-widest">
+											{exp.company}
+										</p>
+										<p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 											{exp.description}
 										</p>
 									</div>
@@ -96,9 +128,15 @@ const Experience = () => {
 					</div>
 
 					{/* Education Column */}
+<<<<<<< HEAD
 					<div className="space-y-16">
 						<div className="flex items-center gap-6">
 							<div className="w-16 h-16 rounded-[1.5rem] bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-orange text-3xl shadow-2xl">
+=======
+					<div className="space-y-12">
+						<div className="flex items-center gap-4 mb-8">
+							<div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 text-xl">
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 								<HiAcademicCap />
 							</div>
 							<h3 className="text-3xl font-black text-white uppercase tracking-tighter">
@@ -106,13 +144,18 @@ const Experience = () => {
 							</h3>
 						</div>
 
+<<<<<<< HEAD
 						<div className="space-y-16 border-l border-gray-800/50 ml-8 pl-12">
+=======
+						<div className="space-y-8 border-l-2 border-gray-100 dark:border-gray-800 ml-5 pl-8">
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 							{educations?.map((edu, index) => (
 								<Motion.div
 									key={edu._id}
 									initial={{ opacity: 0, x: -20 }}
 									whileInView={{ opacity: 1, x: 0 }}
 									transition={{ delay: index * 0.1 }}
+<<<<<<< HEAD
 									className="relative group"
 								>
 									{/* Dot */}
@@ -133,6 +176,24 @@ const Experience = () => {
 											</p>
 										</div>
 										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium">
+=======
+									className="relative"
+								>
+									{/* Dot */}
+									<div className="absolute -left-[41px] top-2 w-4 h-4 rounded-full bg-white dark:bg-gray-950 border-4 border-blue-500 shadow-lg shadow-blue-500/20"></div>
+
+									<div className="space-y-3">
+										<span className="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] bg-blue-500/5 px-3 py-1 rounded-full border border-blue-500/10">
+											{edu.duration}
+										</span>
+										<h4 className="text-xl font-bold text-[#1a1a1a] dark:text-white">
+											{edu.degree}
+										</h4>
+										<p className="text-gray-400 font-bold text-sm uppercase tracking-widest">
+											{edu.institution}
+										</p>
+										<p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 											{edu.description}
 										</p>
 									</div>

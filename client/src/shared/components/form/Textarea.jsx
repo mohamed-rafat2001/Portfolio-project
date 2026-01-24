@@ -10,7 +10,11 @@ const Textarea = React.forwardRef(({ label, error, className = "", ...props }, r
 			)}
 			<textarea
 				ref={ref}
+<<<<<<< HEAD
 				className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-950 border rounded-2xl focus:ring-4 transition-all text-sm resize-none outline-none ${
+=======
+				className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-950 border rounded-xl focus:ring-4 transition-all text-sm resize-none outline-none ${
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 					error 
 						? 'border-red-500/50 focus:ring-red-500/5 focus:border-red-500' 
 						: 'border-transparent focus:border-orange/20 focus:ring-orange/5'

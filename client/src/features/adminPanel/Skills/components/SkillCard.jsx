@@ -8,7 +8,11 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
 			initial={{ opacity: 0, scale: 0.9 }}
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, scale: 0.9 }}
+<<<<<<< HEAD
 			className="group bg-white dark:bg-gray-900 rounded-[2.5rem] p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:border-orange/20 transition-all"
+=======
+			className="group bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:border-orange/20 transition-all"
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		>
 			<div className="flex items-center justify-between mb-6">
 				<h3 className="font-black text-gray-900 dark:text-white uppercase tracking-tight text-lg">
@@ -34,7 +38,11 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
 				{skill.skills?.map((s, index) => (
 					<span
 						key={index}
+<<<<<<< HEAD
 						className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider rounded-2xl border border-gray-100 dark:border-gray-700"
+=======
+						className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider rounded-lg"
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 					>
 						{s}
 					</span>

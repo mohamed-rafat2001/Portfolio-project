@@ -34,6 +34,10 @@ const projectSchema = new mongoose.Schema(
 			trim: true,
 			required: [true, "githubLink is required"],
 		},
+		isPreferred: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{ timestamps: true }
 );

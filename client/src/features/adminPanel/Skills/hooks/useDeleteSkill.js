@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { deleteSkill } from "../../../../services/skill.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { deleteSkill } from "../services/skill";
 
 export default function useDeleteSkill() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		deleteSkill,
-		"Skills"
-	);
-	return { error, isLoading, deleteSkill: mutate, data };
+	return useMutationFactory(deleteSkill, "Skills");
 }

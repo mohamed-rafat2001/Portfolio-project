@@ -6,6 +6,21 @@ import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 
+// Import Routers
+import authRouter from "./src/routers/authRouter.js";
+import userRouter from "./src/routers/userRouter.js";
+import projectRouter from "./src/routers/projectRouter.js";
+import emailRouter from "./src/routers/emailRouter.js";
+import experienceRouter from "./src/routers/experienceRouter.js";
+import educationRouter from "./src/routers/educationRouter.js";
+import skillRouter from "./src/routers/skillRouter.js";
+import visitorRouter from "./src/routers/visitorRouter.js";
+import analyticsRouter from "./src/routers/analyticsRouter.js";
+
+// Error Handling
+import globalErrorHandler from "./src/controllers/errorController.js";
+import appError from "./src/utils/appError.js";
+
 const app = express();
 
 // Global Middlewares
@@ -13,7 +28,11 @@ const app = express();
 // CORS Configuration
 app.use(
 	cors({
-		origin: process.env.CLIENT_URL || "http://localhost:5173",
+		origin: [
+			"http://localhost:5173",
+			process.env.FRONTEND_URL,
+			process.env.CLIENT_URL,
+		].filter(Boolean),
 		credentials: true,
 	})
 );
@@ -35,24 +54,12 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 // Prevent parameter pollution
 app.use(hpp());
 
-// Routers
-import authRouter from "./src/routers/authRouter.js";
-import userRouter from "./src/routers/userRouter.js";
-import projectRouter from "./src/routers/projectRouter.js";
-import emailRouter from "./src/routers/emailRouter.js";
-import experienceRouter from "./src/routers/experienceRouter.js";
-import educationRouter from "./src/routers/educationRouter.js";
-import skillRouter from "./src/routers/skillRouter.js";
-import visitorRouter from "./src/routers/visitorRouter.js";
-import globalErrorHandler from "./src/controllers/errorController.js";
-import appError from "./src/utils/appError.js";
-
-// use Routers
+// Use Routers
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/projects", projectRouter);
@@ -61,11 +68,14 @@ app.use("/api/v1/experiences", experienceRouter);
 app.use("/api/v1/educations", educationRouter);
 app.use("/api/v1/skills", skillRouter);
 app.use("/api/v1/visitors", visitorRouter);
+app.use("/api/v1/analytics", analyticsRouter);
 
-app.all(/(.*)/, (req, res, next) => {
+// 404 Handler
+app.use((req, res, next) => {
 	next(new appError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
+// Global Error Handler
 app.use(globalErrorHandler);
 
 export default app;

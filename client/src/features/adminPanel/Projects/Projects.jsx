@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { HiOutlinePlus, HiOutlinePencil, HiOutlineTrash, HiOutlineGlobeAlt, HiOutlineCodeBracket } from "react-icons/hi2";
-import useProjects from "../../../hooks/useProjects";
+import { AnimatePresence } from "framer-motion";
+import { HiOutlinePlus, HiOutlineBriefcase } from "react-icons/hi2";
+import useProjects from "./hooks/useProjects";
 import useCreateProj from "./hooks/useCreateProj";
 import useUpdateProj from "./hooks/useUpdateProj";
 import useDeleteProj from "./hooks/useDeleteProj";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import ProjectCard from "./components/ProjectCard";
+import ProjectForm from "./components/ProjectForm";
+import Modal from "../../../shared/components/ui/Modal";
+import AdminHeader from "../../../shared/components/ui/AdminHeader";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const Projects = () => {
-	const { projects, isLoading } = useProjects();
-	const { createProj, isLoading: isCreating } = useCreateProj();
-	const { updateProj, isLoading: isUpdating } = useUpdateProj();
-	const { deleteProj, isLoading: isDeleting } = useDeleteProj();
+	const { projects, isLoading: isFetching } = useProjects();
+	const { mutate: createProj, isLoading: isCreating } = useCreateProj();
+	const { mutate: updateProj, isLoading: isUpdating } = useUpdateProj();
+	const { mutate: deleteProj } = useDeleteProj();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingProject, setEditingProject] = useState(null);
 
+<<<<<<< HEAD
 	const { register, handleSubmit, reset, setValue } = useForm();
 
 	const onSubmit = (data) => {
@@ -53,13 +58,16 @@ const Projects = () => {
 			setEditingProject(null);
 			reset();
 		}
+=======
+	const handleAdd = () => {
+		setEditingProject(null);
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		setIsModalOpen(true);
 	};
 
-	const closeModal = () => {
-		setIsModalOpen(false);
-		setEditingProject(null);
-		reset();
+	const handleEdit = (project) => {
+		setEditingProject(project);
+		setIsModalOpen(true);
 	};
 
 	const handleDelete = (id) => {
@@ -68,10 +76,26 @@ const Projects = () => {
 		}
 	};
 
-	if (isLoading) return <div className="flex items-center justify-center h-64"><div className="w-10 h-10 border-4 border-orange border-t-transparent rounded-full animate-spin"></div></div>;
+	const handleSubmit = (formData) => {
+		if (editingProject) {
+			updateProj(
+				{ id: editingProject._id, data: formData },
+				{
+					onSuccess: () => setIsModalOpen(false),
+				}
+			);
+		} else {
+			createProj(formData, {
+				onSuccess: () => setIsModalOpen(false),
+			});
+		}
+	};
+
+	if (isFetching) return <LoadingState message="Loading projects..." />;
 
 	return (
 		<div className="space-y-8">
+<<<<<<< HEAD
 			<div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 				<div>
 					<h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Projects</h1>
@@ -249,6 +273,45 @@ const Projects = () => {
 					</div>
 				)}
 			</AnimatePresence>
+=======
+			<AdminHeader
+				title="Projects"
+				description="Manage your portfolio projects and case studies"
+				icon={<HiOutlineBriefcase />}
+				action={{
+					label: "Add Project",
+					icon: <HiOutlinePlus />,
+					onClick: handleAdd,
+				}}
+			/>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8">
+				<AnimatePresence mode="popLayout">
+					{projects?.map((project) => (
+						<ProjectCard
+							key={project._id}
+							project={project}
+							onEdit={handleEdit}
+							onDelete={handleDelete}
+						/>
+					))}
+				</AnimatePresence>
+			</div>
+
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				title={editingProject ? "Edit Project" : "Add Project"}
+				maxWidth="max-w-2xl"
+			>
+				<ProjectForm
+					project={editingProject}
+					onSubmit={handleSubmit}
+					isLoading={isCreating || isUpdating}
+					onCancel={() => setIsModalOpen(false)}
+				/>
+			</Modal>
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		</div>
 	);
 };

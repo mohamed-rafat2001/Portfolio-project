@@ -1,50 +1,33 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { HiOutlinePlus, HiOutlinePencil, HiOutlineTrash, HiOutlineAcademicCap, HiOutlineCalendar } from "react-icons/hi2";
-import useEducations from "../../../hooks/useEducations";
+import {  AnimatePresence } from "framer-motion";
+import { HiOutlinePlus, HiOutlineAcademicCap } from "react-icons/hi2";
+import useEducations from "./hooks/useEducations";
 import useCreateEdu from "./hooks/useCreateEdu";
 import useUpdateEdu from "./hooks/useUpdateEdu";
 import useDeleteEdu from "./hooks/useDeleteEdu";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import EducationCard from "./components/EducationCard";
+import EducationForm from "./components/EducationForm";
+import Modal from "../../../shared/components/ui/Modal";
+import AdminHeader from "../../../shared/components/ui/AdminHeader";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const Educations = () => {
-	const { educations, isLoading } = useEducations();
-	const { createEdu, isLoading: isCreating } = useCreateEdu();
-	const { updateEdu, isLoading: isUpdating } = useUpdateEdu();
-	const { deleteEdu, isLoading: isDeleting } = useDeleteEdu();
+	const { educations, isLoading: isFetching } = useEducations();
+	const { mutate: createEdu, isLoading: isCreating } = useCreateEdu();
+	const { mutate: updateEdu, isLoading: isUpdating } = useUpdateEdu();
+	const { mutate: deleteEdu } = useDeleteEdu();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingEdu, setEditingEdu] = useState(null);
 
-	const { register, handleSubmit, reset, setValue } = useForm();
-
-	const onSubmit = (data) => {
-		if (editingEdu) {
-			updateEdu({ id: editingEdu._id, data });
-		} else {
-			createEdu(data);
-		}
-		closeModal();
-	};
-
-	const openModal = (edu = null) => {
-		if (edu) {
-			setEditingEdu(edu);
-			setValue("institution", edu.institution);
-			setValue("degree", edu.degree);
-			setValue("duration", edu.duration);
-			setValue("description", edu.description);
-		} else {
-			setEditingEdu(null);
-			reset();
-		}
+	const handleAdd = () => {
+		setEditingEdu(null);
 		setIsModalOpen(true);
 	};
 
-	const closeModal = () => {
-		setIsModalOpen(false);
-		setEditingEdu(null);
-		reset();
+	const handleEdit = (edu) => {
+		setEditingEdu(edu);
+		setIsModalOpen(true);
 	};
 
 	const handleDelete = (id) => {
@@ -53,10 +36,26 @@ const Educations = () => {
 		}
 	};
 
-	if (isLoading) return <div className="flex items-center justify-center h-64"><div className="w-10 h-10 border-4 border-orange border-t-transparent rounded-full animate-spin"></div></div>;
+	const handleSubmit = (data) => {
+		if (editingEdu) {
+			updateEdu(
+				{ id: editingEdu._id, data },
+				{
+					onSuccess: () => setIsModalOpen(false),
+				}
+			);
+		} else {
+			createEdu(data, {
+				onSuccess: () => setIsModalOpen(false),
+			});
+		}
+	};
+
+	if (isFetching) return <LoadingState message="Loading education history..." />;
 
 	return (
 		<div className="space-y-8">
+<<<<<<< HEAD
 			<div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 				<div>
 					<h1 className="text-4xl font-black uppercase tracking-tighter text-gray-900 dark:text-white">Educations</h1>
@@ -228,6 +227,45 @@ const Educations = () => {
 					</div>
 				)}
 			</AnimatePresence>
+=======
+			<AdminHeader
+				title="Education"
+				description="Manage your academic background and certifications"
+				icon={<HiOutlineAcademicCap />}
+				action={{
+					label: "Add Education",
+					icon: <HiOutlinePlus />,
+					onClick: handleAdd,
+				}}
+			/>
+
+			<div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+				<AnimatePresence mode="popLayout">
+					{educations?.map((edu) => (
+						<EducationCard
+							key={edu._id}
+							education={edu}
+							onEdit={handleEdit}
+							onDelete={handleDelete}
+						/>
+					))}
+				</AnimatePresence>
+			</div>
+
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				title={editingEdu ? "Edit Education" : "Add Education"}
+				maxWidth="max-w-2xl"
+			>
+				<EducationForm
+					education={editingEdu}
+					onSubmit={handleSubmit}
+					isLoading={isCreating || isUpdating}
+					onCancel={() => setIsModalOpen(false)}
+				/>
+			</Modal>
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		</div>
 	);
 };

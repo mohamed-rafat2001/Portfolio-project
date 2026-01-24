@@ -1,10 +1,6 @@
-import useMutationFactory from "../../../../hooks/useMutationFactory.js";
-import { createEdu } from "../../../../services/education.js";
+import useMutationFactory from "../../../../shared/hooks/useMutationFactory";
+import { createEducation } from "../services/education";
 
 export default function useCreateEdu() {
-	const { error, isLoading, mutate, data } = useMutationFactory(
-		createEdu,
-		"Educations"
-	);
-	return { error, isLoading, createEdu: mutate, data };
+	return useMutationFactory(createEducation, "Educations");
 }

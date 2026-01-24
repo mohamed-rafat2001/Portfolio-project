@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { HiOutlinePlus, HiOutlinePencil, HiOutlineTrash, HiOutlineWrench } from "react-icons/hi2";
-import useSkills from "../../../hooks/useSkills";
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import { HiOutlinePlus, HiOutlineSparkles } from "react-icons/hi2";
+import useSkills from "./hooks/useSkills";
 import useCreateSkill from "./hooks/useCreateSkill";
 import useUpdateSkill from "./hooks/useUpdateSkill";
 import useDeleteSkill from "./hooks/useDeleteSkill";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import SkillCard from "./components/SkillCard";
+import SkillForm from "./components/SkillForm";
+import Modal from "../../../shared/components/ui/Modal";
+import AdminHeader from "../../../shared/components/ui/AdminHeader";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const Skills = () => {
-	const { skills, isLoading } = useSkills();
-	const { createSkill, isLoading: isCreating } = useCreateSkill();
-	const { updateSkill, isLoading: isUpdating } = useUpdateSkill();
-	const { deleteSkill, isLoading: isDeleting } = useDeleteSkill();
+	const { skills, isLoading: isFetching } = useSkills();
+	const { mutate: createSkill, isLoading: isCreating } = useCreateSkill();
+	const { mutate: updateSkill, isLoading: isUpdating } = useUpdateSkill();
+	const { mutate: deleteSkill } = useDeleteSkill();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingSkill, setEditingSkill] = useState(null);
 
+<<<<<<< HEAD
 	const { register, handleSubmit, reset, setValue } = useForm();
 
 	const onSubmit = (data) => {
@@ -42,13 +47,16 @@ const Skills = () => {
 			setEditingSkill(null);
 			reset();
 		}
+=======
+	const handleAdd = () => {
+		setEditingSkill(null);
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		setIsModalOpen(true);
 	};
 
-	const closeModal = () => {
-		setIsModalOpen(false);
-		setEditingSkill(null);
-		reset();
+	const handleEdit = (skill) => {
+		setEditingSkill(skill);
+		setIsModalOpen(true);
 	};
 
 	const handleDelete = (id) => {
@@ -57,8 +65,22 @@ const Skills = () => {
 		}
 	};
 
-	if (isLoading) return <div className="flex items-center justify-center h-64"><div className="w-10 h-10 border-4 border-orange border-t-transparent rounded-full animate-spin"></div></div>;
+	const handleSubmit = (data) => {
+		if (editingSkill) {
+			updateSkill(
+				{ id: editingSkill._id, data },
+				{
+					onSuccess: () => setIsModalOpen(false),
+				}
+			);
+		} else {
+			createSkill(data, {
+				onSuccess: () => setIsModalOpen(false),
+			});
+		}
+	};
 
+<<<<<<< HEAD
 	return (
 		<div className="space-y-12">
 			<div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -182,6 +204,48 @@ const Skills = () => {
 					</div>
 				)}
 			</AnimatePresence>
+=======
+	if (isFetching) return <LoadingState message="Loading skills..." />;
+
+	return (
+		<div className="space-y-8">
+			<AdminHeader
+				title="Skills & Expertise"
+				description="Manage your technical skills and proficiency levels"
+				icon={<HiOutlineSparkles />}
+				action={{
+					label: "Add Skill",
+					icon: <HiOutlinePlus />,
+					onClick: handleAdd,
+				}}
+			/>
+
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+				<AnimatePresence mode="popLayout">
+					{skills?.map((skill) => (
+						<SkillCard
+							key={skill._id}
+							skill={skill}
+							onEdit={handleEdit}
+							onDelete={handleDelete}
+						/>
+					))}
+				</AnimatePresence>
+			</div>
+
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				title={editingSkill ? "Edit Skill" : "Add New Skill"}
+			>
+				<SkillForm
+					skill={editingSkill}
+					onSubmit={handleSubmit}
+					isLoading={isCreating || isUpdating}
+					onCancel={() => setIsModalOpen(false)}
+				/>
+			</Modal>
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		</div>
 	);
 };

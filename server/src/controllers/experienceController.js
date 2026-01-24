@@ -13,7 +13,6 @@ export const createExperience = createDoc(ExperienceModel, [
 	"description",
 	"duration",
 	"role",
-	"files",
 ]);
 
 // update Experience
@@ -22,7 +21,6 @@ export const updateExperience = updateDoc(ExperienceModel, [
 	"description",
 	"duration",
 	"role",
-	"files",
 ]);
 
 // get Experience by id

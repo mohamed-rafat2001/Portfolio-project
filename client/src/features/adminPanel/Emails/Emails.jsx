@@ -1,24 +1,43 @@
 import { useState } from "react";
-import { HiOutlineTrash, HiOutlineEnvelope, HiOutlineUser, HiOutlineClock } from "react-icons/hi2";
-import useEmails from "../../../hooks/useEmails";
+import { AnimatePresence } from "framer-motion";
+import { HiOutlineEnvelope } from "react-icons/hi2";
+import useEmails from "./hooks/useEmails";
+import useUpdateEmailStatus from "./hooks/useUpdateEmailStatus";
 import useDeleteEmail from "./hooks/useDeleteEmail";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import EmailCard from "./components/EmailCard";
+import EmailDetails from "./components/EmailDetails";
+import Modal from "../../../shared/components/ui/Modal";
+import AdminHeader from "../../../shared/components/ui/AdminHeader";
+import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const Emails = () => {
 	const { emails, isLoading } = useEmails();
-	const { deleteEmail, isLoading: isDeleting } = useDeleteEmail();
-	const [selectedEmail, setSelectedEmail] = useState(null);
+	const { mutate: updateStatus } = useUpdateEmailStatus();
+	const { mutate: deleteEmail } = useDeleteEmail();
 
-	const handleDelete = (id) => {
-		if (window.confirm("Are you sure you want to delete this message?")) {
-			deleteEmail(id);
-			if (selectedEmail?._id === id) setSelectedEmail(null);
+	const [selectedEmail, setSelectedEmail] = useState(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleEmailClick = (email) => {
+		setSelectedEmail(email);
+		setIsModalOpen(true);
+		if (!email.isRead) {
+			updateStatus({ id: email._id, data: { isRead: true } });
 		}
 	};
 
-	if (isLoading) return <div className="flex items-center justify-center h-64"><div className="w-10 h-10 border-4 border-orange border-t-transparent rounded-full animate-spin"></div></div>;
+	const handleDelete = (id) => {
+		if (window.confirm("Are you sure you want to delete this email?")) {
+			deleteEmail(id);
+		}
+	};
+
+	if (isLoading) return <LoadingState message="Loading emails..." />;
+
+	const unreadCount = emails?.filter((e) => !e.isRead).length || 0;
 
 	return (
+<<<<<<< HEAD
 		<div className="h-[calc(100vh-180px)] flex flex-col space-y-8">
 			<div>
 				<h1 className="text-4xl font-black uppercase tracking-tighter text-gray-900 dark:text-white">EMAILS</h1>
@@ -87,8 +106,47 @@ const Emails = () => {
 							</Motion.div>
 						))
 					)}
-				</div>
+=======
+		<div className="space-y-8">
+			<AdminHeader
+				title="Inbox"
+				description={
+					unreadCount > 0
+						? `You have ${unreadCount} unread messages`
+						: "All caught up! No new messages"
+				}
+				icon={<HiOutlineEnvelope />}
+			/>
 
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+				<AnimatePresence mode="popLayout">
+					{emails?.map((email) => (
+						<EmailCard
+							key={email._id}
+							email={email}
+							onClick={handleEmailClick}
+							onDelete={handleDelete}
+						/>
+					))}
+				</AnimatePresence>
+			</div>
+
+			{emails?.length === 0 && (
+				<div className="text-center py-20 bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-100 dark:border-gray-800">
+					<div className="w-20 h-20 bg-gray-50 dark:bg-gray-800 rounded-3xl flex items-center justify-center text-gray-400 text-3xl mx-auto mb-6">
+						<HiOutlineEnvelope />
+					</div>
+					<h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+						No emails yet
+					</h3>
+					<p className="text-gray-500 dark:text-gray-400">
+						Messages from your contact form will appear here
+					</p>
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
+				</div>
+			)}
+
+<<<<<<< HEAD
 				{/* Email Content */}
 				<div className="lg:col-span-8 overflow-hidden h-full">
 					<AnimatePresence mode="wait">
@@ -192,6 +250,16 @@ const Emails = () => {
 					</AnimatePresence>
 				</div>
 			</div>
+=======
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				title="Email Message"
+				maxWidth="max-w-3xl"
+			>
+				<EmailDetails email={selectedEmail} />
+			</Modal>
+>>>>>>> 3b627a6825f4c024e8c6cfc521c4d2364ecc4f41
 		</div>
 	);
 };

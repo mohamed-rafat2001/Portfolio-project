@@ -1,38 +1,33 @@
 import { motion as Motion } from "framer-motion";
+import { HiArrowUpRight } from "react-icons/hi2";
 
-const StatCard = ({ title, value, icon, trend, color }) => {
+const StatCard = ({ title, value, icon, color }) => {
 	return (
 		<Motion.div
-			initial={{ opacity: 0, scale: 0.95 }}
-			animate={{ opacity: 1, scale: 1 }}
-			className="p-8 bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm group hover:border-orange/20 transition-all"
+			initial={{ opacity: 0, y: 20 }}
+			whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+			className="p-10 bg-[#0b1120] rounded-[2.5rem] border border-white/5 shadow-2xl group hover:border-orange/20 transition-all relative flex flex-col justify-between aspect-square"
 		>
-			<div className="flex items-center justify-between mb-6">
-				<div
-					className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center text-2xl text-white shadow-lg shadow-black/5 group-hover:scale-110 transition-transform`}
-				>
-					{icon}
-				</div>
-				{trend && (
-					<span
-						className={`text-xs font-black px-3 py-1 rounded-full ${
-							trend.startsWith("+")
-								? "bg-green-50 text-green-500 dark:bg-green-900/20"
-								: "bg-red-50 text-red-500 dark:bg-red-900/20"
-						}`}
-					>
-						{trend}
-					</span>
-				)}
-			</div>
-			<div>
-				<p className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">
-					{title}
-				</p>
-				<h3 className="text-3xl font-black text-gray-900 dark:text-white">
-					{value}
-				</h3>
-			</div>
+            <div className="flex items-start justify-between">
+                <div
+                    className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center text-2xl text-white shadow-2xl group-hover:scale-110 transition-transform duration-500`}
+                >
+                    {icon}
+                </div>
+                <div className="text-gray-600 group-hover:text-white transition-colors">
+                    <HiArrowUpRight className="text-2xl" />
+                </div>
+            </div>
+
+            <div className="mt-10">
+                <h3 className="text-4xl font-black text-white mb-2">
+                    {value}
+                </h3>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
+                    {title}
+                </p>
+            </div>
 		</Motion.div>
 	);
 };

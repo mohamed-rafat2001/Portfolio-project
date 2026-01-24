@@ -8,7 +8,7 @@ const ExperienceCard = ({ experience, onEdit, onDelete }) => {
 			initial={{ opacity: 0, scale: 0.95 }}
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-			className="group bg-[#0b1120] rounded-[2rem] p-6 border border-white/5 transition-all shadow-xl relative overflow-hidden"
+			className="group bg-[#0b1120] rounded-[2rem] p-5 md:p-6 border border-white/5 transition-all shadow-xl relative overflow-hidden"
 		>
 			<div className="absolute top-0 right-0 w-32 h-32 bg-orange opacity-[0.02] -mr-16 -mt-16 rounded-full group-hover:opacity-[0.05] transition-opacity" />
 
@@ -53,7 +53,7 @@ const ExperienceCard = ({ experience, onEdit, onDelete }) => {
 			</div>
 
 			{experience.description && (
-				<p className="mt-4 text-[11px] text-gray-500 leading-relaxed font-medium opacity-60 line-clamp-2 pl-3 border-l-2 border-white/5">
+				<p className="mt-4 text-[11px] text-gray-500 leading-relaxed font-medium opacity-60 pl-3 border-l-2 border-white/5 whitespace-pre-wrap line-clamp-3">
 					{experience.description}
 				</p>
 			)}

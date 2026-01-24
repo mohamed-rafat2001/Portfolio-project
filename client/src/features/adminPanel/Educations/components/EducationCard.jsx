@@ -35,7 +35,7 @@ const EducationCard = ({ education, onEdit, onDelete }) => {
 			</div>
 
             {/* Content Container */}
-			<div className="flex-1 p-8 bg-[#0b1120] rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden group/box flex flex-col justify-between min-h-[200px]">
+			<div className="flex-1 p-6 md:p-8 bg-[#0b1120] rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden group/box flex flex-col justify-between min-h-[200px]">
                 <div className="absolute inset-0 bg-orange/5 opacity-0 group-hover/box:opacity-100 transition-opacity blur-3xl pointer-events-none"></div>
 				
                 <div className="relative z-10">
@@ -45,7 +45,7 @@ const EducationCard = ({ education, onEdit, onDelete }) => {
                                 <HiOutlineAcademicCap className="text-2xl" />
                              </div>
                              <div>
-                                <h4 className="text-lg font-black text-white uppercase tracking-tight leading-tight line-clamp-2">
+                                <h4 className="text-lg font-black text-white uppercase tracking-tight leading-tight">
                                     {education.degree}
                                 </h4>
                              </div>
@@ -56,7 +56,7 @@ const EducationCard = ({ education, onEdit, onDelete }) => {
                     </div>
 
                     {education.description && (
-                        <p className="text-xs text-gray-400 leading-relaxed font-medium italic line-clamp-3 pl-3 border-l-2 border-white/10 group-hover/box:text-gray-300 transition-colors">
+                        <p className="text-xs text-gray-400 leading-relaxed font-medium italic pl-3 border-l-2 border-white/10 group-hover/box:text-gray-300 transition-colors whitespace-pre-wrap">
                             {education.description}
                         </p>
                     )}

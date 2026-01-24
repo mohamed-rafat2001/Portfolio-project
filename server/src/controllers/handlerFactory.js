@@ -79,11 +79,15 @@ export const getAllDocs = (Model) =>
 		const features = new APIFeatures(Model.find(), req.query)
 			.filter()
 			.sort()
-			.limitFields()
-			.paginate();
+			.limitFields();
+
+		// Get total results with filters applied (before pagination)
+		const totalResults = await Model.countDocuments(features.query.getFilter());
+
+		// Apply pagination
+		features.paginate();
 
 		const docs = await features.query;
-		const totalResults = await Model.countDocuments();
 
 		if (!docs) return next(new appError("no docs found", 404));
 

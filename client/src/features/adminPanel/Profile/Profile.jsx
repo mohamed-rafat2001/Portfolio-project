@@ -264,13 +264,14 @@ const Profile = () => {
                 isOpen={isViewPhotoOpen}
                 onClose={() => setIsViewPhotoOpen(false)}
                 title="Profile Photo"
-                maxWidth="max-w-2xl"
+                maxWidth="max-w-md"
+                padding="p-6 md:p-10"
             >
-                <div className="p-2.5 bg-[#030712] rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl">
+                <div className="bg-[#030712] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl aspect-square flex items-center justify-center p-4">
                     <img 
                         src={user?.profileImg?.secure_url} 
                         alt={user?.name} 
-                        className="w-full h-full object-contain rounded-[2.2rem]"
+                        className="max-w-full max-h-full object-contain rounded-xl"
                         crossOrigin="anonymous"
                     />
                 </div>

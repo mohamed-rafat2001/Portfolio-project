@@ -21,9 +21,9 @@ import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const Dashboard = () => {
 	const { user } = useCurrentUser();
-	const { projects, isLoading: projectsLoading } = useProjects();
+	const { projects, totalResults: totalProjects, isLoading: projectsLoading } = useProjects();
 	const { skills, isLoading: skillsLoading } = useSkills();
-	const { emails, isLoading: emailsLoading } = useEmails();
+	const { emails, totalResults: totalEmails, isLoading: emailsLoading } = useEmails();
 	const { experiences, isLoading: expLoading } = useExperiences();
 	const { educations, isLoading: eduLoading } = useEducations();
 	const { analytics, isLoading: analyticsLoading } = useAnalytics();
@@ -47,10 +47,11 @@ const Dashboard = () => {
 	];
 
     const contentStats = [
-        { title: "Projects", value: projects?.length || 0, icon: <HiOutlineRocketLaunch />, color: "bg-blue-600" },
-        { title: "Skills", value: skills?.length || 0, icon: <HiOutlineWrenchScrewdriver />, color: "bg-emerald-600" },
-        { title: "Experiences", value: experiences?.length || 0, icon: <HiOutlineBriefcase />, color: "bg-purple-600" },
-        { title: "Educations", value: educations?.length || 0, icon: <HiOutlineAcademicCap />, color: "bg-orange" },
+        { title: "Projects", value: totalProjects || 0, icon: <HiOutlineRocketLaunch />, color: "bg-blue-600" },
+        { title: "Skills", value: skills?.length || 0, icon: <HiOutlineWrenchScrewdriver />, color: "bg-orange" },
+        { title: "Messages", value: totalEmails || 0, icon: <HiOutlineEnvelope />, color: "bg-purple-600" },
+        { title: "Experience", value: experiences?.length || 0, icon: <HiOutlineBriefcase />, color: "bg-emerald-600" },
+        { title: "Education", value: educations?.length || 0, icon: <HiOutlineAcademicCap />, color: "bg-rose-600" },
     ];
 
     const unreadEmails = emails?.filter(e => !e.isRead).length || 0;
@@ -65,9 +66,9 @@ const Dashboard = () => {
                     <div className="w-1.5 h-8 bg-orange rounded-full" />
                     <h2 className="text-3xl font-black text-white uppercase tracking-tighter">Visitor Analytics</h2>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
                     {visitorStats.map((stat) => (
-                        <div key={stat.title} className="p-8 bg-[#0b1120] border border-white/5 rounded-[2.5rem] shadow-2xl flex flex-col items-center text-center">
+                        <div key={stat.title} className="p-6 md:p-8 bg-[#0b1120] border border-white/5 rounded-[2.5rem] shadow-2xl flex flex-col items-center text-center">
                             <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl text-white mb-6 shadow-2xl`}>
                                 {stat.icon}
                             </div>

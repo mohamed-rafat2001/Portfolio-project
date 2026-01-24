@@ -12,6 +12,6 @@ export default function useExperiences(params) {
 	});
 
 	const experiences = response?.data?.experiences || [];
-	const totalResults = response?.totalResults || 0;
+	const totalResults = response?.data?.totalResults || 0;
 	return { experiences, isLoading, error, totalResults };
 }

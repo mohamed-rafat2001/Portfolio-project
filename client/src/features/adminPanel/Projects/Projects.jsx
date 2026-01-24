@@ -14,7 +14,7 @@ import Pagination from "../../../shared/components/ui/Pagination";
 
 const Projects = () => {
 	const [page, setPage] = useState(1);
-	const limit = 6;
+	const limit = 3;
 	const { projects, isLoading: isFetching, totalResults } = useProjects({ page, limit });
 	const { mutate: createProj, isLoading: isCreating, progress: createProgress } = useCreateProj();
 	const { mutate: updateProj, isLoading: isUpdating, progress: updateProgress } = useUpdateProj();
@@ -74,6 +74,16 @@ const Projects = () => {
                 }}
             />
 
+			<div className="flex justify-end">
+				<Pagination 
+					page={page} 
+					totalResults={totalResults} 
+					limit={limit} 
+					setPage={setPage} 
+					size="small"
+				/>
+			</div>
+
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
 				<AnimatePresence mode="popLayout">
 					{projects?.map((project, index) => (
@@ -113,6 +123,7 @@ const Projects = () => {
 				totalResults={totalResults} 
 				limit={limit} 
 				setPage={setPage} 
+                size="small"
 			/>
 
 			<Modal

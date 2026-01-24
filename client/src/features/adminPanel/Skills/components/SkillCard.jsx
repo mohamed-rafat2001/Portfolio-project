@@ -40,10 +40,10 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
 			</div>
 
             {/* Tags Container */}
-			<div className="flex-1 p-8 bg-[#0b1120] rounded-[2.5rem] border border-white/5 flex flex-col gap-6 shadow-2xl relative overflow-hidden group/box">
+			<div className={`p-6 md:p-8 bg-[#0b1120] rounded-[2.5rem] border border-white/5 flex flex-col gap-6 shadow-2xl relative overflow-hidden group/box transition-all duration-500 ${showAll ? 'min-h-[400px]' : 'h-[300px]'}`}>
                 <div className="absolute inset-0 bg-orange/5 opacity-0 group-hover/box:opacity-100 transition-opacity blur-3xl pointer-events-none"></div>
 				
-                <div className="flex flex-wrap gap-3">
+                <div className={`flex flex-wrap gap-3 ${!showAll ? 'overflow-hidden' : ''}`}>
                     {displaySkills?.map((s, index) => (
                         <Motion.span
                             layout

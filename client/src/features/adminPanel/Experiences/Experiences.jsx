@@ -14,7 +14,7 @@ import Pagination from "../../../shared/components/ui/Pagination";
 
 const Experiences = () => {
 	const [page, setPage] = useState(1);
-	const limit = 6;
+	const limit = 3;
 	const { experiences, isLoading: isFetching, totalResults } = useExperiences({ page, limit });
 	const { mutate: createExp, isLoading: isCreating } = useCreateExp();
 	const { mutate: updateExp, isLoading: isUpdating } = useUpdateExp();
@@ -22,6 +22,11 @@ const Experiences = () => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingExp, setEditingExp] = useState(null);
+
+	// Re-check page if results are zero (e.g. after delete)
+	useEffect(() => {
+		if (experiences && experiences.length === 0 && page > 1) setPage(page - 1);
+	}, [experiences, page]);
 
 	const handleAdd = () => {
 		setEditingExp(null);
@@ -69,7 +74,17 @@ const Experiences = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-20 auto-rows-fr">
+			<div className="flex justify-end">
+				<Pagination 
+					page={page} 
+					totalResults={totalResults} 
+					limit={limit} 
+					setPage={setPage} 
+					size="small"
+				/>
+			</div>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
 				<AnimatePresence mode="popLayout">
 					{experiences?.map((exp) => (
 						<ExperienceCard
@@ -107,6 +122,7 @@ const Experiences = () => {
 				totalResults={totalResults} 
 				limit={limit} 
 				setPage={setPage} 
+                size="small"
 			/>
 
 			<Modal

@@ -41,7 +41,7 @@ const ContactForm = () => {
 
 	return (
 		<div className="lg:col-span-7">
-			<div className="bg-[#0a0f1c] rounded-[3rem] p-10 md:p-14 border border-gray-800/50 relative overflow-hidden shadow-2xl">
+			<div className="bg-[#0a0f1c] rounded-[3rem] p-6 md:p-10 lg:p-14 border border-gray-800/50 relative overflow-hidden shadow-2xl">
 				<div className="absolute top-0 right-0 w-80 h-80 bg-orange/5 rounded-full blur-[100px] -mr-40 -mt-40"></div>
 				
 				<form onSubmit={handleSubmit(onSubmit)} className="relative z-10 space-y-8">

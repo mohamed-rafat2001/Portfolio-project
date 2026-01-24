@@ -117,7 +117,7 @@ const ProjectDetails = () => {
                                 <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-white/90">Project Overview</h2>
                             </div>
 
-                            <div className="bg-[#0a0f1c]/60 backdrop-blur-3xl rounded-[2.5rem] p-10 md:p-14 border border-white/5 shadow-2xl space-y-12 group relative overflow-hidden">
+                            <div className="bg-[#0a0f1c]/60 backdrop-blur-3xl rounded-[2.5rem] p-6 md:p-10 lg:p-14 border border-white/5 shadow-2xl space-y-12 group relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-96 h-96 bg-orange/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
                                 
                                 <div className="space-y-10 relative z-10">
@@ -145,7 +145,7 @@ const ProjectDetails = () => {
 
                                     {/* Sub-cards */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 border-t border-white/5">
-                                        <div className="p-8 bg-black/40 rounded-[1.5rem] border border-white/5 flex items-center gap-6 group/box hover:border-orange/20 transition-all">
+                                        <div className="p-6 md:p-8 bg-black/40 rounded-[1.5rem] border border-white/5 flex items-center gap-6 group/box hover:border-orange/20 transition-all">
                                             <div className="text-orange opacity-60">
                                                 <HiOutlineSparkles className="text-2xl" />
                                             </div>
@@ -155,7 +155,7 @@ const ProjectDetails = () => {
                                             </div>
                                         </div>
 
-                                        <div className="p-8 bg-black/40 rounded-[1.5rem] border border-white/5 flex items-center gap-6 group/box hover:border-blue-500/20 transition-all">
+                                        <div className="p-6 md:p-8 bg-black/40 rounded-[1.5rem] border border-white/5 flex items-center gap-6 group/box hover:border-blue-500/20 transition-all">
                                             <div className="text-blue-400 opacity-60">
                                                 <HiCodeBracket className="text-2xl" />
                                             </div>

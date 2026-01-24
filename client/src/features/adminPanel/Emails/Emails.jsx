@@ -13,12 +13,17 @@ import Pagination from "../../../shared/components/ui/Pagination";
 
 const Emails = () => {
 	const [page, setPage] = useState(1);
-	const limit = 10;
+	const limit = 3;
 	const { emails, isLoading, totalResults } = useEmails({ page, limit });
 	const { mutate: updateStatus } = useUpdateEmailStatus();
 	const { mutate: deleteEmail } = useDeleteEmail();
 
 	const [selectedEmail, setSelectedEmail] = useState(null);
+
+	// Re-check page if results are zero (e.g. after delete)
+	useEffect(() => {
+		if (emails && emails.length === 0 && page > 1) setPage(page - 1);
+	}, [emails, page]);
 
 	// Set first email as selected by default when emails load
 	useEffect(() => {
@@ -51,7 +56,7 @@ const Emails = () => {
 	const unreadCount = emails?.filter((e) => !e.read).length || 0;
 
 	return (
-		<div className="flex flex-col h-[calc(100vh-140px)] gap-8">
+		<div className="flex flex-col h-auto gap-8">
 			<AdminHeader
 				title="Messages Hub"
 				description={
@@ -62,10 +67,20 @@ const Emails = () => {
 				icon={<HiOutlineEnvelope />}
 			/>
 
-			<div className="flex-1 flex gap-8 min-h-0 overflow-hidden">
+			<div className="flex justify-end -mt-4">
+				<Pagination 
+					page={page} 
+					totalResults={totalResults} 
+					limit={limit} 
+					setPage={setPage} 
+					size="small"
+				/>
+			</div>
+
+			<div className="flex-1 flex flex-col lg:flex-row gap-8 min-h-0">
 				{/* Left Sidebar: Email List */}
-				<div className="w-[380px] flex flex-col gap-6 h-full">
-                    <div className="flex-1 overflow-y-auto pr-4 space-y-4 custom-scrollbar">
+				<div className="w-full lg:w-[320px] flex flex-col gap-6 h-auto shrink-0">
+                    <div className="space-y-4 min-h-0">
                         <AnimatePresence mode="popLayout">
                             {emails?.map((email) => (
                                 <EmailCard
@@ -86,7 +101,7 @@ const Emails = () => {
                         )}
                     </div>
                     
-                    <div className="pt-2">
+                    <div className="pt-2 border-t border-white/5">
                         <Pagination 
                             page={page} 
                             totalResults={totalResults} 
@@ -98,7 +113,7 @@ const Emails = () => {
 				</div>
 
 				{/* Right main: Email content details */}
-				<div className="flex-1 h-full bg-white dark:bg-[#0b1120] rounded-[3rem] border border-gray-100 dark:border-white/5 overflow-y-auto custom-scrollbar shadow-2xl p-12">
+				<div className="flex-1 bg-[#0b1120] rounded-[3rem] border border-white/5 p-4 md:p-8 overflow-visible shadow-2xl relative min-h-[400px]">
 					<AnimatePresence mode="wait">
 						{selectedEmail ? (
 							<Motion.div

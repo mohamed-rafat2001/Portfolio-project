@@ -14,6 +14,6 @@ export default function useProjects(params, options = {}) {
 
 	const projects = response?.data?.projects || [];
 	const results = response?.results || 0;
-	const totalResults = response?.totalResults || 0;
+	const totalResults = response?.data?.totalResults || 0;
 	return { projects, isLoading, error, results, totalResults };
 }

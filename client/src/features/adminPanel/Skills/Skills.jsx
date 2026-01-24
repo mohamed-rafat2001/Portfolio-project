@@ -14,7 +14,7 @@ import Pagination from "../../../shared/components/ui/Pagination";
 
 const Skills = () => {
 	const [page, setPage] = useState(1);
-	const limit = 8;
+	const limit = 3;
 	const { skills, isLoading: isFetching, totalResults } = useSkills({ page, limit });
 	const { mutate: createSkill, isLoading: isCreating } = useCreateSkill();
 	const { mutate: updateSkill, isLoading: isUpdating } = useUpdateSkill();
@@ -22,6 +22,11 @@ const Skills = () => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingSkill, setEditingSkill] = useState(null);
+
+	// Re-check page if results are zero (e.g. after delete)
+	useEffect(() => {
+		if (skills && skills.length === 0 && page > 1) setPage(page - 1);
+	}, [skills, page]);
 
 	const handleAdd = () => {
 		setEditingSkill(null);
@@ -69,7 +74,17 @@ const Skills = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10 pb-20 auto-rows-fr">
+			<div className="flex justify-end">
+				<Pagination 
+					page={page} 
+					totalResults={totalResults} 
+					limit={limit} 
+					setPage={setPage} 
+					size="small"
+				/>
+			</div>
+
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10 pb-20">
 				<AnimatePresence mode="popLayout">
 					{skills?.map((skill) => (
 						<SkillCard
@@ -107,6 +122,7 @@ const Skills = () => {
 				totalResults={totalResults} 
 				limit={limit} 
 				setPage={setPage} 
+                size="small"
 			/>
 
 			<Modal

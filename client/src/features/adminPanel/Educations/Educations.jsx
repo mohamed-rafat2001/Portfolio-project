@@ -14,7 +14,7 @@ import Pagination from "../../../shared/components/ui/Pagination";
 
 const Educations = () => {
 	const [page, setPage] = useState(1);
-	const limit = 6;
+	const limit = 2;
 	const { educations, isLoading: isFetching, totalResults } = useEducations({ page, limit });
 	const { mutate: createEdu, isLoading: isCreating } = useCreateEdu();
 	const { mutate: updateEdu, isLoading: isUpdating } = useUpdateEdu();
@@ -22,6 +22,11 @@ const Educations = () => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingEdu, setEditingEdu] = useState(null);
+
+	// Re-check page if results are zero (e.g. after delete)
+	useEffect(() => {
+		if (educations && educations.length === 0 && page > 1) setPage(page - 1);
+	}, [educations, page]);
 
 	const handleAdd = () => {
 		setEditingEdu(null);
@@ -69,7 +74,17 @@ const Educations = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-20 auto-rows-fr">
+			<div className="flex justify-end">
+				<Pagination 
+					page={page} 
+					totalResults={totalResults} 
+					limit={limit} 
+					setPage={setPage} 
+					size="small"
+				/>
+			</div>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-10">
 				<AnimatePresence mode="popLayout">
 					{educations?.map((edu) => (
 						<EducationCard
@@ -107,6 +122,7 @@ const Educations = () => {
 				totalResults={totalResults} 
 				limit={limit} 
 				setPage={setPage} 
+                size="small"
 			/>
 
 			<Modal

@@ -52,7 +52,7 @@ const ProjectCard = ({ project, index }) => {
                 </div>
 
                 {/* Tightened Content Area */}
-                <div className="px-8 py-7 flex flex-col flex-grow relative">
+                <div className="px-6 py-6 md:px-8 md:py-7 flex flex-col flex-grow relative">
                     <h3 className="text-[22px] font-black text-white uppercase tracking-tighter mb-3 leading-tight group-hover/card:text-[#f97316] transition-colors duration-300">
                         {project.title}
                     </h3>

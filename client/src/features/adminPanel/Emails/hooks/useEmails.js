@@ -11,6 +11,6 @@ export default function useEmails(params) {
 		queryFn: () => getAllEmails(params),
 	});
 	const emails = response?.data?.emails || [];
-	const totalResults = response?.totalResults || 0;
+	const totalResults = response?.data?.totalResults || 0;
 	return { emails, isLoading, error, totalResults };
 }

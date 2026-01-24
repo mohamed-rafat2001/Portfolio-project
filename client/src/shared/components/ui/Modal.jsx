@@ -1,7 +1,7 @@
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { HiOutlineXMark } from "react-icons/hi2";
 
-const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHeader = false }) => {
+const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHeader = false, padding = "px-12 pb-12" }) => {
 	return (
 		<AnimatePresence>
 			{isOpen && (
@@ -38,7 +38,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 						)}
 
 						{/* Body */}
-						<div className="px-12 pb-12 overflow-y-auto custom-scrollbar">
+						<div className={`${padding} overflow-y-auto custom-scrollbar`}>
 							{children}
 						</div>
 					</Motion.div>

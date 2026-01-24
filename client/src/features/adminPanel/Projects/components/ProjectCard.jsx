@@ -10,10 +10,10 @@ const ProjectCard = ({ project, onEdit, onDelete, index }) => {
 			initial={{ opacity: 0, scale: 0.95 }}
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-			className="group bg-white dark:bg-[#0b1120] rounded-[2.5rem] shadow-sm dark:shadow-2xl shadow-black/5 hover:shadow-xl dark:hover:shadow-orange/10 transition-all duration-500 overflow-hidden flex flex-col border border-gray-100 dark:border-white/5 aspect-square"
+			className="group bg-white dark:bg-[#0b1120] rounded-[2.5rem] shadow-sm dark:shadow-2xl shadow-black/5 hover:shadow-xl dark:hover:shadow-orange/10 transition-all duration-500 overflow-hidden flex flex-col border border-gray-100 dark:border-white/5 min-h-[400px]"
 		>
-			{/* High-Impact Dominant Image Area (75% of card) */}
-			<div className="relative h-[75%] overflow-hidden bg-gray-50 dark:bg-[#030712]">
+			{/* High-Impact Dominant Image Area (70% of card) */}
+			<div className="relative h-[70%] overflow-hidden bg-gray-50 dark:bg-[#030712]">
 				<img
 					src={project.mainImg?.secure_url}
 					alt={project.title}
@@ -57,9 +57,9 @@ const ProjectCard = ({ project, onEdit, onDelete, index }) => {
 			</div>
 
 			{/* Minimalist Footnote Area */}
-			<div className="px-8 flex-1 flex flex-col justify-center bg-white dark:bg-[#0b1120] relative">
-				<div className="flex items-center justify-between gap-4">
-                    <h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-1 leading-tight group-hover:text-orange transition-colors line-clamp-1">
+			<div className="px-6 py-5 md:px-8 md:py-6 flex-1 flex flex-col justify-center bg-white dark:bg-[#0b1120] relative">
+				<div className="flex items-center justify-between gap-4 mb-2">
+                    <h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-tight group-hover:text-orange transition-colors line-clamp-2">
                         {project.title}
                     </h3>
                     <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-100 dark:border-white/5 shadow-sm shrink-0">
@@ -68,7 +68,7 @@ const ProjectCard = ({ project, onEdit, onDelete, index }) => {
                     </div>
                 </div>
 				
-				<p className="text-[13px] text-gray-500 dark:text-gray-400 font-bold leading-relaxed line-clamp-1 opacity-80 group-hover:opacity-100 transition-opacity">
+				<p className="text-[13px] text-gray-500 dark:text-gray-400 font-bold leading-relaxed line-clamp-2 opacity-80 group-hover:opacity-100 transition-opacity">
 					{project.description}
 				</p>
 			</div>

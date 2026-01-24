@@ -60,7 +60,7 @@ const Experience = () => {
 							</h3>
 						</div>
 
-						<div className="space-y-16 border-l border-gray-800/50 ml-8 pl-12">
+						<div className="space-y-16 border-l border-gray-800/50 ml-4 md:ml-8 pl-8 md:pl-12">
 							{experiences?.map((exp, index) => (
 								<Motion.div
 									key={exp._id}
@@ -70,7 +70,7 @@ const Experience = () => {
 									className="relative group"
 								>
 									{/* Dot */}
-									<div className="absolute -left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
+									<div className="absolute -left-[41px] md:-left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
 
 									<div className="space-y-6">
 										<div className="inline-block px-5 py-2 rounded-xl bg-orange/5 border border-orange/10 group-hover:border-orange/30 transition-colors">
@@ -86,7 +86,7 @@ const Experience = () => {
 												{exp.company}
 											</p>
 										</div>
-										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium">
+										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
 											{exp.description}
 										</p>
 									</div>
@@ -106,7 +106,7 @@ const Experience = () => {
 							</h3>
 						</div>
 
-						<div className="space-y-16 border-l border-gray-800/50 ml-8 pl-12">
+						<div className="space-y-16 border-l border-gray-800/50 ml-4 md:ml-8 pl-8 md:pl-12">
 							{educations?.map((edu, index) => (
 								<Motion.div
 									key={edu._id}
@@ -116,7 +116,7 @@ const Experience = () => {
 									className="relative group"
 								>
 									{/* Dot */}
-									<div className="absolute -left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
+									<div className="absolute -left-[41px] md:-left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
 
 									<div className="space-y-6">
 										<div className="inline-block px-5 py-2 rounded-xl bg-orange/5 border border-orange/10 group-hover:border-orange/30 transition-colors">
@@ -132,7 +132,7 @@ const Experience = () => {
 												{edu.institution}
 											</p>
 										</div>
-										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium">
+										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
 											{edu.description}
 										</p>
 									</div>

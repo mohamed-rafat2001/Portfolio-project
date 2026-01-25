@@ -6,7 +6,7 @@ import {
 	HiPhone,
 	HiMapPin,
 } from "react-icons/hi2";
-import useAdminInfo from "../../../hooks/useAdminInfo";
+import useAdminInfo from "../../../shared/hooks/useAdminInfo";
 
 const sectionVariants = {
 	hidden: { opacity: 0, y: 50 },

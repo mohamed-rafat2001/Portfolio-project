@@ -7,7 +7,7 @@ import {
 	FaFacebook,
 	FaGlobe,
 } from "react-icons/fa";
-import useAdminInfo from "../../../hooks/useAdminInfo";
+import useAdminInfo from "../../../shared/hooks/useAdminInfo";
 import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const getIcon = (name) => {

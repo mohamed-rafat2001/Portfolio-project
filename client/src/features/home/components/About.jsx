@@ -1,7 +1,7 @@
 import { motion as Motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi2";
 import profileImg from "../../../shared/assets/profissionalMe.png";
-import useAdminInfo from "../../../hooks/useAdminInfo";
+import useAdminInfo from "../../../shared/hooks/useAdminInfo";
 
 import LoadingState from "../../../shared/components/ui/LoadingState";
 

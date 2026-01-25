@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAdminInfo } from "../services/user.js";
+import { getAdminInfo } from "../../services/user.js";
 
 export default function useAdminInfo() {
 	const {

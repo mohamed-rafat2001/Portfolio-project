@@ -1,6 +1,6 @@
 import { HiCodeBracket } from "react-icons/hi2";
 import { motion as Motion } from "framer-motion";
-import useAdminInfo from "../../../hooks/useAdminInfo";
+import useAdminInfo from "../../hooks/useAdminInfo";
 
 const Logo = ({
 	className = "",

@@ -1,6 +1,6 @@
 [build]
-  command = "npm install --prefix ../client && npm run build --prefix ../client && npm install"
-  publish = "../client/dist"
+  command = "npm install"
+  publish = "public"
   functions = "functions"
 
 [build.environment]
@@ -13,9 +13,4 @@
 [[redirects]]
   from = "/api/v1/*"
   to = "/.netlify/functions/api/api/v1/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
   status = 200

@@ -1,7 +1,16 @@
 import axios from "axios";
 
+const getBaseURL = () => {
+	const url = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1/";
+	// Ensure the production URL ends with /api/v1/ if it doesn't already
+	if (!url.endsWith("/api/v1/")) {
+		return `${url.replace(/\/$/, "")}/api/v1/`;
+	}
+	return url;
+};
+
 const mainApi = axios.create({
-	baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1/",
+	baseURL: getBaseURL(),
 	withCredentials: true,
 });
 

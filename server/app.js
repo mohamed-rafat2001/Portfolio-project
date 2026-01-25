@@ -78,15 +78,15 @@ app.use(getFunction(mongoSanitize)());
 app.use(getFunction(hpp)());
 
 // Use Routers
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/projects", projectRouter);
-app.use("/api/v1/emails", emailRouter);
-app.use("/api/v1/experiences", experienceRouter);
-app.use("/api/v1/educations", educationRouter);
-app.use("/api/v1/skills", skillRouter);
-app.use("/api/v1/visitors", visitorRouter);
-app.use("/api/v1/analytics", analyticsRouter);
+app.use("/api/v1/auth", getFunction(authRouter));
+app.use("/api/v1/users", getFunction(userRouter));
+app.use("/api/v1/projects", getFunction(projectRouter));
+app.use("/api/v1/emails", getFunction(emailRouter));
+app.use("/api/v1/experiences", getFunction(experienceRouter));
+app.use("/api/v1/educations", getFunction(educationRouter));
+app.use("/api/v1/skills", getFunction(skillRouter));
+app.use("/api/v1/visitors", getFunction(visitorRouter));
+app.use("/api/v1/analytics", getFunction(analyticsRouter));
 
 // 404 Handler
 app.use((req, res, next) => {
@@ -94,6 +94,6 @@ app.use((req, res, next) => {
 });
 
 // Global Error Handler
-app.use(globalErrorHandler);
+app.use(getFunction(globalErrorHandler));
 
 export default app;

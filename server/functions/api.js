@@ -2,6 +2,13 @@ import serverless from "serverless-http";
 
 let serverlessHandler;
 
+// Helper to get the actual function from a module (handles ESM/CJS interop)
+const getFunction = (mod) => {
+	if (typeof mod === "function") return mod;
+	if (mod && typeof mod.default === "function") return mod.default;
+	return mod;
+};
+
 export const handler = async (event, context) => {
 	// Add some debugging info to logs
 	console.log(`API Handler called: ${event.httpMethod} ${event.path}`);
@@ -27,7 +34,7 @@ export const handler = async (event, context) => {
 		await dbConnect();
 
 		if (!serverlessHandler) {
-			serverlessHandler = serverless(app, {
+			serverlessHandler = getFunction(serverless)(app, {
 				binary: ["image/*", "application/pdf"],
 			});
 		}

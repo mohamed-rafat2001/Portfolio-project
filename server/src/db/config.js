@@ -28,5 +28,8 @@ export default async function dbConnect() {
 		console.log("db is connected");
 	} catch (e) {
 		console.error("DB connection error:", e.message);
+		if (process.env.NODE_MODE === "PRODUCTION") {
+			throw new Error(`Failed to connect to Database: ${e.message}`);
+		}
 	}
 }

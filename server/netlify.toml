@@ -17,6 +17,14 @@
   status = 200
   force = true
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://mohamed-rafat-portfolio.netlify.app"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With, Accept, Origin"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    Access-Control-Allow-Credentials = "true"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

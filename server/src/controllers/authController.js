@@ -1,5 +1,5 @@
 import UserModel from "../models/userModel.js";
-import catchAsync from "../middlewares/catchAsyncMiddleware.js";
+import { catchAsync } from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
 import sendEmail from "../utils/sendEmail.js";

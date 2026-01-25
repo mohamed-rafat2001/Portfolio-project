@@ -1,5 +1,5 @@
 import VisitorModel from "../models/visitorModel.js";
-import catchAsync from "../middlewares/catchAsyncMiddleware.js";
+import { catchAsync } from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 import { getAllDocs, deleteDoc } from "./handlerFactory.js";
 

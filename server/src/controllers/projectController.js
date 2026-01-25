@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import ProjectModel from "../models/projectModel.js";
 import UserModel from "../models/userModel.js";
-import catchAsync from "../middlewares/catchAsyncMiddleware.js";
+import { catchAsync } from "../middlewares/catchAsyncMiddleware.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 import { cloudinary } from "../utils/cloudinaryConfig.js";
 import appError from "../utils/appError.js";

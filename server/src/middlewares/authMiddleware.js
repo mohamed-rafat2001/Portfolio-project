@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import appError from "../utils/appError.js";
-import catchAsync from "../middlewares/catchAsyncMiddleware.js";
+import { catchAsync } from "./catchAsyncMiddleware.js";
 import UserModel from "../models/userModel.js";
 
 export const protect = catchAsync(async (req, res, next) => {

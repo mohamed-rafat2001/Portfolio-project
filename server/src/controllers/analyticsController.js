@@ -1,5 +1,5 @@
 import Visitor from "../models/visitorModel.js";
-import catchAsync from "../middlewares/catchAsyncMiddleware.js";
+import { catchAsync } from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 
 export const trackVisit = catchAsync(async (req, res, _next) => {

@@ -7,8 +7,8 @@
   NODE_VERSION = "20"
 
 [functions]
+  [functions.node_bundle]
   external_node_modules = ["express", "serverless-http", "mongoose", "bcryptjs", "cloudinary", "cookie-parser", "cors", "dotenv", "jsonwebtoken", "multer", "nodemailer", "validator", "zod"]
-  node_bundle = true
 
 [[redirects]]
   from = "/api/v1/*"

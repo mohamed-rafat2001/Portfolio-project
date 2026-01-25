@@ -9,7 +9,7 @@ import {
     incrementProjectViews,
 } from "../controllers/projectController.js";
 import { protect } from "../middlewares/authMiddleware.js";
-import upload from "../utils/multer.js";
+import { upload } from "../utils/multer.js";
 import { validate } from "../middlewares/validateMiddleware.js";
 import { projectValidation } from "../validations/projectValidation.js";
 

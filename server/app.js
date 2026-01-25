@@ -6,6 +6,14 @@ import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 
+// Handle potential ESM/CJS interop issues with middlewares
+const corsLib = typeof cors === 'function' ? cors : cors.default;
+const cookieParserLib = typeof cookieParser === 'function' ? cookieParser : cookieParser.default;
+const helmetLib = typeof helmet === 'function' ? helmet : helmet.default;
+const hppLib = typeof hpp === 'function' ? hpp : hpp.default;
+const rateLimitLib = typeof rateLimit === 'function' ? rateLimit : rateLimit.default;
+const mongoSanitizeLib = typeof mongoSanitize === 'function' ? mongoSanitize : mongoSanitize.default;
+
 // Import Routers
 import authRouter from "./src/routers/authRouter.js";
 import userRouter from "./src/routers/userRouter.js";
@@ -32,7 +40,7 @@ const allowedOrigins = [
 ];
 
 app.use(
-	cors({
+	corsLib({
 		origin: (origin, callback) => {
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
@@ -48,10 +56,10 @@ app.use(
 );
 
 // Security HTTP headers
-app.use(helmet());
+app.use(helmetLib());
 
 // Limit requests from same API
-const limiter = rateLimit({
+const limiter = rateLimitLib({
 	max: 5000,
 	windowMs: 60 * 60 * 1000,
 	message: "Too many requests from this IP, please try again in an hour!",
@@ -61,13 +69,13 @@ app.use("/api", limiter);
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
-app.use(cookieParser());
+app.use(cookieParserLib());
 
 // Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
+app.use(mongoSanitizeLib());
 
 // Prevent parameter pollution
-app.use(hpp());
+app.use(hppLib());
 
 // Use Routers
 app.use("/api/v1/auth", authRouter);

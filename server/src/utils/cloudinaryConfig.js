@@ -5,6 +5,9 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Handle potential ESM/CJS interop issues with multer
+const multerLib = typeof multer === 'function' ? multer : multer.default;
+
 cloudinary.config({
 	cloud_name: process.env.cloud_name,
 	api_key: process.env.api_key,
@@ -37,7 +40,7 @@ const fileFilter = (req, file, cb) => {
 	}
 };
 
-const upload = multer({
+const upload = multerLib({
 	storage: storage,
 	fileFilter: fileFilter,
 	limits: {

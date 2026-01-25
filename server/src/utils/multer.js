@@ -1,7 +1,10 @@
 import multer from "multer";
 import appError from "./appError.js";
 
-const storage = multer.memoryStorage();
+// Handle potential ESM/CJS interop issues with multer
+const multerLib = typeof multer === 'function' ? multer : multer.default;
+
+const storage = multerLib.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
 	if (file.mimetype.startsWith("image") || file.mimetype === "application/pdf") {
@@ -11,7 +14,7 @@ const fileFilter = (req, file, cb) => {
 	}
 };
 
-const upload = multer({
+export const upload = multerLib({
 	storage: storage,
 	fileFilter: fileFilter,
 	limits: {

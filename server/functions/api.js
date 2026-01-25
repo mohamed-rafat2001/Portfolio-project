@@ -5,8 +5,15 @@ let serverlessHandler;
 export const handler = async (event, context) => {
 	try {
 		// Dynamically import to catch initialization errors
-		const { default: app } = await import("../app.js");
-		const { default: dbConnect } = await import("../src/db/config.js");
+		const appModule = await import("../app.js");
+		const dbConfigModule = await import("../src/db/config.js");
+
+		const app = appModule.default || appModule;
+		const dbConnect = dbConfigModule.default || dbConfigModule;
+
+		if (typeof app !== "function") {
+			throw new Error(`The imported 'app' is not a function. It is a ${typeof app}. Value: ${JSON.stringify(app).substring(0, 100)}`);
+		}
 
 		// Initialize DB connection
 		await dbConnect();

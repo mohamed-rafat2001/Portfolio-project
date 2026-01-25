@@ -6,14 +6,6 @@ import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 
-// Handle potential ESM/CJS interop issues with middlewares
-const corsLib = typeof cors === 'function' ? cors : cors.default;
-const cookieParserLib = typeof cookieParser === 'function' ? cookieParser : cookieParser.default;
-const helmetLib = typeof helmet === 'function' ? helmet : helmet.default;
-const hppLib = typeof hpp === 'function' ? hpp : hpp.default;
-const rateLimitLib = typeof rateLimit === 'function' ? rateLimit : rateLimit.default;
-const mongoSanitizeLib = typeof mongoSanitize === 'function' ? mongoSanitize : mongoSanitize.default;
-
 // Import Routers
 import authRouter from "./src/routers/authRouter.js";
 import userRouter from "./src/routers/userRouter.js";
@@ -29,7 +21,15 @@ import analyticsRouter from "./src/routers/analyticsRouter.js";
 import globalErrorHandler from "./src/controllers/errorController.js";
 import appError from "./src/utils/appError.js";
 
-const app = express();
+// Helper to get the actual function from a module (handles ESM/CJS interop)
+const getFunction = (mod) => {
+	if (typeof mod === "function") return mod;
+	if (mod && typeof mod.default === "function") return mod.default;
+	return mod;
+};
+
+const expressLib = getFunction(express);
+const app = expressLib();
 
 // Global Middlewares
 
@@ -40,7 +40,7 @@ const allowedOrigins = [
 ];
 
 app.use(
-	corsLib({
+	getFunction(cors)({
 		origin: (origin, callback) => {
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
@@ -56,10 +56,10 @@ app.use(
 );
 
 // Security HTTP headers
-app.use(helmetLib());
+app.use(getFunction(helmet)());
 
 // Limit requests from same API
-const limiter = rateLimitLib({
+const limiter = getFunction(rateLimit)({
 	max: 5000,
 	windowMs: 60 * 60 * 1000,
 	message: "Too many requests from this IP, please try again in an hour!",
@@ -67,15 +67,15 @@ const limiter = rateLimitLib({
 app.use("/api", limiter);
 
 // Body parser, reading data from body into req.body
-app.use(express.json({ limit: "10kb" }));
-app.use(express.urlencoded({ extended: true, limit: "10kb" }));
-app.use(cookieParserLib());
+app.use(expressLib.json({ limit: "10kb" }));
+app.use(expressLib.urlencoded({ extended: true, limit: "10kb" }));
+app.use(getFunction(cookieParser)());
 
 // Data sanitization against NoSQL query injection
-app.use(mongoSanitizeLib());
+app.use(getFunction(mongoSanitize)());
 
 // Prevent parameter pollution
-app.use(hppLib());
+app.use(getFunction(hpp)());
 
 // Use Routers
 app.use("/api/v1/auth", authRouter);

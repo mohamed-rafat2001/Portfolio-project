@@ -28,7 +28,7 @@ const app = express();
 // CORS Configuration
 const allowedOrigins = [
 	"http://localhost:5173",
-	"https://portfolio-project-alpha-lilac.vercel.app",
+	"https://mohamed-rafat-portfolio.netlify.app", // Placeholder for your new Netlify client URL
 	process.env.CLIENT_URL,
 ].filter(Boolean);
 

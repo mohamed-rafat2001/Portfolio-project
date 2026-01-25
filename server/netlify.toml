@@ -1,5 +1,5 @@
 [build]
-  command = "npm install"
+  command = "npm install --legacy-peer-deps"
   publish = "public"
   functions = "functions"
 

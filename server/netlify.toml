@@ -8,7 +8,8 @@
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [functions]
-  node_bundle = true
+  [functions.node_bundle]
+  external_node_modules = ["express", "serverless-http", "mongoose", "bcryptjs", "cloudinary", "cookie-parser", "cors", "dotenv", "jsonwebtoken", "multer", "nodemailer", "validator", "zod", "express-mongo-sanitize", "express-rate-limit", "express-validator", "helmet", "hpp", "multer-storage-cloudinary"]
 
 [[headers]]
   for = "/*"

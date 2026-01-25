@@ -7,6 +7,7 @@ import { z } from "zod";
 import toast from "react-hot-toast";
 import useLogin from "./hooks/useLogin";
 import Logo from "../../shared/components/ui/Logo";
+import ButtonLoader from "../../shared/components/ui/ButtonLoader";
 
 const loginSchema = z.object({
 	email: z.string().email("Please enter a valid email"),
@@ -108,10 +109,14 @@ const Login = () => {
 						<button
 							type="submit"
 							disabled={isLoading}
-							className="w-full py-4 bg-orange text-white rounded-2xl font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange/20 active:scale-[0.98] flex items-center justify-center gap-3 disabled:opacity-70"
+							className="w-full py-4 bg-orange text-white rounded-2xl font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange/20 active:scale-[0.98] flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed min-h-[56px]"
 						>
-							{isLoading ? "Signing in..." : "Sign In"}
-							{!isLoading && <HiArrowRight className="text-lg" />}
+							{isLoading ? <ButtonLoader /> : (
+								<>
+									Sign In
+									<HiArrowRight className="text-lg" />
+								</>
+							)}
 						</button>
 					</form>
 				</div>

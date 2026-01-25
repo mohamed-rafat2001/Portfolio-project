@@ -6,6 +6,7 @@ import { HiPaperAirplane } from "react-icons/hi2";
 import useCreateEmail from "../../adminPanel/Emails/hooks/useCreateEmail";
 import Input from "../../../shared/components/form/Input";
 import Textarea from "../../../shared/components/form/Textarea";
+import ButtonLoader from "../../../shared/components/ui/ButtonLoader";
 
 const contactSchema = z.object({
 	userName: z.string().min(3, "Name must be at least 3 characters"),
@@ -91,10 +92,14 @@ const ContactForm = () => {
 
 					<button 
 						disabled={isLoading}
-						className="w-full py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-orange-600 transition-all duration-300 shadow-[0_10px_30px_-10px_rgba(255,165,0,0.5)] active:scale-[0.98] flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
+						className="w-full py-5 bg-orange text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-orange-600 transition-all duration-300 shadow-[0_10px_30px_-10px_rgba(255,165,0,0.5)] active:scale-[0.98] flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed min-h-[60px]"
 					>
-						{isLoading ? "Sending..." : "Send Message"}
-						{!isLoading && <HiPaperAirplane className="text-lg rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+						{isLoading ? <ButtonLoader /> : (
+							<>
+								Send Message
+								<HiPaperAirplane className="text-lg rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+							</>
+						)}
 					</button>
 				</form>
 			</div>

@@ -2,7 +2,7 @@ import Visitor from "../models/visitorModel.js";
 import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
 
-export const trackVisit = catchAsync(async (req, res, next) => {
+export const trackVisit = catchAsync(async (req, res, _next) => {
 	// Check if user is logged in (only via token in cookies)
 	const token = req.cookies?.token;
 
@@ -20,7 +20,7 @@ export const trackVisit = catchAsync(async (req, res, next) => {
 	sendResponse(res, 200, "Visit tracked");
 });
 
-export const getStats = catchAsync(async (req, res, next) => {
+export const getStats = catchAsync(async (req, res, _next) => {
 	const now = new Date();
 	const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 	const weekStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);

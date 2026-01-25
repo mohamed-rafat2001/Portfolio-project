@@ -44,22 +44,16 @@ export const updateDoc = (Model, fields = []) =>
 // get by id param
 export const getDocById = (Model) =>
 	catchAsync(async (req, res, next) => {
-		try {
-			const doc = await Model.findById(req.params.id);
+		const doc = await Model.findById(req.params.id);
 
-			if (!doc) return next(new appError("doc not found", 400));
+		if (!doc) return next(new appError("doc not found", 400));
 
-			let modelName = Model.modelName;
-			if (modelName.endsWith("Model")) modelName = modelName.slice(0, -5);
-			modelName = modelName.toLowerCase();
+		let modelName = Model.modelName;
+		if (modelName.endsWith("Model")) modelName = modelName.slice(0, -5);
+		modelName = modelName.toLowerCase();
 
-			const responseData = { [modelName]: doc };
-			sendResponse(res, 200, responseData);
-		} catch (error) {
-			const fs = await import('fs');
-			fs.appendFileSync('server_error_details.log', `${new Date().toISOString()} - Error in getDocById (${Model.modelName}): ${error.stack}\n`);
-			return next(new appError(error.message, 500));
-		}
+		const responseData = { [modelName]: doc };
+		sendResponse(res, 200, responseData);
 	});
 
 // delete doc

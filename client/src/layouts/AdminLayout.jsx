@@ -46,8 +46,10 @@ const AdminLayout = () => {
 
 	// Close mobile sidebar on route change
 	useEffect(() => {
-		setIsSidebarOpen(false);
-	}, [location]);
+		if (isSidebarOpen) {
+			setIsSidebarOpen(false);
+		}
+	}, [location, isSidebarOpen]);
 
 	const currentRoute = navLinks.find(link => location.pathname.includes(link.to))?.label || "Admin Panel";
 

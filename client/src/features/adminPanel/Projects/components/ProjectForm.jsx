@@ -41,7 +41,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid },
+		formState: { errors },
 		trigger,
 		setValue,
 		watch,

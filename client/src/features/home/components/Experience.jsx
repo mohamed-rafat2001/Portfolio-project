@@ -20,12 +20,6 @@ const Experience = () => {
 	const { experiences, isLoading: isExpLoading } = useExperiences();
 	const { educations, isLoading: isEduLoading } = useEducations();
 
-	const formatDate = (dateString) => {
-		if (!dateString) return "";
-		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-	};
-
 	if (isExpLoading || isEduLoading) return <LoadingState message="Fetching your journey..." />;
 
 	return (

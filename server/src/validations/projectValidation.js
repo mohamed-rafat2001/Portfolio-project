@@ -16,7 +16,7 @@ export const projectValidation = [
 				try {
 					const parsed = JSON.parse(value);
 					if (!Array.isArray(parsed)) throw new Error();
-				} catch (e) {
+				} catch {
 					throw new Error("Tech stack must be an array or a JSON string representing an array");
 				}
 			} else if (!Array.isArray(value)) {

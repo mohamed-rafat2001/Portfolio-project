@@ -4,7 +4,7 @@ import sendResponse from "../utils/sendResponse.js";
 import { getAllDocs, deleteDoc } from "./handlerFactory.js";
 
 // track visitor
-export const trackVisitor = catchAsync(async (req, res, next) => {
+export const trackVisitor = catchAsync(async (req, res, _next) => {
 	const ip = req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 	const userAgent = req.headers["user-agent"];
 

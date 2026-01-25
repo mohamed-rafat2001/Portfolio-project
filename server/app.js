@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
+import mongoSanitize from "express-mongo-sanitize";
 
 // Import Routers
 import authRouter from "./src/routers/authRouter.js";
@@ -30,7 +30,7 @@ app.use(
 	cors({
 		origin: [
 			"http://localhost:5173",
-			process.env.FRONTEND_URL,
+			
 			process.env.CLIENT_URL,
 		].filter(Boolean),
 		credentials: true,
@@ -54,7 +54,7 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection
-// app.use(mongoSanitize());
+app.use(mongoSanitize());
 
 // Prevent parameter pollution
 app.use(hpp());

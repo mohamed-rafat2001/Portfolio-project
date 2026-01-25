@@ -11,12 +11,14 @@ export default function ProtectRoute() {
 
 	// Watch for changes to isAuthenticated after mount
 	useEffect(() => {
-		if (wasAuthenticated.current && !isAuthenticated) {
+		if (wasAuthenticated.current && !isAuthenticated && !shouldRedirect) {
 			setShouldRedirect(true);
 		}
 
-		wasAuthenticated.current = isAuthenticated;
-	}, [isAuthenticated]);
+		if (wasAuthenticated.current !== isAuthenticated) {
+			wasAuthenticated.current = isAuthenticated;
+		}
+	}, [isAuthenticated, shouldRedirect]);
 
 	// Show a loading indicator while user info is being fetched
 	if (isLoading)

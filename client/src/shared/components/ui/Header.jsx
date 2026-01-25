@@ -18,8 +18,10 @@ const Header = () => {
 
 	// Close mobile menu when route changes
 	useEffect(() => {
-		closeMenu();
-	}, [pathname, closeMenu]);
+		if (isOpen) {
+			closeMenu();
+		}
+	}, [pathname, closeMenu, isOpen]);
 
 	// Prevent scrolling when mobile menu is open
 	useEffect(() => {

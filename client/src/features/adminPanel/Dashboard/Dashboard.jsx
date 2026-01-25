@@ -21,11 +21,11 @@ import LoadingState from "../../../shared/components/ui/LoadingState";
 
 const Dashboard = () => {
 	const { user } = useCurrentUser();
-	const { projects, totalResults: totalProjects, isLoading: projectsLoading } = useProjects();
-	const { skills, isLoading: skillsLoading } = useSkills();
+	const { totalResults: totalProjects, isLoading: projectsLoading } = useProjects();
+	const { totalResults: totalSkills, isLoading: skillsLoading } = useSkills();
 	const { emails, totalResults: totalEmails, isLoading: emailsLoading } = useEmails();
-	const { experiences, isLoading: expLoading } = useExperiences();
-	const { educations, isLoading: eduLoading } = useEducations();
+	const { totalResults: totalExperiences, isLoading: expLoading } = useExperiences();
+	const { totalResults: totalEducations, isLoading: eduLoading } = useEducations();
 	const { analytics, isLoading: analyticsLoading } = useAnalytics();
 
 	const isLoading =
@@ -48,13 +48,13 @@ const Dashboard = () => {
 
     const contentStats = [
         { title: "Projects", value: totalProjects || 0, icon: <HiOutlineRocketLaunch />, color: "bg-blue-600" },
-        { title: "Skills", value: skills?.length || 0, icon: <HiOutlineWrenchScrewdriver />, color: "bg-orange" },
+        { title: "Skills", value: totalSkills || 0, icon: <HiOutlineWrenchScrewdriver />, color: "bg-orange" },
         { title: "Messages", value: totalEmails || 0, icon: <HiOutlineEnvelope />, color: "bg-purple-600" },
-        { title: "Experience", value: experiences?.length || 0, icon: <HiOutlineBriefcase />, color: "bg-emerald-600" },
-        { title: "Education", value: educations?.length || 0, icon: <HiOutlineAcademicCap />, color: "bg-rose-600" },
+        { title: "Experience", value: totalExperiences || 0, icon: <HiOutlineBriefcase />, color: "bg-emerald-600" },
+        { title: "Education", value: totalEducations || 0, icon: <HiOutlineAcademicCap />, color: "bg-rose-600" },
     ];
 
-    const unreadEmails = emails?.filter(e => !e.isRead).length || 0;
+    const unreadEmails = emails?.filter(e => !e.read).length || 0;
 
 	return (
 		<div className="space-y-14 pb-20">

@@ -1,9 +1,3 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import toast from "react-hot-toast";
-import useCreateEmail from "../../adminPanel/Emails/hooks/useCreateEmail";
 import { motion as Motion } from "framer-motion";
 import ContactInfo from "./ContactInfo";
 import ContactForm from "./ContactForm";
@@ -20,38 +14,7 @@ const sectionVariants = {
 	},
 };
 
-const contactSchema = z.object({
-	userName: z.string().min(3, "Name must be at least 3 characters"),
-	userEmail: z.string().email("Please enter a valid email"),
-	phoneNumber: z.string().optional(),
-	subject: z.string().optional(),
-	emailBody: z.string().min(10, "Message must be at least 10 characters"),
-});
-
 const Contact = () => {
-	const { createEmail, isLoading } = useCreateEmail();
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm({
-		resolver: zodResolver(contactSchema),
-		mode: "onChange",
-	});
-
-	const onSubmit = (data) => {
-		createEmail(data, {
-			onSuccess: () => {
-				toast.success("Message sent successfully!");
-				reset();
-			},
-			onError: () => {
-				toast.error("Failed to send message. Please try again.");
-			},
-		});
-	};
-
 	return (
 		<Motion.section
 			id="contact"

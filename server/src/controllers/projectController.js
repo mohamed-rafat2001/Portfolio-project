@@ -7,7 +7,6 @@ import { cloudinary } from "../utils/cloudinaryConfig.js";
 import appError from "../utils/appError.js";
 import sendResponse from "../utils/sendResponse.js";
 import {
-	deleteDoc,
 	getAllDocs,
 	getDocById,
 	updateDoc,
@@ -106,7 +105,7 @@ export const incrementProjectViews = catchAsync(async (req, res, next) => {
             if (user?.role === "Admin") {
                 isAdmin = true;
             }
-        } catch (err) {
+        } catch {
             // Token invalid or expired, treat as regular visitor
         }
     }

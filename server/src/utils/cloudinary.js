@@ -31,12 +31,8 @@ export const uploadToCloudinary = async (fileBuffer, folder = "general") => {
 };
 
 export const removeFromCloudinary = async (public_id) => {
-	try {
-		const result = await cloudinary.uploader.destroy(public_id);
-		return result;
-	} catch (error) {
-		throw error;
-	}
+	const result = await cloudinary.uploader.destroy(public_id);
+	return result;
 };
 
 export default cloudinary;

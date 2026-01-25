@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import UserModel from "../models/userModel.js";
 import catchAsync from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
@@ -6,7 +5,7 @@ import appError from "../utils/appError.js";
 import { cloudinary } from "../utils/cloudinaryConfig.js";
 
 // get user doc
-export const getMe = catchAsync(async (req, res, next) => {
+export const getMe = catchAsync(async (req, res, _next) => {
 	sendResponse(res, 200, req.user);
 });
 

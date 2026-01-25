@@ -4,6 +4,11 @@ import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import crypto from "crypto";
 
+// Handle potential ESM/CJS interop issues
+const getLib = (mod) => (mod && mod.default ? mod.default : mod);
+const bcryptLib = getLib(bcryptjs);
+const jwtLib = getLib(jwt);
+
 const socialMediaSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -131,7 +136,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
 	if (!this.isModified("password")) return next();
 
-	this.password = await bcryptjs.hash(this.password, 12);
+	this.password = await bcryptLib.hash(this.password, 12);
 	this.confirmPassword = undefined;
 
 	next();
@@ -139,14 +144,14 @@ userSchema.pre("save", async function (next) {
 
 // create token using jwt
 userSchema.methods.createToken = function () {
-	return jwt.sign({ _id: this._id }, process.env.USER_KEY_TOKEN, {
+	return jwtLib.sign({ _id: this._id }, process.env.USER_KEY_TOKEN, {
 		expiresIn: "90d",
 	});
 };
 
 // check if password is correct
 userSchema.methods.correctPassword = async function (password, hashPassword) {
-	return await bcryptjs.compare(password, hashPassword);
+	return await bcryptLib.compare(password, hashPassword);
 };
 
 // create cookie

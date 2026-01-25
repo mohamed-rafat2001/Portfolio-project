@@ -3,33 +3,29 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const dbPassword =
-	process.env.NODE_MODE === "PRODUCTION" ? process.env.DB_PASSWORD : undefined;
+const dbUrl = process.env.PRODUCTION_DB_URL 
+	? process.env.PRODUCTION_DB_URL.replace("<db_password>", process.env.DB_PASSWORD)
+	: process.env.LOCAL_DB_URL;
 
-const dbUrl =
-	process.env.NODE_MODE === "PRODUCTION"
-		? process.env.PRODUCTION_DB_URL.replace("<db_password>", dbPassword)
-		: process.env.LOCAL_DB_URL;
 let isConnected = false;
 
 export default async function dbConnect() {
-	if (isConnected) {
-		return;
-	}
+	if (isConnected) return;
 
 	if (!dbUrl) {
-		console.error("DB_URL is not defined in environment variables");
+		console.error("Database connection string (PRODUCTION_DB_URL or LOCAL_DB_URL) is missing");
 		return;
 	}
 
 	try {
-		await mongoose.connect(dbUrl);
+		mongoose.set("strictQuery", true);
+		await mongoose.connect(dbUrl, {
+			serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+		});
 		isConnected = true;
-		console.log("db is connected");
+		console.log("MongoDB Connected Successfully");
 	} catch (e) {
-		console.error("DB connection error:", e.message);
-		if (process.env.NODE_MODE === "PRODUCTION") {
-			throw new Error(`Failed to connect to Database: ${e.message}`);
-		}
+		console.error("MongoDB Connection Error:", e.message);
+		throw e; // Re-throw so the handler can catch it and return 500
 	}
 }

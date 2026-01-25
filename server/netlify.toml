@@ -8,14 +8,7 @@
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [functions]
-  [functions.node_bundle]
-  external_node_modules = ["express", "serverless-http", "mongoose", "bcryptjs", "cloudinary", "cookie-parser", "cors", "dotenv", "jsonwebtoken", "multer", "nodemailer", "validator", "zod"]
-
-[[redirects]]
-  from = "/api/v1/*"
-  to = "/.netlify/functions/api/api/v1/:splat"
-  status = 200
-  force = true
+  node_bundle = true
 
 [[headers]]
   for = "/*"
@@ -24,6 +17,12 @@
     Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With, Accept, Origin"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS"
     Access-Control-Allow-Credentials = "true"
+
+[[redirects]]
+  from = "/api/v1/*"
+  to = "/.netlify/functions/api/api/v1/:splat"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/*"

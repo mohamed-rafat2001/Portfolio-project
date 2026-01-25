@@ -45,10 +45,11 @@ const sendErrorProd = (err, res) => {
 		// 1) Log error
 		console.error("ERROR 💥", err);
 
-		// 2) Send generic message
+		// 2) Send generic message with error details for troubleshooting
 		res.status(500).json({
 			status: "error",
-			message: "Something went very wrong!",
+			message: "Internal Server Error",
+			error: err.message, // Temporarily added for troubleshooting
 		});
 	}
 };

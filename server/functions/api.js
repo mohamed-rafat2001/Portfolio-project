@@ -1,11 +1,13 @@
 import serverless from "serverless-http";
-import app from "../app.js";
-import dbConnect from "../src/db/config.js";
 
 let serverlessHandler;
 
 export const handler = async (event, context) => {
 	try {
+		// Dynamically import to catch initialization errors
+		const { default: app } = await import("../app.js");
+		const { default: dbConnect } = await import("../src/db/config.js");
+
 		// Initialize DB connection
 		await dbConnect();
 
@@ -15,7 +17,7 @@ export const handler = async (event, context) => {
 
 		return await serverlessHandler(event, context);
 	} catch (error) {
-		console.error("Netlify Function Error:", error);
+		console.error("Netlify Function Crash:", error);
 		return {
 			statusCode: 500,
 			headers: {
@@ -25,8 +27,9 @@ export const handler = async (event, context) => {
 			},
 			body: JSON.stringify({
 				status: "error",
-				message: "Internal Server Error in Netlify Function",
+				message: "The server function crashed during initialization. Check the error details below.",
 				error: error.message,
+				stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
 			}),
 		};
 	}

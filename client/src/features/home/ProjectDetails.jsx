@@ -81,7 +81,7 @@ const ProjectDetails = () => {
                         <div className="flex flex-col md:flex-row md:items-center gap-6 mb-12">
                             <button 
                                 onClick={() => navigate('/projects')}
-                                className="group inline-flex items-center gap-3 px-6 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.4em] text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-all shadow-2xl"
+                                className="group inline-flex items-center gap-3 px-6 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.4em] text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-all shadow-xl"
                             >
                                 <HiOutlineArrowLeft className="text-xs transition-transform group-hover:-translate-x-1" />
                                 <span>Back to projects</span>

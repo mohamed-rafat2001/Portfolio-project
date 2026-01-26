@@ -36,7 +36,7 @@ const About = () => {
 					<span className="text-orange font-black text-sm uppercase tracking-[0.4em]">
 						01
 					</span>
-					<div className="h-px grow bg-gray-200 dark:bg-gray-800/50"></div>
+					<div className="h-px grow bg-gray-100 dark:bg-gray-800/50"></div>
 					<h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 						About <span className="text-orange">Me</span>
 					</h2>
@@ -48,9 +48,9 @@ const About = () => {
 						<div className="relative">
 							{/* Background Decorative Elements */}
 							<div className="absolute -inset-6 bg-orange/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-							<div className="absolute -inset-4 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[3rem] -rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl"></div>
+							<div className="absolute -inset-4 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-[3rem] -rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-xl"></div>
 
-							<div className="relative aspect-square rounded-[3rem] bg-gray-50 dark:bg-[#0a0f1c] overflow-hidden border-8 border-gray-50 dark:border-[#0a0f1c] shadow-2xl">
+							<div className="relative aspect-square rounded-[3rem] bg-gray-50 dark:bg-[#0a0f1c] overflow-hidden border-8 border-gray-50 dark:border-[#0a0f1c] shadow-xl">
 								<img
 									src={admin?.profileImg?.secure_url || profileImg}
 									alt={admin?.name || "Mohamed Rafat"}

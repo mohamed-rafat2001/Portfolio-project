@@ -32,6 +32,9 @@ const getFunction = (mod) => {
 const expressFunc = getFunction(express);
 const app = expressFunc();
 
+// Trust proxy for secure cookies on Netlify/Vercel
+app.set("trust proxy", 1);
+
 // Global Middlewares
 
 // CORS Configuration

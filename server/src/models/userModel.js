@@ -155,24 +155,32 @@ userSchema.methods.correctPassword = async function (password, hashPassword) {
 };
 
 // create cookie
-userSchema.methods.createCookie = function (res) {
-	const token = this.createToken();
-	res.cookie("token", token, {
+userSchema.methods.createCookie = function (res, providedToken) {
+	const token = providedToken || this.createToken();
+	const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production";
+	
+	const cookieOptions = {
 		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
-		sameSite: "strict",
+		secure: isProd, // Must be true for sameSite: "none"
+		sameSite: isProd ? "none" : "lax",
 		maxAge: (process.env.COOKIE_EXPIRE || 7) * 24 * 60 * 60 * 1000,
-	});
+	};
+
+	res.cookie("token", token, cookieOptions);
 };
 
 // remove cookie
 userSchema.methods.removeCookie = function (res) {
-	res.cookie("token", "", {
+	const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production";
+	
+	const cookieOptions = {
 		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
-		sameSite: "strict",
+		secure: isProd,
+		sameSite: isProd ? "none" : "lax",
 		maxAge: 0,
-	});
+	};
+
+	res.cookie("token", "", cookieOptions);
 };
 
 // create passwordResetToken

@@ -17,13 +17,17 @@ const jwtLib = getExport(jwt);
 export const protect = catchAsync(async (req, res, next) => {
 	let token;
 
-	// get token only from cookies
+	// 1) Get token from cookies
 	if (req.cookies && req.cookies.token) {
 		token = req.cookies.token;
+	} 
+	// 2) Fallback: Get token from Authorization header (Bearer token)
+	else if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+		token = req.headers.authorization.split(" ")[1];
 	}
 
 	if (!token) {
-		return next(new AppError("no token", 401));
+		return next(new AppError("Not authorized to access this route", 401));
 	}
 
 	// verification token

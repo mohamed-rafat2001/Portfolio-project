@@ -31,10 +31,17 @@ export const login = catchAsync(async (req, res, next) => {
 		return next(new AppError("email or password is wrong", 400));
 
 	// create cookie
-	user.createCookie(res);
+	const token = user.createToken();
+	user.createCookie(res, token);
+
+	// Remove password from output
+	user.password = undefined;
 
 	// send response
-	sendRes(res, 201, { user });
+	sendRes(res, 201, { 
+		user,
+		token // Also send token in body for potential fallback
+	});
 });
 
 // log out func

@@ -28,8 +28,9 @@ const getFunction = (mod) => {
 	return mod;
 };
 
-const expressLib = getFunction(express);
-const app = expressLib();
+// Initialize express app with interop handling
+const expressFunc = getFunction(express);
+const app = expressFunc();
 
 // Global Middlewares
 
@@ -67,8 +68,9 @@ const limiter = getFunction(rateLimit)({
 app.use("/api", limiter);
 
 // Body parser, reading data from body into req.body
-app.use(expressLib.json({ limit: "10kb" }));
-app.use(expressLib.urlencoded({ extended: true, limit: "10kb" }));
+// Use expressFunc for json and urlencoded to ensure we use the correct lib
+app.use(expressFunc.json({ limit: "10kb" }));
+app.use(expressFunc.urlencoded({ extended: true, limit: "10kb" }));
 app.use(getFunction(cookieParser)());
 
 // Data sanitization against NoSQL query injection
@@ -96,4 +98,5 @@ app.use((req, res, next) => {
 // Global Error Handler
 app.use(getFunction(globalErrorHandler));
 
+export { app };
 export default app;

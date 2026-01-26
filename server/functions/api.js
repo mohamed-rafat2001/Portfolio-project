@@ -19,11 +19,17 @@ export const handler = async (event, context) => {
 		const dbConfigModule = await import("../src/db/config.js");
 
 		// Extract the actual exports
-		const app = appModule.default || appModule;
+		let app = appModule.app || appModule.default || appModule;
 		const dbConnect = dbConfigModule.default || dbConfigModule;
 
+		// One final check - sometimes nested .default happens in bundling
+		if (app && app.default && typeof app.default === "function") {
+			app = app.default;
+		}
+
 		if (typeof app !== "function") {
-			throw new Error(`The imported 'app' is not a function. It is a ${typeof app}. Value: ${JSON.stringify(app).substring(0, 100)}`);
+			const keys = Object.keys(appModule).join(", ");
+			throw new Error(`The imported 'app' is not a function. It is a ${typeof app}. Module keys: [${keys}]. Value: ${JSON.stringify(app).substring(0, 100)}`);
 		}
 		
 		if (typeof dbConnect !== "function") {

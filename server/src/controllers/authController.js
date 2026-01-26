@@ -5,20 +5,29 @@ import appError from "../utils/appError.js";
 import sendEmail from "../utils/sendEmail.js";
 import { passwordResetCodeTemplate } from "../utils/emailTemplates.js";
 
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const User = getExport(UserModel);
+const AppError = getExport(appError);
+
 // login func
 export const login = catchAsync(async (req, res, next) => {
 	const { password, email } = req.body;
 	if (!password || !email)
-		return next(new appError("please provide valid email and password", 400));
+		return next(new AppError("please provide valid email and password", 400));
 
-	const user = await UserModel.findOne({ email });
+	const user = await User.findOne({ email });
 
-	if (!user) return next(new appError("email or password is wrong", 400));
+	if (!user) return next(new AppError("email or password is wrong", 400));
 
 	const isCorrectPass = await user.correctPassword(password, user.password);
 
 	if (!isCorrectPass)
-		return next(new appError("email or password is wrong", 400));
+		return next(new AppError("email or password is wrong", 400));
 
 	// create cookie
 	user.createCookie(res);
@@ -29,9 +38,9 @@ export const login = catchAsync(async (req, res, next) => {
 
 // log out func
 export const logOut = catchAsync(async (req, res, next) => {
-	const user = await UserModel.findById(req.user._id);
+	const user = await User.findById(req.user._id);
 
-	if (!user) return next(new appError("user not found", 404));
+	if (!user) return next(new AppError("user not found", 404));
 
 	user.removeCookie(res);
 	sendResponse(res, 200, {});
@@ -40,11 +49,11 @@ export const logOut = catchAsync(async (req, res, next) => {
 // forgot password func
 export const forgotPassword = catchAsync(async (req, res, next) => {
 	const { email } = req.body;
-	if (!email) return next(new appError("please provide valid email ", 400));
+	if (!email) return next(new AppError("please provide valid email ", 400));
 
-	const user = await UserModel.findOne({ email });
+	const user = await User.findOne({ email });
 
-	if (!user) return next(new appError("user not found", 404));
+	if (!user) return next(new AppError("user not found", 404));
 
 	// create passwordResetToken
 	const resetCode = user.createPasswordResetCode();
@@ -52,7 +61,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 	await user.save({ validateBeforeSave: false });
 
 	// sendEmail to user contain the uniqeCode
-	if (!resetCode) return next(new appError("something went wrong", 400));
+	if (!resetCode) return next(new AppError("something went wrong", 400));
 
 	const Email = sendEmail({
 		email: user.email,
@@ -63,7 +72,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 			user.passwordResetExpires
 		),
 	});
-	if (!Email) return next(new appError("email not send", 400));
+	if (!Email) return next(new AppError("email not send", 400));
 
 	sendResponse(res, 200, {});
 });
@@ -73,15 +82,15 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 	const { email, resetCode, password, confirmPassword } = req.body;
 
 	if (!email || !resetCode || !password || !confirmPassword)
-		return next(new appError("please provide all fields", 400));
+		return next(new AppError("please provide all fields", 400));
 
-	const user = await UserModel.findOne({
+	const user = await User.findOne({
 		email,
 		passwordResetCode: resetCode,
 		passwordResetExpires: { $gt: Date.now() },
 	});
 
-	if (!user) return next(new appError("invalid or expired reset code", 400));
+	if (!user) return next(new AppError("invalid or expired reset code", 400));
 
 	user.password = password;
 	user.confirmPassword = confirmPassword;

@@ -4,19 +4,32 @@ import appError from "../utils/appError.js";
 import validationBody from "../utils/validationBody.js";
 import APIFeatures from "../utils/apiFeatures.js";
 
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const AppError = getExport(appError);
+const Features = getExport(APIFeatures);
+
+// Helper to ensure we have the actual Mongoose Model
+const getModel = (Model) => getExport(Model);
+
 // create doc
 export const createDoc = (Model, fields = []) =>
 	catchAsync(async (req, res, next) => {
 		let object;
+        const M = getModel(Model);
 
 		if (fields.length != 0) {
 			object = validationBody(req.body, fields);
 			if (!object || Object.keys(object).length === 0)
-				return next(new appError("please provide valid fields to update", 400));
+				return next(new AppError("please provide valid fields to update", 400));
 		}
-		const doc = await Model.create({ ...object });
+		const doc = await M.create({ ...object });
 
-		if (!doc) return next(new appError("doc not created", 400));
+		if (!doc) return next(new AppError("doc not created", 400));
 
 		sendResponse(res, 201, doc);
 	});
@@ -24,19 +37,20 @@ export const createDoc = (Model, fields = []) =>
 export const updateDoc = (Model, fields = []) =>
 	catchAsync(async (req, res, next) => {
 		let object;
+        const M = getModel(Model);
 
 		if (fields.length != 0) {
 			object = validationBody(req.body, fields);
 			if (!object || Object.keys(object).length === 0)
-				return next(new appError("please provide valid fields to update", 400));
+				return next(new AppError("please provide valid fields to update", 400));
 		}
-		const doc = await Model.findByIdAndUpdate(
+		const doc = await M.findByIdAndUpdate(
 			req.params.id,
 			{ ...object },
 			{ new: true, runValidators: true }
 		);
 
-		if (!doc) return next(new appError("doc not updated", 400));
+		if (!doc) return next(new AppError("doc not updated", 400));
 
 		sendResponse(res, 200, doc);
 	});
@@ -44,11 +58,12 @@ export const updateDoc = (Model, fields = []) =>
 // get by id param
 export const getDocById = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.findById(req.params.id);
+        const M = getModel(Model);
+		const doc = await M.findById(req.params.id);
 
-		if (!doc) return next(new appError("doc not found", 400));
+		if (!doc) return next(new AppError("doc not found", 400));
 
-		let modelName = Model.modelName;
+		let modelName = M.modelName;
 		if (modelName.endsWith("Model")) modelName = modelName.slice(0, -5);
 		modelName = modelName.toLowerCase();
 
@@ -59,9 +74,10 @@ export const getDocById = (Model) =>
 // delete doc
 export const deleteDoc = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.findByIdAndDelete(req.params.id);
+        const M = getModel(Model);
+		const doc = await M.findByIdAndDelete(req.params.id);
 
-		if (!doc) return next(new appError("doc not deleted", 400));
+		if (!doc) return next(new AppError("doc not deleted", 400));
 
 		sendResponse(res, 200, {});
 	});
@@ -69,24 +85,25 @@ export const deleteDoc = (Model) =>
 // get all docs
 export const getAllDocs = (Model) =>
 	catchAsync(async (req, res, next) => {
+        const M = getModel(Model);
 		// Build query
-		const features = new APIFeatures(Model.find(), req.query)
+		const features = new Features(M.find(), req.query)
 			.filter()
 			.sort()
 			.limitFields();
 
 		// Get total results with filters applied (before pagination)
-		const totalResults = await Model.countDocuments(features.query.getFilter());
+		const totalResults = await M.countDocuments(features.query.getFilter());
 
 		// Apply pagination
 		features.paginate();
 
 		const docs = await features.query;
 
-		if (!docs) return next(new appError("no docs found", 404));
+		if (!docs) return next(new AppError("no docs found", 404));
 
 		// Get the model name in lowercase plural form
-		let modelName = Model.modelName; 
+		let modelName = M.modelName; 
 		if (modelName.endsWith("Model")) {
 			modelName = modelName.slice(0, -5);
 		}
@@ -101,6 +118,5 @@ export const getAllDocs = (Model) =>
 		}
 
 		const responseData = { [modelName]: docs, totalResults };
-
 		sendResponse(res, 200, responseData);
 	});

@@ -1,6 +1,14 @@
-import Visitor from "../models/visitorModel.js";
+import VisitorModel from "../models/visitorModel.js";
 import { catchAsync } from "../middlewares/catchAsyncMiddleware.js";
 import sendResponse from "../utils/sendResponse.js";
+
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const Visitor = getExport(VisitorModel);
 
 export const trackVisit = catchAsync(async (req, res, _next) => {
 	// Check if user is logged in (only via token in cookies)

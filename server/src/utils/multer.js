@@ -2,7 +2,9 @@ import multer from "multer";
 import appError from "./appError.js";
 
 // Handle potential ESM/CJS interop issues with multer
-const multerLib = typeof multer === 'function' ? multer : multer.default;
+const getExport = (mod) => (mod && mod.default ? mod.default : mod);
+const multerLib = getExport(multer);
+const AppError = getExport(appError);
 
 const storage = multerLib.memoryStorage();
 
@@ -10,7 +12,7 @@ const fileFilter = (req, file, cb) => {
 	if (file.mimetype.startsWith("image") || file.mimetype === "application/pdf") {
 		cb(null, true);
 	} else {
-		cb(new appError("Invalid file type! Please upload only images or PDFs.", 400), false);
+		cb(new AppError("Invalid file type! Please upload only images or PDFs.", 400), false);
 	}
 };
 

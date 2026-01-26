@@ -4,17 +4,26 @@ import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
 import { cloudinary } from "../utils/cloudinaryConfig.js";
 
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const User = getExport(UserModel);
+const AppError = getExport(appError);
+
 // get user doc
 export const getMe = catchAsync(async (req, res, _next) => {
 	sendResponse(res, 200, req.user);
 });
 
 export const getAdminInfo = catchAsync(async (req, res, next) => {
-	const admin = await UserModel.findOne({ role: "Admin" }).select(
+	const admin = await User.findOne({ role: "Admin" }).select(
 		"name email phoneNumber location aboutMe infos profileImg socialMedia"
 	);
 
-	if (!admin) return next(new appError("admin not found", 404));
+	if (!admin) return next(new AppError("admin not found", 404));
 
 	sendResponse(res, 200, admin);
 });
@@ -34,20 +43,20 @@ export const updateMe = catchAsync(async (req, res, next) => {
         passwordCurrent 
     } = req.body;
 
-    const user = await UserModel.findById(req.user._id).select("+password");
-    if (!user) return next(new appError("user not found", 404));
+    const user = await User.findById(req.user._id).select("+password");
+    if (!user) return next(new AppError("user not found", 404));
 
     // If password update is requested (check if the password field actually has content)
     const isPasswordUpdate = password && typeof password === 'string' && password.trim().length > 0;
 
     if (isPasswordUpdate) {
         if (!passwordCurrent || !confirmPassword) {
-            return next(new appError("please provide current password and confirmation", 400));
+            return next(new AppError("please provide current password and confirmation", 400));
         }
         
         // Use your method to check if the current password is correct
         if (!(await user.correctPassword(passwordCurrent, user.password))) {
-            return next(new appError("current password is wrong", 401));
+            return next(new AppError("current password is wrong", 401));
         }
         
         user.password = password;

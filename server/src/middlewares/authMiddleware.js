@@ -3,6 +3,17 @@ import appError from "../utils/appError.js";
 import { catchAsync } from "./catchAsyncMiddleware.js";
 import UserModel from "../models/userModel.js";
 
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const User = getExport(UserModel);
+const AppError = getExport(appError);
+// Handle jwt import which might be CJS
+const jwtLib = getExport(jwt);
+
 export const protect = catchAsync(async (req, res, next) => {
 	let token;
 
@@ -12,18 +23,18 @@ export const protect = catchAsync(async (req, res, next) => {
 	}
 
 	if (!token) {
-		return next(new appError("no token", 401));
+		return next(new AppError("no token", 401));
 	}
 
 	// verification token
-	const decode = jwt.verify(token, process.env.USER_KEY_TOKEN);
+	const decode = jwtLib.verify(token, process.env.USER_KEY_TOKEN);
 
 	// check user if still exist
-	const user = await UserModel.findById(decode._id);
+	const user = await User.findById(decode._id);
 
 	if (!user)
 		return next(
-			new appError("the user belong to this token does'nt exist", 401)
+			new AppError("the user belong to this token does'nt exist", 401)
 		);
 
 	req.user = user;
@@ -35,7 +46,7 @@ export const restrictTo = (...roles) => {
 	return (req, res, next) => {
 		if (!roles.includes(req.user.role)) {
 			return next(
-				new appError("you don't have permission to perform this action", 400)
+				new AppError("you don't have permission to perform this action", 400)
 			);
 		}
 

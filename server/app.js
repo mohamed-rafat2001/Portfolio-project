@@ -92,7 +92,12 @@ app.use("/api/v1/analytics", getFunction(analyticsRouter));
 
 // 404 Handler
 app.use((req, res, next) => {
-	next(new appError(`Can't find ${req.originalUrl} on this server!`, 404));
+    // Manually handle AppError here to avoid import issues
+    const err = new Error(`Can't find ${req.originalUrl} on this server!`);
+    err.statusCode = 404;
+    err.status = 'fail';
+    err.isOperational = true;
+	next(err);
 });
 
 // Global Error Handler

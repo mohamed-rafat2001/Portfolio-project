@@ -107,6 +107,14 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
 	await user.save();
 
-	user.createCookie(res);
-	sendRes(res, 200, { user });
+	const token = user.createToken();
+	user.createCookie(res, token);
+	
+	// Remove password from output
+	user.password = undefined;
+
+	sendRes(res, 200, { 
+		user,
+		token 
+	});
 });

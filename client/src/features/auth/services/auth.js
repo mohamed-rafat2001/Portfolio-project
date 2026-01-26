@@ -3,12 +3,19 @@ import mainApi from "../../../api/mainApi.js";
 // login func
 export const login = async (data) => {
 	const res = await mainApi.post("auth/login", data);
+	
+	// Store token in localStorage as a fallback for cross-domain issues
+	if (res.data?.token) {
+		localStorage.setItem("token", res.data.token);
+	}
+	
 	return res.data;
 };
 
 // logout func
 export const logOut = async () => {
 	const res = await mainApi.post("auth/logout");
+	localStorage.removeItem("token");
 	return res.data;
 };
 

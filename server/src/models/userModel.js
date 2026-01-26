@@ -157,7 +157,7 @@ userSchema.methods.correctPassword = async function (password, hashPassword) {
 // create cookie
 userSchema.methods.createCookie = function (res, providedToken) {
 	const token = providedToken || this.createToken();
-	const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production";
+	const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production" || process.env.NETLIFY === "true";
 	
 	const cookieOptions = {
 		httpOnly: true,
@@ -171,7 +171,7 @@ userSchema.methods.createCookie = function (res, providedToken) {
 
 // remove cookie
 userSchema.methods.removeCookie = function (res) {
-	const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production";
+	const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production" || process.env.NETLIFY === "true";
 	
 	const cookieOptions = {
 		httpOnly: true,

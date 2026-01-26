@@ -24,6 +24,20 @@ const mainApi = axios.create({
 	timeout: 15000, // 15 seconds timeout
 });
 
+// Request interceptor - Add Authorization header if token exists in localStorage
+mainApi.interceptors.request.use(
+	(config) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`;
+		}
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	}
+);
+
 // Response interceptor - Handle token expiration
 mainApi.interceptors.response.use(
 	(response) => {

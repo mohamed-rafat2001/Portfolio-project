@@ -68,12 +68,12 @@ const Dashboard = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
                     {visitorStats.map((stat) => (
-                        <div key={stat.title} className="p-6 md:p-8 bg-white dark:bg-[#0b1120] border border-gray-100 dark:border-white/5 rounded-[2.5rem] shadow-2xl flex flex-col items-center text-center">
-                            <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl text-white mb-6 shadow-2xl`}>
+                        <div key={stat.title} className="p-6 md:p-8 bg-white dark:bg-[#0b1120] border border-gray-100 dark:border-white/5 rounded-[2.5rem] shadow-xl flex flex-col items-center text-center">
+                            <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl text-white mb-6 shadow-xl`}>
                                 {stat.icon}
                             </div>
                             <h3 className="text-4xl font-black text-gray-900 dark:text-white mb-2">{stat.value}</h3>
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{stat.title}</p>
+                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">{stat.title}</p>
                         </div>
                     ))}
                 </div>
@@ -87,7 +87,7 @@ const Dashboard = () => {
                 
                 <div className="lg:col-span-4 flex flex-col gap-10">
                     {/* Grow Portfolio Card */}
-                    <div className="bg-orange rounded-[3rem] p-10 text-white shadow-2xl shadow-orange/30 relative overflow-hidden group">
+                    <div className="bg-orange rounded-[3rem] p-10 text-white shadow-xl shadow-orange/30 relative overflow-hidden group">
                         <div className="relative z-10 h-full flex flex-col justify-between min-h-[220px]">
                             <div>
                                 <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 leading-tight">Grow your portfolio</h3>

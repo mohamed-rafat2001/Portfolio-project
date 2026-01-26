@@ -117,7 +117,7 @@ const ProjectDetails = () => {
                                 <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-gray-900/90 dark:text-white/90">Project Overview</h2>
                             </div>
 
-                            <div className="bg-gray-50 dark:bg-[#0a0f1c]/60 backdrop-blur-3xl rounded-[2.5rem] p-6 md:p-10 lg:p-14 border border-gray-100 dark:border-white/5 shadow-2xl space-y-12 group relative overflow-hidden transition-colors duration-500">
+                            <div className="bg-gray-50 dark:bg-[#0a0f1c]/60 backdrop-blur-3xl rounded-[2.5rem] p-6 md:p-10 lg:p-14 border border-gray-100 dark:border-white/5 shadow-xl space-y-12 group relative overflow-hidden transition-colors duration-500">
                                 <div className="absolute top-0 right-0 w-96 h-96 bg-orange/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
                                 
                                 <div className="space-y-10 relative z-10">
@@ -144,13 +144,13 @@ const ProjectDetails = () => {
                                     </div>
 
                                     {/* Sub-cards */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 border-t border-gray-200 dark:border-white/5">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 border-t border-gray-100 dark:border-white/5">
                                         <div className="p-6 md:p-8 bg-white dark:bg-black/40 rounded-[1.5rem] border border-gray-100 dark:border-white/5 flex items-center gap-6 group/box hover:border-orange/20 transition-all">
                                             <div className="text-orange opacity-60">
                                                 <HiOutlineSparkles className="text-2xl" />
                                             </div>
                                             <div>
-                                                <span className="text-[9px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-1">Status</span>
+                                                <span className="text-[9px] font-black text-gray-500 dark:text-gray-500 uppercase tracking-widest block mb-1">Status</span>
                                                 <span className="text-xs font-black uppercase text-gray-900 dark:text-white tracking-widest">{status}</span>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@ const ProjectDetails = () => {
                                                 <HiCodeBracket className="text-2xl" />
                                             </div>
                                             <div>
-                                                <span className="text-[9px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-1">Architecture</span>
+                                                <span className="text-[9px] font-black text-gray-500 dark:text-gray-500 uppercase tracking-widest block mb-1">Architecture</span>
                                                 <span className="text-xs font-black uppercase text-gray-900 dark:text-white tracking-widest">{architecture}</span>
                                             </div>
                                         </div>
@@ -209,7 +209,7 @@ const ProjectDetails = () => {
                                         nextEl: '.gallery-next-btn',
                                     }}
                                     onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                                    className="rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-[#0a0f1c] shadow-2xl transition-colors duration-500"
+                                    className="rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-[#0a0f1c] shadow-xl transition-colors duration-500"
                                 >
                                     {galleryImages.map((img, idx) => (
                                         <SwiperSlide key={img.public_id || idx}>

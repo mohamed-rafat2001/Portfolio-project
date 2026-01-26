@@ -18,7 +18,7 @@ const VisitorTrendChart = ({ data }) => {
 		<Motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="bg-white dark:bg-[#0b1120] rounded-[3rem] p-10 border border-gray-100 dark:border-white/5 shadow-2xl h-full relative"
+			className="bg-white dark:bg-[#0b1120] rounded-[3rem] p-10 border border-gray-100 dark:border-white/5 shadow-xl h-full relative"
 		>
 			<div className="flex items-center justify-between mb-12">
 				<div>
@@ -29,7 +29,7 @@ const VisitorTrendChart = ({ data }) => {
 						LAST 7 DAYS
 					</p>
 				</div>
-                <div className="w-12 h-12 bg-orange/10 border border-orange/20 rounded-2xl flex items-center justify-center text-orange shadow-2xl">
+                <div className="w-12 h-12 bg-orange/10 border border-orange/20 rounded-2xl flex items-center justify-center text-orange shadow-xl">
                     <HiArrowTrendingUp className="text-2xl" />
                 </div>
 			</div>

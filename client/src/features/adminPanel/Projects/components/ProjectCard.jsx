@@ -10,7 +10,7 @@ const ProjectCard = ({ project, onEdit, onDelete, index }) => {
 			initial={{ opacity: 0, scale: 0.95 }}
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, scale: 0.95 }}
-			className="group bg-white dark:bg-[#0b1120] rounded-[2.5rem] shadow-sm dark:shadow-2xl shadow-black/5 hover:shadow-xl dark:hover:shadow-orange/10 transition-all duration-500 overflow-hidden flex flex-col border border-gray-100 dark:border-white/5 min-h-[400px]"
+			className="group bg-white dark:bg-[#0b1120] rounded-[2.5rem] shadow-xl hover:shadow-orange/10 dark:hover:shadow-orange/10 transition-all duration-500 overflow-hidden flex flex-col border border-gray-100 dark:border-white/5 min-h-[400px]"
 		>
 			{/* High-Impact Dominant Image Area (70% of card) */}
 			<div className="relative h-[70%] overflow-hidden bg-gray-50 dark:bg-[#030712]">
@@ -43,13 +43,13 @@ const ProjectCard = ({ project, onEdit, onDelete, index }) => {
 				<div className="absolute inset-0 bg-black/70 dark:bg-[#030712]/90 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4 backdrop-blur-sm">
 					<button
 						onClick={() => onEdit(project)}
-						className="w-14 h-14 bg-white dark:bg-white/10 dark:backdrop-blur-md rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 border dark:border-white/10 shadow-2xl"
+						className="w-14 h-14 bg-white dark:bg-white/10 dark:backdrop-blur-md rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 border dark:border-white/10 shadow-xl"
 					>
 						<HiOutlinePencil className="text-2xl" />
 					</button>
 					<button
 						onClick={() => onDelete(project._id)}
-						className="w-14 h-14 bg-white dark:bg-white/10 dark:backdrop-blur-md rounded-2xl flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-red-600 dark:hover:bg-red-600 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 border dark:border-white/10 shadow-2xl"
+						className="w-14 h-14 bg-white dark:bg-white/10 dark:backdrop-blur-md rounded-2xl flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-red-600 dark:hover:bg-red-600 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 border dark:border-white/10 shadow-xl"
 					>
 						<HiOutlineTrash className="text-2xl" />
 					</button>

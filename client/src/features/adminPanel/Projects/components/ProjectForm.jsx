@@ -134,20 +134,20 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
 	return (
 		<div className="space-y-10">
             {/* Custom Premium Header */}
-            <div className="flex items-center justify-between pb-8 border-b border-white/5">
+            <div className="flex items-center justify-between pb-8 border-b border-gray-100 dark:border-white/5">
                 <div className="flex items-center gap-6">
-                    <div className="w-16 h-16 rounded-2xl bg-[#030712] border border-white/5 flex items-center justify-center text-orange text-3xl shadow-[0_0_50px_-12px_rgba(249,115,22,0.3)]">
+                    <div className="w-16 h-16 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 flex items-center justify-center text-orange text-3xl shadow-[0_0_50px_-12px_rgba(249,115,22,0.3)]">
                         <HiOutlineRocketLaunch />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-1">
+                        <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-1">
                             {project ? 'Edit Project' : 'New Project'}
                         </h2>
                         <div className="flex items-center gap-3">
                              <div className="flex items-center gap-1.5 px-3 py-1 bg-orange/10 border border-orange/20 rounded-lg">
                                 <span className="text-[10px] font-black text-orange uppercase tracking-widest">Step {step}/2</span>
                              </div>
-                             <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">
+                             <span className="text-[10px] font-black text-gray-400 dark:text-gray-600 uppercase tracking-widest">
                                 {step === 1 ? 'Project Foundation' : 'Visual Assets & Gallery'}
                              </span>
                         </div>
@@ -156,7 +156,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                 <button 
                     type="button"
                     onClick={onCancel}
-                    className="w-12 h-12 bg-[#030712] hover:bg-white/5 border border-white/5 rounded-2xl flex items-center justify-center text-gray-500 hover:text-white transition-all cursor-pointer group"
+                    className="w-12 h-12 bg-gray-50 dark:bg-[#030712] hover:bg-gray-100 dark:hover:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer group"
                 >
                     <HiOutlineXMark className="text-2xl group-hover:rotate-90 transition-transform" />
                 </button>
@@ -165,7 +165,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
             {/* Stepper Logic */}
             <div className="flex gap-4 px-2">
                 {[1, 2].map((i) => (
-                    <div key={i} className="flex-1 h-2 bg-[#030712] rounded-full overflow-hidden border border-white/5">
+                    <div key={i} className="flex-1 h-2 bg-gray-100 dark:bg-[#030712] rounded-full overflow-hidden border border-gray-100 dark:border-white/5">
                         <Motion.div 
                             className="h-full bg-orange"
                             initial={{ width: 0 }}
@@ -200,7 +200,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                     Project Description
                                 </label>
                                 <textarea
-                                    className="w-full px-6 py-5 bg-[#030712] border-2 border-white/5 rounded-[2rem] transition-all text-sm font-medium text-white/90 outline-none focus:border-orange/30 min-h-[160px] leading-relaxed placeholder:text-gray-700"
+                                    className="w-full px-6 py-5 bg-gray-50 dark:bg-[#030712] border-2 border-gray-100 dark:border-white/5 rounded-[2rem] transition-all text-sm font-medium text-gray-900 dark:text-white/90 outline-none focus:border-orange/30 min-h-[160px] leading-relaxed placeholder:text-gray-500"
                                     placeholder="Tell the story of this innovation..."
                                     {...register("description")}
                                 />
@@ -237,24 +237,24 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                 className={`p-8 rounded-[2.5rem] border-2 transition-all cursor-pointer group flex items-center justify-between ${
                                     isPreferred 
                                         ? 'bg-orange/5 border-orange/20 shadow-[0_20px_40px_-15px_rgba(249,115,22,0.1)]' 
-                                        : 'bg-[#030712] border-white/5 hover:border-white/10'
+                                        : 'bg-gray-50 dark:bg-[#030712] border-gray-100 dark:border-white/5 hover:border-orange/20'
                                 }`}
                                 onClick={() => setValue("isPreferred", !isPreferred)}
                             >
                                 <div className="flex items-center gap-8">
-                                    <div className="w-16 h-16 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-center text-2xl">
-                                        <HiOutlineRocketLaunch className={isPreferred ? 'text-orange animate-pulse' : 'text-gray-700'} />
+                                    <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-white/5 flex items-center justify-center text-2xl">
+                                        <HiOutlineRocketLaunch className={isPreferred ? 'text-orange animate-pulse' : 'text-gray-400 dark:text-gray-700'} />
                                     </div>
                                     <div>
-                                        <h4 className={`text-sm font-black uppercase tracking-widest mb-1 ${isPreferred ? 'text-white' : 'text-gray-400'}`}>
+                                        <h4 className={`text-sm font-black uppercase tracking-widest mb-1 ${isPreferred ? 'text-orange dark:text-white' : 'text-gray-400'}`}>
                                             Featured Spotlight
                                         </h4>
-                                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                                        <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
                                             Priority placement at the top of your portfolio
                                         </p>
                                     </div>
                                 </div>
-                                <div className={`w-14 h-7 rounded-full transition-all relative p-1 ${isPreferred ? 'bg-orange' : 'bg-white/10'}`}>
+                                <div className={`w-14 h-7 rounded-full transition-all relative p-1 ${isPreferred ? 'bg-orange' : 'bg-gray-200 dark:bg-white/10'}`}>
                                     <div className={`h-full aspect-square bg-white rounded-full transition-all shadow-xl ${isPreferred ? 'translate-x-[28px]' : 'translate-x-0'}`} />
                                 </div>
                                 <input type="checkbox" className="hidden" {...register("isPreferred")} />
@@ -276,7 +276,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                 </label>
                                 <div 
                                     onClick={() => document.getElementById('main-img-input').click()}
-                                    className="relative aspect-video rounded-[2.5rem] bg-[#030712] border-2 border-dashed border-white/10 flex flex-col items-center justify-center cursor-pointer overflow-hidden group hover:border-orange/30 transition-all shadow-2xl"
+                                    className="relative aspect-video rounded-[2.5rem] bg-gray-50 dark:bg-[#030712] border-2 border-dashed border-gray-100 dark:border-white/10 flex flex-col items-center justify-center cursor-pointer overflow-hidden group hover:border-orange/30 transition-all shadow-2xl"
                                 >
                                     <input type="file" id="main-img-input" className="hidden" accept="image/*" onChange={handleMainImgChange} />
                                     {mainImgPreview ? (
@@ -288,11 +288,11 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                         </>
                                     ) : (
                                         <div className="text-center p-8">
-                                            <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:text-orange transition-all">
-                                                <HiOutlineCloudArrowUp className="text-3xl text-gray-700 group-hover:text-orange transition-colors" />
+                                            <div className="w-16 h-16 bg-gray-100 dark:bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:text-orange transition-all">
+                                                <HiOutlineCloudArrowUp className="text-3xl text-gray-400 dark:text-gray-700 group-hover:text-orange transition-colors" />
                                             </div>
-                                            <p className="text-[10px] font-black text-white uppercase tracking-[0.2em] mb-1">Deploy Cover Asset</p>
-                                            <p className="text-[8px] font-bold text-gray-600 uppercase tracking-widest">16:9 ratio recommended</p>
+                                            <p className="text-[10px] font-black text-gray-900 dark:text-white uppercase tracking-[0.2em] mb-1">Deploy Cover Asset</p>
+                                            <p className="text-[8px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-widest">16:9 ratio recommended</p>
                                         </div>
                                     )}
                                 </div>
@@ -305,7 +305,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                         <HiOutlinePhoto className="text-sm" />
                                         Interactive Gallery
                                     </label>
-                                    <span className="px-3 py-1 bg-[#030712] border border-white/5 rounded-full text-[8px] font-black text-white uppercase tracking-widest">
+                                    <span className="px-3 py-1 bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 rounded-full text-[8px] font-black text-gray-900 dark:text-white uppercase tracking-widest">
                                         {galleryPreviews.length} Media Units
                                     </span>
                                 </div>
@@ -317,7 +317,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                             layout
                                             initial={{ opacity: 0, scale: 0.8 }}
                                             animate={{ opacity: 1, scale: 1 }}
-                                            className="relative aspect-square rounded-[1.5rem] bg-[#030712] border border-white/5 overflow-hidden group shadow-lg"
+                                            className="relative aspect-square rounded-[1.5rem] bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 overflow-hidden group shadow-lg"
                                         >
                                             <img src={preview} alt="Gallery" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                             <button 

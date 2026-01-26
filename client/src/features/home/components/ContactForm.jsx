@@ -42,7 +42,7 @@ const ContactForm = () => {
 
 	return (
 		<div className="lg:col-span-7">
-			<div className="bg-[#0a0f1c] rounded-[3rem] p-6 md:p-10 lg:p-14 border border-gray-800/50 relative overflow-hidden shadow-2xl">
+			<div className="bg-gray-50 dark:bg-[#0a0f1c] rounded-[3rem] p-6 md:p-10 lg:p-14 border border-gray-100 dark:border-gray-800/50 relative overflow-hidden shadow-2xl transition-colors duration-500">
 				<div className="absolute top-0 right-0 w-80 h-80 bg-orange/5 rounded-full blur-[100px] -mr-40 -mt-40"></div>
 				
 				<form onSubmit={handleSubmit(onSubmit)} className="relative z-10 space-y-8">
@@ -50,7 +50,7 @@ const ContactForm = () => {
 						<Input
 							label="Your Name"
 							placeholder="John Doe"
-							className="!bg-[#030712] !border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
+							className="!bg-white dark:!bg-[#030712] !border-gray-100 dark:!border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
 							error={errors.userName?.message}
 							{...register("userName")}
 						/>
@@ -58,7 +58,7 @@ const ContactForm = () => {
 							label="Your Email"
 							type="email"
 							placeholder="john@example.com"
-							className="!bg-[#030712] !border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
+							className="!bg-white dark:!bg-[#030712] !border-gray-100 dark:!border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
 							error={errors.userEmail?.message}
 							{...register("userEmail")}
 						/>
@@ -68,14 +68,14 @@ const ContactForm = () => {
 						<Input
 							label="Phone Number"
 							placeholder="+20 10..."
-							className="!bg-[#030712] !border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
+							className="!bg-white dark:!bg-[#030712] !border-gray-100 dark:!border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
 							error={errors.phoneNumber?.message}
 							{...register("phoneNumber")}
 						/>
 						<Input
 							label="Subject"
 							placeholder="Project Inquiry"
-							className="!bg-[#030712] !border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
+							className="!bg-white dark:!bg-[#030712] !border-gray-100 dark:!border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
 							error={errors.subject?.message}
 							{...register("subject")}
 						/>
@@ -85,7 +85,7 @@ const ContactForm = () => {
 						label="Message"
 						rows="5"
 						placeholder="Tell me about your project..."
-						className="!bg-[#030712] !border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
+						className="!bg-white dark:!bg-[#030712] !border-gray-100 dark:!border-gray-800/50 focus:!border-orange/30 !py-4 !px-6 !rounded-2xl"
 						error={errors.emailBody?.message}
 						{...register("emailBody")}
 					/>

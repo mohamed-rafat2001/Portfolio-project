@@ -42,7 +42,7 @@ const SkillCategoryCard = ({ skill, catIndex }) => {
 				</h3>
 			</div>
 
-			<div className={`p-6 md:p-10 bg-[#0a0f1c] rounded-[3rem] border border-gray-800/50 shadow-2xl group-hover:border-orange/30 transition-all duration-500 flex flex-col ${showAll ? 'min-h-[300px]' : 'h-[250px]'}`}>
+			<div className={`p-6 md:p-10 bg-gray-50 dark:bg-[#0a0f1c] rounded-[3rem] border border-gray-100 dark:border-white/5 shadow-2xl group-hover:border-orange/30 transition-all duration-500 flex flex-col ${showAll ? 'min-h-[300px]' : 'h-[250px]'}`}>
 				<div className={`flex flex-wrap gap-4 ${!showAll ? 'overflow-hidden' : ''}`}>
 					<AnimatePresence>
 						{displaySkills?.map((s, sIndex) => (
@@ -52,7 +52,7 @@ const SkillCategoryCard = ({ skill, catIndex }) => {
 								initial={{ opacity: 0, scale: 0.8 }}
 								animate={{ opacity: 1, scale: 1 }}
 								whileHover={{ scale: 1.05, y: -2 }}
-								className="px-6 py-3 bg-[#030712] text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-800/50 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
+								className="px-6 py-3 bg-white dark:bg-[#030712] text-gray-600 dark:text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-100 dark:border-white/5 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
 							>
 								{s}
 							</Motion.span>
@@ -63,7 +63,7 @@ const SkillCategoryCard = ({ skill, catIndex }) => {
 				{hasMore && (
 					<button 
 						onClick={() => setShowAll(!showAll)}
-						className="mt-auto pt-6 text-[10px] font-black text-orange uppercase tracking-[0.3em] hover:text-white transition-colors flex items-center gap-2 cursor-pointer w-fit"
+						className="mt-auto pt-6 text-[10px] font-black text-orange uppercase tracking-[0.3em] hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-2 cursor-pointer w-fit"
 					>
 						<div className="w-6 h-[1px] bg-orange/30"></div>
 						{showAll ? "Show Less" : `+ View ${skill.skills.length - 8} More`}
@@ -108,7 +108,7 @@ const Skills = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.1 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-[#030712]"
+			className="py-24 md:py-32 bg-white dark:bg-[#030712] transition-colors duration-500"
 		>
 			<div className="container mx-auto px-4">
 				<div className="flex items-center gap-8 mb-20">
@@ -116,12 +116,12 @@ const Skills = () => {
 						<span className="text-orange font-black text-[10px] uppercase tracking-[0.4em] mb-2">
 							Abilities
 						</span>
-						<h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+						<h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 							Technical <span className="text-orange">Skills</span>
 						</h2>
 					</div>
-					<div className="h-px grow bg-gray-800/50"></div>
-					<span className="text-gray-800 font-black text-6xl md:text-8xl select-none">
+					<div className="h-px grow bg-gray-200 dark:bg-gray-800/50"></div>
+					<span className="text-gray-100 dark:text-gray-800 font-black text-6xl md:text-8xl select-none">
 						04
 					</span>
 				</div>

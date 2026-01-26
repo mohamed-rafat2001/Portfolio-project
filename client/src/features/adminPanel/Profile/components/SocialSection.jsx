@@ -28,13 +28,13 @@ const SocialSection = ({ register, errors, isUpdating, isDirty, control }) => {
 		>
 			<div className="space-y-10">
                 {fields.length === 0 && (
-                    <div className="py-10 text-center border-2 border-dashed border-white/5 rounded-[2rem]">
-                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest">No social platforms added yet</p>
+                    <div className="py-10 text-center border-2 border-dashed border-gray-100 dark:border-white/5 rounded-[2rem]">
+                        <p className="text-[10px] font-black text-gray-400 dark:text-gray-600 uppercase tracking-widest">No social platforms added yet</p>
                     </div>
                 )}
 
 				{fields.map((field, index) => (
-					<div key={field.id} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end group/social relative p-8 bg-[#030712] border border-white/5 rounded-[2rem] hover:border-orange/20 transition-all">
+					<div key={field.id} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end group/social relative p-8 bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 rounded-[2rem] hover:border-orange/20 transition-all">
 						<InputField
 							label={`Platform #${index + 1}`}
 							placeholder="e.g. LinkedIn, GitHub"

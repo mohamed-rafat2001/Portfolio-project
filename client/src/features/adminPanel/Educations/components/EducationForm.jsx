@@ -72,7 +72,7 @@ const EducationForm = ({ education, onSubmit, isLoading, onCancel }) => {
 				<button
 					type="button"
 					onClick={onCancel}
-					className="px-8 py-4 font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 hover:text-white transition-all cursor-pointer"
+					className="px-8 py-4 font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white transition-all cursor-pointer"
 				>
 					Cancel
 				</button>

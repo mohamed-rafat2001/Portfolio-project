@@ -14,10 +14,10 @@ const Input = React.forwardRef(({ label, error, icon: Icon, className = "", ...p
 				)}
 				<input
 					ref={ref}
-					className={`w-full ${Icon ? 'pl-11' : 'px-4'} pr-4 py-3 bg-gray-50 dark:bg-gray-950 border rounded-2xl focus:ring-4 transition-all text-sm outline-none ${
+					className={`w-full ${Icon ? 'pl-11' : 'px-4'} pr-4 py-3 bg-gray-50 dark:bg-gray-950 border rounded-2xl transition-all text-sm text-gray-900 dark:text-white outline-none ${
 						error 
-							? 'border-red-500/50 focus:ring-red-500/5 focus:border-red-500' 
-							: 'border-transparent focus:border-orange/20 focus:ring-orange/5'
+							? 'border-red-500/50 focus:border-red-500 ring-4 ring-red-500/5' 
+							: 'border-gray-100 dark:border-transparent focus:border-orange/20 focus:ring-4 focus:ring-orange/5'
 					} ${className}`}
 					{...props}
 				/>

@@ -29,15 +29,15 @@ const About = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.2 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-[#030712] overflow-hidden"
+			className="py-24 md:py-32 bg-white dark:bg-[#030712] overflow-hidden transition-colors duration-500"
 		>
 			<div className="container mx-auto px-4">
 				<div className="flex items-center gap-8 mb-24">
 					<span className="text-orange font-black text-sm uppercase tracking-[0.4em]">
 						01
 					</span>
-					<div className="h-px grow bg-gray-800/50"></div>
-					<h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+					<div className="h-px grow bg-gray-200 dark:bg-gray-800/50"></div>
+					<h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 						About <span className="text-orange">Me</span>
 					</h2>
 				</div>
@@ -48,16 +48,16 @@ const About = () => {
 						<div className="relative">
 							{/* Background Decorative Elements */}
 							<div className="absolute -inset-6 bg-orange/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-							<div className="absolute -inset-4 bg-gray-900 border border-gray-800 rounded-[3rem] -rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl"></div>
+							<div className="absolute -inset-4 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[3rem] -rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-2xl"></div>
 
-							<div className="relative aspect-square rounded-[3rem] bg-[#0a0f1c] overflow-hidden border-8 border-[#0a0f1c] shadow-2xl">
+							<div className="relative aspect-square rounded-[3rem] bg-gray-50 dark:bg-[#0a0f1c] overflow-hidden border-8 border-gray-50 dark:border-[#0a0f1c] shadow-2xl">
 								<img
 									src={admin?.profileImg?.secure_url || profileImg}
 									alt={admin?.name || "Mohamed Rafat"}
 									className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
 									crossOrigin="anonymous"
 								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-[#030712]/80 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700"></div>
+								<div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 dark:from-[#030712]/80 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700"></div>
 							</div>
 						</div>
 					</div>
@@ -65,13 +65,13 @@ const About = () => {
 					{/* Text Content */}
 					<div className="flex-1 space-y-10">
 						<div className="space-y-4">
-							<h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight">
+							<h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] tracking-tight">
 								Hello, I'm<br />
 								<span className="text-orange">{admin?.name || "Mohamed Rafat"}</span>.
 							</h3>
 						</div>
 
-						<div className="space-y-8 text-gray-400">
+						<div className="space-y-8 text-gray-500 dark:text-gray-400">
 							<div className="text-lg md:text-xl leading-relaxed font-medium">
 								{admin?.infos?.aboutMe?.message ? (
 									<p>{admin.infos.aboutMe.message}</p>

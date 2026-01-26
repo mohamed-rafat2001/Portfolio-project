@@ -61,8 +61,8 @@ const ProfileImageModal = ({ isOpen, onClose }) => {
             <div className="space-y-8">
                 <div 
                     onClick={() => fileInputRef.current.click()}
-                    className={`relative aspect-square rounded-[2.5rem] bg-[#030712] border-2 border-dashed flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-all ${
-                        preview ? 'border-orange/40' : 'border-white/10 hover:border-orange/20'
+                    className={`relative aspect-square rounded-[2.5rem] bg-gray-50 dark:bg-[#030712] border-2 border-dashed flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-all ${
+                        preview ? 'border-orange/40' : 'border-gray-200 dark:border-white/10 hover:border-orange/20'
                     }`}
                 >
                     <input 
@@ -77,11 +77,11 @@ const ProfileImageModal = ({ isOpen, onClose }) => {
                         <img src={preview} alt="Preview" className="w-full h-full object-cover" />
                     ) : (
                         <div className="text-center p-8">
-                            <HiOutlineCloudArrowUp className="text-5xl text-gray-700 mb-4 mx-auto" />
+                            <HiOutlineCloudArrowUp className="text-5xl text-gray-400 dark:text-gray-700 mb-4 mx-auto" />
                             <p className="text-xs font-black uppercase tracking-widest text-gray-500">
                                 Click to select or drop an image
                             </p>
-                            <span className="text-[10px] text-gray-600 mt-2 block">
+                            <span className="text-[10px] text-gray-400 dark:text-gray-600 mt-2 block">
                                 PNG, JPG or WEBP (Max 5MB)
                             </span>
                         </div>

@@ -7,14 +7,14 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
 	return (
 		<div className="space-y-6 pb-4 overflow-x-hidden">
 			{/* Sender Identity & Metadata Header */}
-			<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-white/5 relative">
+			<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-gray-100 dark:border-white/5 relative">
 				<div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-[#030712] border border-white/10 flex items-center justify-center text-orange text-xl shrink-0 shadow-2xl">
+                    <div className="w-12 h-12 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/10 flex items-center justify-center text-orange text-xl shrink-0 shadow-2xl">
                         <HiOutlineUser />
                     </div>
                     <div className="min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h2 className="text-lg md:text-xl font-black uppercase tracking-tight text-white truncate">
+                            <h2 className="text-lg md:text-xl font-black uppercase tracking-tight text-gray-900 dark:text-white truncate">
                                 {email.userName}
                             </h2>
                             {!email.read && (
@@ -26,7 +26,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                                 <HiOutlineEnvelope className="text-xs opacity-50" />
                                 <span className="truncate max-w-[150px] md:max-w-none">{email.userEmail}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-500">
+                            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
                                 <HiOutlinePhone className="text-xs opacity-50" />
                                 <span className="truncate">{email.phoneNumber}</span>
                             </div>
@@ -34,14 +34,14 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                     </div>
                 </div>
 
-                <div className="bg-[#030712]/40 p-4 rounded-2xl border border-white/5 min-w-[160px] lg:min-w-[180px] shadow-inner relative group overflow-hidden shrink-0">
+                <div className="bg-gray-50 dark:bg-[#030712]/40 p-4 rounded-2xl border border-gray-100 dark:border-white/5 min-w-[160px] lg:min-w-[180px] shadow-inner relative group overflow-hidden shrink-0">
                     <div className="absolute inset-0 bg-orange/5 opacity-0 group-hover:opacity-100 transition-opacity blur-xl"></div>
                     <div className="relative z-10">
-                        <div className="flex items-center gap-2 text-gray-500 mb-2">
+                        <div className="flex items-center gap-2 text-gray-400 dark:text-gray-500 mb-2">
                             <HiOutlineClock className="text-orange text-xs" />
                             <span className="text-[9px] font-black uppercase tracking-[0.2em]">Received at</span>
                         </div>
-                        <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest leading-tight">
+                        <p className="text-[10px] font-black text-gray-900 dark:text-gray-300 uppercase tracking-widest leading-tight">
                             {format(new Date(email.createdAt), "MM/dd/yyyy,")}
                             <br />
                             <span className="text-orange/80 mt-1 block">{format(new Date(email.createdAt), "hh:mm:ss a")}</span>
@@ -52,17 +52,17 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
 
             {/* Actions Bar */}
             <div className="flex items-center justify-between gap-3 h-8">
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-100 dark:via-white/5 to-transparent"></div>
                 {!email.read && (
                     <button 
                         onClick={onMarkAsRead}
-                        className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 hover:text-orange transition-all cursor-pointer group whitespace-nowrap"
+                        className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-orange transition-all cursor-pointer group whitespace-nowrap"
                     >
                         <HiOutlineEye className="text-sm group-hover:scale-110 transition-transform" />
                         Mark as Read
                     </button>
                 )}
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-100 dark:via-white/5 to-transparent"></div>
             </div>
 
 			{/* Communication Content Area */}
@@ -71,9 +71,9 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
 				<div className="space-y-3">
                     <div className="flex items-center gap-3">
                         <div className="w-1 h-5 bg-orange rounded-full shadow-[0_0_10px_rgba(255,165,0,0.5)]" />
-                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Subject Inquiry</span>
+                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Subject Inquiry</span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter pl-4 break-words leading-tight">
+                    <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter pl-4 break-words leading-tight">
                         {email.subject}
                     </h3>
                 </div>
@@ -82,16 +82,16 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
 				<div className="space-y-4">
 					<div className="flex items-center gap-3">
                         <div className="w-1 h-5 bg-orange rounded-full shadow-[0_0_10px_rgba(255,165,0,0.5)]" />
-                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Transmission Content</span>
+                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Transmission Content</span>
                     </div>
 					<div className="relative pl-4">
-                        <div className="p-6 md:p-8 bg-[#030712]/50 rounded-[2rem] border border-white/5 text-gray-300 leading-relaxed italic relative overflow-hidden group shadow-2xl">
+                        <div className="p-6 md:p-8 bg-gray-50 dark:bg-[#030712]/50 rounded-[2rem] border border-gray-100 dark:border-white/5 text-gray-600 dark:text-gray-300 leading-relaxed italic relative overflow-hidden group shadow-2xl">
                             <div className="absolute top-0 right-0 w-48 h-48 bg-orange/2 rounded-full blur-[60px] -mr-24 -mt-24"></div>
-                            <span className="text-4xl absolute top-4 left-6 opacity-[0.03] font-serif text-white group-hover:opacity-[0.07] transition-opacity">"</span>
+                            <span className="text-4xl absolute top-4 left-6 opacity-[0.03] font-serif text-gray-900 dark:text-white group-hover:opacity-[0.07] transition-opacity">"</span>
                             <p className="relative z-10 text-base md:text-lg font-bold tracking-tight px-1 md:px-4 line-height-relaxed opacity-80 break-words whitespace-pre-wrap">
                                 {email.emailBody}
                             </p>
-                            <span className="text-4xl absolute bottom-4 right-6 opacity-[0.03] font-serif text-white group-hover:opacity-[0.07] transition-opacity">"</span>
+                            <span className="text-4xl absolute bottom-4 right-6 opacity-[0.03] font-serif text-gray-900 dark:text-white group-hover:opacity-[0.07] transition-opacity">"</span>
                         </div>
                     </div>
 				</div>

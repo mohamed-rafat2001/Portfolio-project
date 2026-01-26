@@ -29,15 +29,15 @@ const Experience = () => {
 			whileInView="visible"
 			viewport={{ once: true, amount: 0.1 }}
 			variants={sectionVariants}
-			className="py-24 md:py-32 bg-[#030712] text-white"
+			className="py-24 md:py-32 bg-white dark:bg-[#030712] text-gray-900 dark:text-white transition-colors duration-500"
 		>
 			<div className="container mx-auto px-4">
 				<div className="flex items-center gap-8 mb-24">
 					<span className="text-orange font-black text-sm uppercase tracking-[0.4em]">
 						03
 					</span>
-					<div className="h-px grow bg-gray-800/50"></div>
-					<h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+					<div className="h-px grow bg-gray-200 dark:bg-gray-800/50"></div>
+					<h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 						My <span className="text-orange">Journey</span>
 					</h2>
 				</div>
@@ -46,15 +46,15 @@ const Experience = () => {
 					{/* Experience Column */}
 					<div className="space-y-16">
 						<div className="flex items-center gap-6">
-							<div className="w-16 h-16 rounded-[1.5rem] bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-orange text-3xl shadow-2xl">
+							<div className="w-16 h-16 rounded-[1.5rem] bg-gray-50 dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange text-3xl shadow-xl transition-colors">
 								<HiBriefcase />
 							</div>
-							<h3 className="text-3xl font-black text-white uppercase tracking-tighter">
+							<h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 								Work <span className="text-orange">History</span>
 							</h3>
 						</div>
 
-						<div className="space-y-16 border-l border-gray-800/50 ml-4 md:ml-8 pl-8 md:pl-12">
+						<div className="space-y-16 border-l border-gray-100 dark:border-gray-800/50 ml-4 md:ml-8 pl-8 md:pl-12">
 							{experiences?.map((exp, index) => (
 								<Motion.div
 									key={exp._id}
@@ -64,7 +64,7 @@ const Experience = () => {
 									className="relative group"
 								>
 									{/* Dot */}
-									<div className="absolute -left-[41px] md:-left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
+									<div className="absolute -left-[41px] md:-left-[57px] top-2 w-5 h-5 rounded-full bg-white dark:bg-[#030712] border-4 border-gray-100 dark:border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
 
 									<div className="space-y-6">
 										<div className="inline-block px-5 py-2 rounded-xl bg-orange/5 border border-orange/10 group-hover:border-orange/30 transition-colors">
@@ -73,14 +73,14 @@ const Experience = () => {
 											</span>
 										</div>
 										<div>
-											<h4 className="text-2xl font-black text-white mb-2 group-hover:text-orange transition-colors uppercase tracking-tight">
+											<h4 className="text-2xl font-black text-gray-900 dark:text-white mb-2 group-hover:text-orange transition-colors uppercase tracking-tight">
 												{exp.role}
 											</h4>
-											<p className="text-gray-500 font-black text-[10px] uppercase tracking-[0.3em]">
+											<p className="text-gray-500 dark:text-gray-500 font-black text-[10px] uppercase tracking-[0.3em]">
 												{exp.company}
 											</p>
 										</div>
-										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
+										<p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
 											{exp.description}
 										</p>
 									</div>
@@ -92,15 +92,15 @@ const Experience = () => {
 					{/* Education Column */}
 					<div className="space-y-16">
 						<div className="flex items-center gap-6">
-							<div className="w-16 h-16 rounded-[1.5rem] bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-orange text-3xl shadow-2xl">
+							<div className="w-16 h-16 rounded-[1.5rem] bg-gray-50 dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange text-3xl shadow-xl transition-colors">
 								<HiAcademicCap />
 							</div>
-							<h3 className="text-3xl font-black text-white uppercase tracking-tighter">
+							<h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 								<span className="text-orange">Education</span>
 							</h3>
 						</div>
 
-						<div className="space-y-16 border-l border-gray-800/50 ml-4 md:ml-8 pl-8 md:pl-12">
+						<div className="space-y-16 border-l border-gray-100 dark:border-gray-800/50 ml-4 md:ml-8 pl-8 md:pl-12">
 							{educations?.map((edu, index) => (
 								<Motion.div
 									key={edu._id}
@@ -110,7 +110,7 @@ const Experience = () => {
 									className="relative group"
 								>
 									{/* Dot */}
-									<div className="absolute -left-[41px] md:-left-[57px] top-2 w-5 h-5 rounded-full bg-[#030712] border-4 border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
+									<div className="absolute -left-[41px] md:-left-[57px] top-2 w-5 h-5 rounded-full bg-white dark:bg-[#030712] border-4 border-gray-100 dark:border-gray-800 group-hover:border-orange transition-colors duration-500 shadow-[0_0_20px_rgba(255,165,0,0)] group-hover:shadow-[0_0_20px_rgba(255,165,0,0.4)]"></div>
 
 									<div className="space-y-6">
 										<div className="inline-block px-5 py-2 rounded-xl bg-orange/5 border border-orange/10 group-hover:border-orange/30 transition-colors">
@@ -119,14 +119,14 @@ const Experience = () => {
 											</span>
 										</div>
 										<div>
-											<h4 className="text-2xl font-black text-white mb-2 group-hover:text-orange transition-colors uppercase tracking-tight">
+											<h4 className="text-2xl font-black text-gray-900 dark:text-white mb-2 group-hover:text-orange transition-colors uppercase tracking-tight">
 												{edu.degree}
 											</h4>
-											<p className="text-gray-500 font-black text-[10px] uppercase tracking-[0.3em]">
+											<p className="text-gray-500 dark:text-gray-500 font-black text-[10px] uppercase tracking-[0.3em]">
 												{edu.institution}
 											</p>
 										</div>
-										<p className="text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
+										<p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
 											{edu.description}
 										</p>
 									</div>

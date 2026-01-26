@@ -22,7 +22,7 @@ const WelcomeSection = ({ user }) => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-6xl font-black text-white mb-4"
+                        className="text-6xl font-black text-gray-900 dark:text-white mb-4"
                     >
 						Hello,
 					</Motion.h1>
@@ -40,14 +40,14 @@ const WelcomeSection = ({ user }) => {
                 <Motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="hidden lg:flex items-center gap-6 p-6 bg-[#0b1120] border border-white/5 rounded-[2rem] shadow-2xl min-w-[300px]"
+                    className="hidden lg:flex items-center gap-6 p-6 bg-white dark:bg-[#0b1120] border border-gray-100 dark:border-white/5 rounded-[2rem] shadow-2xl min-w-[300px]"
                 >
-                    <div className="w-14 h-14 rounded-2xl bg-[#030712] border border-white/10 flex items-center justify-center text-gray-700">
+                    <div className="w-14 h-14 rounded-2xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-gray-700">
                         <HiOutlineUser className="text-2xl" />
                     </div>
                     <div>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange block mb-1">Administrator</span>
-                        <span className="text-sm font-black text-white uppercase tracking-widest">{user?.name}</span>
+                        <span className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest">{user?.name}</span>
                     </div>
                 </Motion.div>
 			</div>

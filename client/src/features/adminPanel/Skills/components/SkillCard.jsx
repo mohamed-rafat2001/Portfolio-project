@@ -19,14 +19,14 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
 			<div className="flex items-center justify-between px-2">
                 <div className="flex items-center gap-3">
                     <div className="w-1.5 h-4 bg-orange rounded-full" />
-                    <h3 className="font-black text-white uppercase tracking-[0.2em] text-[10px]">
+                    <h3 className="font-black text-gray-900 dark:text-white uppercase tracking-[0.2em] text-[10px]">
                         {skill.name}
                     </h3>
                 </div>
 				<div className="flex items-center gap-1 opacity-20 group-hover:opacity-100 transition-all">
 					<button
 						onClick={() => onEdit(skill)}
-						className="p-1.5 hover:bg-white/5 text-gray-400 hover:text-white rounded-lg transition-all cursor-pointer"
+						className="p-1.5 hover:bg-gray-100 dark:hover:bg-white/5 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg transition-all cursor-pointer"
 					>
 						<HiOutlinePencil className="text-sm" />
 					</button>
@@ -40,7 +40,7 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
 			</div>
 
             {/* Tags Container */}
-			<div className={`p-6 md:p-8 bg-[#0b1120] rounded-[2.5rem] border border-white/5 flex flex-col gap-6 shadow-2xl relative overflow-hidden group/box transition-all duration-500 ${showAll ? 'min-h-[400px]' : 'h-[300px]'}`}>
+			<div className={`p-6 md:p-8 bg-white dark:bg-[#0b1120] rounded-[2.5rem] border border-gray-100 dark:border-white/5 flex flex-col gap-6 shadow-2xl relative overflow-hidden group/box transition-all duration-500 ${showAll ? 'min-h-[400px]' : 'h-[300px]'}`}>
                 <div className="absolute inset-0 bg-orange/5 opacity-0 group-hover/box:opacity-100 transition-opacity blur-3xl pointer-events-none"></div>
 				
                 <div className={`flex flex-wrap gap-3 ${!showAll ? 'overflow-hidden' : ''}`}>
@@ -48,7 +48,7 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
                         <Motion.span
                             layout
                             key={index}
-                            className="px-5 py-2.5 bg-[#030712] text-[10px] font-black text-gray-400 uppercase tracking-widest rounded-[1.2rem] border border-white/5 hover:border-orange/20 hover:text-white transition-all cursor-default shadow-sm"
+                            className="px-5 py-2.5 bg-gray-50 dark:bg-[#030712] text-[10px] font-black text-gray-400 uppercase tracking-widest rounded-[1.2rem] border border-gray-100 dark:border-white/5 hover:border-orange/20 hover:text-gray-900 dark:hover:text-white transition-all cursor-default shadow-sm"
                         >
                             {s}
                         </Motion.span>

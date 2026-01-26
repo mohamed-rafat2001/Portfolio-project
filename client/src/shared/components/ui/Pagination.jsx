@@ -49,7 +49,7 @@ const Pagination = ({ page, totalResults, limit, setPage, size = "default" }) =>
 		<div className={`${containerClasses} ${size === "small" ? "flex-col" : "flex-col sm:flex-row"} items-center gap-6`}>
             {totalResults > 0 && (
                 <div className={`text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 whitespace-nowrap ${size === "small" ? "mb-1" : ""}`}>
-                    Showing <span className="text-white">{startItem}-{endItem}</span> of <span className="text-white">{totalResults}</span> items
+                    Showing <span className="text-gray-900 dark:text-white">{startItem}-{endItem}</span> of <span className="text-gray-900 dark:text-white">{totalResults}</span> items
                 </div>
             )}
 
@@ -57,7 +57,7 @@ const Pagination = ({ page, totalResults, limit, setPage, size = "default" }) =>
                 <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    className={`${buttonClasses} bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed hover:border-orange/30 hover:text-orange transition-all`}
+                    className={`${buttonClasses} bg-white dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-gray-900 dark:text-white disabled:opacity-30 disabled:cursor-not-allowed hover:border-orange/30 hover:text-orange transition-all shadow-sm dark:shadow-none`}
                 >
                     <HiChevronLeft className={size === "small" ? "text-base" : "text-lg"} />
                 </button>
@@ -72,8 +72,8 @@ const Pagination = ({ page, totalResults, limit, setPage, size = "default" }) =>
                                 onClick={() => setPage(p)}
                                 className={`${buttonClasses} font-bold text-[10px] transition-all ${
                                     page === p
-                                        ? "bg-orange text-white shadow-lg shadow-orange/20"
-                                        : "bg-[#0a0f1c] text-gray-500 hover:text-white hover:border-gray-600 border border-gray-800"
+                                        ? "bg-orange text-white shadow-lg shadow-orange/20 border-orange"
+                                        : "bg-white dark:bg-[#0a0f1c] text-gray-500 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600 border border-gray-100 dark:border-gray-800 shadow-sm dark:shadow-none"
                                 }`}
                             >
                                 {p}
@@ -85,7 +85,7 @@ const Pagination = ({ page, totalResults, limit, setPage, size = "default" }) =>
                 <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    className={`${buttonClasses} bg-[#0a0f1c] border border-gray-800 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed hover:border-orange/30 hover:text-orange transition-all`}
+                    className={`${buttonClasses} bg-white dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-gray-900 dark:text-white disabled:opacity-30 disabled:cursor-not-allowed hover:border-orange/30 hover:text-orange transition-all shadow-sm dark:shadow-none`}
                 >
                     <HiChevronRight className={size === "small" ? "text-base" : "text-lg"} />
                 </button>

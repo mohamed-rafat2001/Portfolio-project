@@ -7,12 +7,12 @@ const LoadingState = ({ message = "Loading..." }) => {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
-			className="flex flex-col items-center justify-center min-h-[400px] w-full bg-[#030712]/50 backdrop-blur-sm text-white space-y-8"
+			className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white/50 dark:bg-[#030712]/50 backdrop-blur-sm text-gray-900 dark:text-white space-y-8"
 		>
 			<div className="relative flex items-center justify-center">
 				{/* Modern Spinner from react-spinners */}
 				<PuffLoader
-					color="#f59e0b"
+					color="#f97316"
 					size={100}
 					speedMultiplier={1.5}
 				/>
@@ -21,7 +21,7 @@ const LoadingState = ({ message = "Loading..." }) => {
 				<Motion.div
 					animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
 					transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-					className="absolute w-3 h-3 bg-orange rounded-full shadow-[0_0_15px_rgba(245,158,11,0.8)]"
+					className="absolute w-3 h-3 bg-orange rounded-full shadow-[0_0_15px_rgba(249,115,22,0.8)]"
 				/>
 			</div>
 
@@ -29,7 +29,7 @@ const LoadingState = ({ message = "Loading..." }) => {
 				<Motion.span
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					className="text-white/80 font-medium text-lg tracking-wider"
+					className="text-gray-500 dark:text-white/80 font-medium text-lg tracking-wider"
 				>
 					{message}
 				</Motion.span>

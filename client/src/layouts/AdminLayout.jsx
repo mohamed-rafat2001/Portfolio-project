@@ -70,7 +70,7 @@ const AdminLayout = () => {
 
 			{/* Sidebar */}
 			<aside
-				className={`fixed inset-y-0 left-0 z-[70] bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 lg:static lg:relative lg:translate-x-0 ${
+				className={`fixed inset-y-0 left-0 z-[70] w-72 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 lg:static lg:relative lg:translate-x-0 ${
 					isSidebarOpen ? "translate-x-0" : "-translate-x-full"
 				} ${isCollapsed ? "lg:w-20" : "lg:w-72"}`}
 			>
@@ -117,7 +117,7 @@ const AdminLayout = () => {
 									
 									{/* Tooltip for collapsed state */}
 									{isCollapsed && (
-										<div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap">
+										<div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 dark:bg-black text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap shadow-xl">
 											{link.label}
 										</div>
 									)}
@@ -137,7 +137,7 @@ const AdminLayout = () => {
 							{!isCollapsed && <span>Logout</span>}
 							
 							{isCollapsed && (
-								<div className="absolute left-full ml-4 px-3 py-2 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap">
+								<div className="absolute left-full ml-4 px-3 py-2 bg-red-600 dark:bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap shadow-xl">
 									Logout
 								</div>
 							)}

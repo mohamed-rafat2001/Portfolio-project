@@ -101,7 +101,7 @@ const Emails = () => {
                         )}
                     </div>
                     
-                    <div className="pt-2 border-t border-white/5">
+                    <div className="pt-2 border-t border-gray-100 dark:border-white/5">
                         <Pagination 
                             page={page} 
                             totalResults={totalResults} 
@@ -113,7 +113,7 @@ const Emails = () => {
 				</div>
 
 				{/* Right main: Email content details */}
-				<div className="flex-1 bg-[#0b1120] rounded-[3rem] border border-white/5 p-4 md:p-8 overflow-visible shadow-2xl relative min-h-[400px]">
+				<div className="flex-1 bg-white dark:bg-[#0b1120] rounded-[3rem] border border-gray-100 dark:border-white/5 p-4 md:p-8 overflow-visible shadow-2xl relative min-h-[400px]">
 					<AnimatePresence mode="wait">
 						{selectedEmail ? (
 							<Motion.div
@@ -130,8 +130,8 @@ const Emails = () => {
 							</Motion.div>
 						) : (
 							<div className="h-full flex flex-col items-center justify-center text-center opacity-20">
-								<HiOutlineEnvelope className="text-8xl mb-6 text-gray-400" />
-								<h3 className="text-xl font-black text-gray-400 uppercase tracking-widest">
+								<HiOutlineEnvelope className="text-8xl mb-6 text-gray-500 dark:text-gray-400" />
+								<h3 className="text-xl font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest">
 									Select a message to view details
 								</h3>
 							</div>

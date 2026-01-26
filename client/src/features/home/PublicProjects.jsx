@@ -53,7 +53,7 @@ const PublicProjects = () => {
 	if (isLoading) return <LoadingState message="Fetching all projects..." />;
 
 	return (
-		<div className="min-h-screen pt-40 pb-32 bg-[#030712] text-white overflow-hidden relative">
+		<div className="min-h-screen pt-40 pb-32 bg-white dark:bg-[#030712] text-gray-900 dark:text-white overflow-hidden relative transition-colors duration-500">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0 overflow-hidden">
                 <img 
@@ -61,8 +61,8 @@ const PublicProjects = () => {
                     alt="Background" 
                     className="w-full h-full object-cover opacity-[0.03] scale-110 grayscale"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-transparent to-[#030712]"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030712_100%)] opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white dark:from-[#030712] dark:via-transparent dark:to-[#030712]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,white_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,#030712_100%)] opacity-60"></div>
             </div>
 
             {/* Darker, more cinematic background effects */}
@@ -83,14 +83,14 @@ const PublicProjects = () => {
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: 1 }}
                                 transition={{ duration: 1, delay: 0.5 }}
-                                className="absolute inset-0 bg-white origin-left"
+                                className="absolute inset-0 bg-white dark:bg-[#030712] origin-left"
                             ></Motion.div>
                         </div>
                         <span className="text-[11px] font-black uppercase tracking-[0.6em] text-orange">Portfolio Index</span>
                     </div>
 
 					<h1 className="text-6xl md:text-8xl lg:text-[10vw] font-black uppercase tracking-tighter leading-[0.8] mb-12 flex flex-col items-center">
-						<span className="text-white">Project</span>
+						<span className="text-gray-900 dark:text-white">Project</span>
 						<span className="text-orange">Archive</span>
 					</h1>
 					<p className="text-gray-500 max-w-2xl mx-auto font-medium text-lg md:text-xl leading-relaxed opacity-70 mt-10">
@@ -104,9 +104,9 @@ const PublicProjects = () => {
                             placeholder="Filter by technology or name..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-5 text-sm font-bold placeholder:text-gray-600 focus:outline-none focus:border-orange/40 transition-all outline-none"
+                            className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl px-12 py-5 text-sm font-bold placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none focus:border-orange/40 transition-all outline-none text-gray-900 dark:text-white"
                         />
-                        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 group-focus-within:text-orange transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-600 group-focus-within:text-orange transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
@@ -114,13 +114,13 @@ const PublicProjects = () => {
 
 				<div className="flex items-center gap-10 mb-20">
                     <div className="flex items-baseline gap-6">
-					    <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none flex items-center gap-4">
-						    Discovery <span className="text-[#1e293b]">Phase</span>
+					    <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-none flex items-center gap-4">
+						    Discovery <span className="text-gray-300 dark:text-[#1e293b]">Phase</span>
 					    </h2>
                     </div>
-					<div className="h-px grow bg-white/5 relative hidden lg:block">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-6 pl-10 bg-[#030712]">
-                            <span className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] whitespace-nowrap">
+					<div className="h-px grow bg-gray-100 dark:bg-white/5 relative hidden lg:block">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-6 pl-10 bg-white dark:bg-[#030712]">
+                            <span className="text-[11px] font-black text-gray-300 dark:text-white/20 uppercase tracking-[0.5em] whitespace-nowrap">
                                 {totalResults || projects.length || 0} TOTAL UNITS
                             </span>
                         </div>
@@ -147,7 +147,7 @@ const PublicProjects = () => {
 						<button
 							onClick={() => setPage((p) => Math.max(1, p - 1))}
 							disabled={page === 1}
-							className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-2xl"
+							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-2xl"
 						>
 							<HiChevronLeft className="text-2xl" />
 						</button>
@@ -155,7 +155,7 @@ const PublicProjects = () => {
 						<div className="flex items-center gap-4">
 							{getPageNumbers().map((p, i) => (
 								p === "..." ? (
-									<span key={`ellipsis-${i}`} className="w-10 h-10 flex items-center justify-center text-white/20 font-black">...</span>
+									<span key={`ellipsis-${i}`} className="w-10 h-10 flex items-center justify-center text-gray-300 dark:text-white/20 font-black">...</span>
 								) : (
 									<button
 										key={p}
@@ -163,7 +163,7 @@ const PublicProjects = () => {
 										className={`w-16 h-16 rounded-full font-black text-xs transition-all shadow-2xl ${
 											page === p
 												? "bg-orange text-white"
-												: "bg-white/5 text-white/40 border border-white/5 hover:border-orange hover:text-white"
+												: "bg-gray-50 dark:bg-white/5 text-gray-400 dark:text-white/40 border border-gray-100 dark:border-white/5 hover:border-orange hover:text-white"
 										}`}
 									>
 										{p < 10 ? `0${p}` : p}
@@ -175,7 +175,7 @@ const PublicProjects = () => {
 						<button
 							onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
 							disabled={page === totalPages}
-							className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-2xl"
+							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-2xl"
 						>
 							<HiChevronRight className="text-2xl" />
 						</button>

@@ -9,17 +9,20 @@ import {
 } from "recharts";
 import { motion as Motion } from "framer-motion";
 import { HiArrowTrendingUp } from "react-icons/hi2";
+import { useTheme } from "../../../../shared/context/ThemeContext";
 
 const VisitorTrendChart = ({ data }) => {
+	const { isDark } = useTheme();
+
 	return (
 		<Motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="bg-[#0b1120] rounded-[3rem] p-10 border border-white/5 shadow-2xl h-full relative"
+			className="bg-white dark:bg-[#0b1120] rounded-[3rem] p-10 border border-gray-100 dark:border-white/5 shadow-2xl h-full relative"
 		>
 			<div className="flex items-center justify-between mb-12">
 				<div>
-					<h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-2">
+					<h3 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-2">
 						Visitor Trend
 					</h3>
 					<p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">
@@ -43,13 +46,14 @@ const VisitorTrendChart = ({ data }) => {
 						<CartesianGrid
 							strokeDasharray="4 4"
 							vertical={false}
-							stroke="rgba(255,255,255,0.03)"
+							stroke="currentColor"
+							className="text-gray-200 dark:text-white/5"
 						/>
 						<XAxis
 							dataKey="day"
 							axisLine={false}
 							tickLine={false}
-							tick={{ fill: "#475569", fontSize: 10, fontWeight: '900' }}
+							tick={{ fill: "#94a3b8", fontSize: 10, fontWeight: '900' }}
 							dy={15}
 						/>
 						<YAxis
@@ -59,12 +63,14 @@ const VisitorTrendChart = ({ data }) => {
 						/>
 						<Tooltip
 							contentStyle={{
-								backgroundColor: "#030712",
-								border: "1px solid rgba(255,255,255,0.1)",
+								backgroundColor: isDark ? "#030712" : "#ffffff",
+								border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.05)",
 								borderRadius: "16px",
 								fontSize: '12px',
                                 fontWeight: '900',
-                                textTransform: 'uppercase'
+                                textTransform: 'uppercase',
+                                color: isDark ? "#ffffff" : "#111827",
+                                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
 							}}
 							itemStyle={{ color: "#f97316" }}
                             cursor={{ stroke: '#f97316', strokeWidth: 2, strokeDasharray: '4 4' }}

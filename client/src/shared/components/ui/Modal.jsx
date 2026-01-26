@@ -12,7 +12,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						onClick={onClose}
-						className="absolute inset-0 bg-[#030712]/60 backdrop-blur-md"
+						className="absolute inset-0 bg-gray-900/60 dark:bg-[#030712]/60 backdrop-blur-md"
 					/>
 
 					{/* Modal Content */}
@@ -20,17 +20,17 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 						initial={{ opacity: 0, scale: 0.9, y: 20 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.9, y: 20 }}
-						className={`relative w-full ${maxWidth} bg-[#030712] rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 flex flex-col max-h-[95vh]`}
+						className={`relative w-full ${maxWidth} bg-white dark:bg-[#030712] rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden border border-gray-100 dark:border-white/5 flex flex-col max-h-[95vh]`}
 					>
 						{/* Header */}
 						{!hideHeader && title && (
 							<div className="flex items-center justify-between px-12 py-10">
-								<h3 className="text-2xl font-black uppercase tracking-tight text-white mb-0">
+								<h3 className="text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white mb-0">
 									{title}
 								</h3>
 								<button
 									onClick={onClose}
-									className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl text-gray-400 hover:text-white transition-all cursor-pointer"
+									className="p-3 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-2xl text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
 								>
 									<HiOutlineXMark className="text-2xl" />
 								</button>

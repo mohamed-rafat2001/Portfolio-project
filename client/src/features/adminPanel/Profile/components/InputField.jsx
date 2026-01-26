@@ -14,10 +14,10 @@ const InputField = React.forwardRef(({ label, error, icon: Icon, className = "",
 				)}
 				<input
 					ref={ref}
-					className={`w-full ${Icon ? 'pl-14' : 'px-6'} pr-6 py-4 bg-[#030712] border-2 rounded-[1.5rem] transition-all text-sm font-bold text-white outline-none ${
+					className={`w-full ${Icon ? 'pl-14' : 'px-6'} pr-6 py-4 bg-gray-50 dark:bg-[#030712] border-2 rounded-[1.5rem] transition-all text-sm font-bold text-gray-900 dark:text-white outline-none ${
 						error 
 							? 'border-red-500/50 focus:border-red-500' 
-							: 'border-white/5 focus:border-orange/40'
+							: 'border-gray-100 dark:border-white/5 focus:border-orange/40'
 					} ${className}`}
 					{...props}
 				/>

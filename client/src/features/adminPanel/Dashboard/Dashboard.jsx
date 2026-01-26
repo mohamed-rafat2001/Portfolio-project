@@ -64,15 +64,15 @@ const Dashboard = () => {
             <section className="space-y-10">
                 <div className="flex items-center gap-4">
                     <div className="w-1.5 h-8 bg-orange rounded-full" />
-                    <h2 className="text-3xl font-black text-white uppercase tracking-tighter">Visitor Analytics</h2>
+                    <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Visitor Analytics</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
                     {visitorStats.map((stat) => (
-                        <div key={stat.title} className="p-6 md:p-8 bg-[#0b1120] border border-white/5 rounded-[2.5rem] shadow-2xl flex flex-col items-center text-center">
+                        <div key={stat.title} className="p-6 md:p-8 bg-white dark:bg-[#0b1120] border border-gray-100 dark:border-white/5 rounded-[2.5rem] shadow-2xl flex flex-col items-center text-center">
                             <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl text-white mb-6 shadow-2xl`}>
                                 {stat.icon}
                             </div>
-                            <h3 className="text-4xl font-black text-white mb-2">{stat.value}</h3>
+                            <h3 className="text-4xl font-black text-gray-900 dark:text-white mb-2">{stat.value}</h3>
                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{stat.title}</p>
                         </div>
                     ))}
@@ -104,19 +104,19 @@ const Dashboard = () => {
                     </div>
 
                     {/* Email Summary Card */}
-                    <div className="bg-[#0b1120] rounded-[3rem] p-10 border border-white/5 shadow-2xl flex flex-col justify-between min-h-[220px]">
+                    <div className="bg-white dark:bg-[#0b1120] rounded-[3rem] p-10 border border-gray-100 dark:border-white/5 shadow-2xl flex flex-col justify-between min-h-[220px]">
                         <div className="flex items-center gap-6">
-                            <div className="w-16 h-16 rounded-[1.5rem] bg-[#030712] border border-white/5 flex items-center justify-center text-orange text-3xl shadow-2xl">
+                            <div className="w-16 h-16 rounded-[1.5rem] bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 flex items-center justify-center text-orange text-3xl shadow-2xl">
                                 <HiOutlineEnvelope />
                             </div>
                             <div>
-                                <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Emails</h3>
+                                <h3 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Emails</h3>
                                 <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">{unreadEmails} UNREAD EMAILS</p>
                             </div>
                         </div>
                         <Link 
                             to="/adminPanel/emails" 
-                            className="w-full py-5 rounded-3xl border-2 border-white/5 text-white font-black uppercase tracking-widest text-[10px] text-center hover:bg-white hover:text-black transition-all"
+                            className="w-full py-5 rounded-3xl border-2 border-gray-100 dark:border-white/5 text-gray-900 dark:text-white font-black uppercase tracking-widest text-[10px] text-center hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all"
                         >
                             View Inbox
                         </Link>
@@ -128,7 +128,7 @@ const Dashboard = () => {
             <section className="space-y-10">
                 <div className="flex items-center gap-4">
                     <div className="w-1.5 h-8 bg-orange rounded-full" />
-                    <h2 className="text-3xl font-black text-white uppercase tracking-tighter">Content Overview</h2>
+                    <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Content Overview</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {contentStats.map((stat) => (

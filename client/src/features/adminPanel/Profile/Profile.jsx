@@ -135,12 +135,12 @@ const Profile = () => {
 	return (
 		<div className="max-w-6xl mx-auto pb-20">
             {/* Upper Profile Box */}
-            <section className="bg-[#0b1120] rounded-[2.5rem] p-10 border border-white/5 mb-14 shadow-2xl relative overflow-hidden group">
+            <section className="bg-white dark:bg-[#0b1120] rounded-[2.5rem] p-10 border border-gray-100 dark:border-white/5 mb-14 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-orange/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
                 
                 <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
                     <div className="relative group" ref={dropdownRef}>
-                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-[2.5rem] bg-[#030712] flex items-center justify-center text-orange overflow-hidden border-4 border-white/5 shadow-2xl">
+                        <div className="w-32 h-32 md:w-44 md:h-44 rounded-[2.5rem] bg-gray-50 dark:bg-[#030712] flex items-center justify-center text-orange overflow-hidden border-4 border-white dark:border-white/5 shadow-2xl">
                             {user?.profileImg?.secure_url ? (
                                 <img
                                     src={user.profileImg.secure_url}
@@ -154,7 +154,7 @@ const Profile = () => {
                         </div>
                         <button 
                             onClick={() => setIsImageDropdownOpen(!isImageDropdownOpen)}
-                            className="absolute -bottom-2 -right-2 w-12 h-12 bg-orange rounded-2xl shadow-2xl border-4 border-[#0b1120] flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer"
+                            className="absolute -bottom-2 -right-2 w-12 h-12 bg-orange rounded-2xl shadow-2xl border-4 border-white dark:border-[#0b1120] flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer"
                         >
                             <HiOutlineCamera className="text-2xl" />
                         </button>
@@ -165,14 +165,14 @@ const Profile = () => {
                                     initial={{ opacity: 0, scale: 0.9, y: 10 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                    className="absolute left-full ml-4 top-1/2 -translate-y-1/2 w-56 bg-[#030712] border border-white/10 rounded-3xl shadow-3xl p-3 z-50 overflow-hidden"
+                                    className="absolute left-full ml-4 top-1/2 -translate-y-1/2 w-56 bg-white dark:bg-[#030712] border border-gray-100 dark:border-white/10 rounded-3xl shadow-3xl p-3 z-50 overflow-hidden"
                                 >
                                     <button 
                                         onClick={() => {
                                             setIsImageModalOpen(true);
                                             setIsImageDropdownOpen(false);
                                         }}
-                                        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-white/5 rounded-2xl transition-colors text-white group"
+                                        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-gray-50 dark:hover:bg-white/5 rounded-2xl transition-colors text-gray-900 dark:text-white group"
                                     >
                                         <HiOutlineCamera className="text-xl text-orange group-hover:scale-110 transition-transform" />
                                         <span className="text-[10px] font-black uppercase tracking-widest">Upload Photo</span>
@@ -184,7 +184,7 @@ const Profile = () => {
                                                 setIsImageDropdownOpen(false);
                                             }
                                         }}
-                                        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-white/5 rounded-2xl transition-colors text-white group"
+                                        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-gray-50 dark:hover:bg-white/5 rounded-2xl transition-colors text-gray-900 dark:text-white group"
                                     >
                                         <HiOutlineEye className="text-xl text-blue-500 group-hover:scale-110 transition-transform" />
                                         <span className="text-[10px] font-black uppercase tracking-widest">View Photo</span>
@@ -195,7 +195,7 @@ const Profile = () => {
                     </div>
 
                     <div className="text-center md:text-left flex-grow">
-                        <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-4">
                             {user?.name}
                         </h1>
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-gray-400">
@@ -203,8 +203,8 @@ const Profile = () => {
                                 <HiOutlineEnvelope className="text-orange" />
                                 <span className="text-[10px] font-black uppercase tracking-widest text-orange">{user?.email}</span>
                              </div>
-                             <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Admin</span>
+                             <div className="flex items-center gap-2 px-4 py-1.5 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-full">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-white/40">Admin</span>
                              </div>
                              <div className="flex items-center gap-2 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
                                 <span className="text-[10px] font-black uppercase tracking-widest text-green-500">Active Account</span>
@@ -216,7 +216,7 @@ const Profile = () => {
 
             {/* Navigation Tabs */}
             <div className="flex justify-center mb-10 px-4">
-                <div className="inline-flex p-1.5 bg-[#0b1120] border border-white/5 rounded-full shadow-2xl">
+                <div className="inline-flex p-1.5 bg-white dark:bg-[#0b1120] border border-gray-100 dark:border-white/5 rounded-full shadow-2xl">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
@@ -224,10 +224,10 @@ const Profile = () => {
                             className={`flex items-center gap-3 px-8 py-3.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all relative overflow-hidden ${
                                 activeTab === tab.id 
                                     ? "bg-orange/10 text-orange border border-orange/20" 
-                                    : "text-white/40 hover:text-white"
+                                    : "text-gray-400 dark:text-white/40 hover:text-gray-900 dark:hover:text-white"
                             }`}
                         >
-                            <tab.icon className={`text-lg ${activeTab === tab.id ? "text-orange" : "text-white/20"}`} />
+                            <tab.icon className={`text-lg ${activeTab === tab.id ? "text-orange" : "text-gray-200 dark:text-white/20"}`} />
                             {tab.label}
                         </button>
                     ))}
@@ -267,7 +267,7 @@ const Profile = () => {
                 maxWidth="max-w-md"
                 padding="p-6 md:p-10"
             >
-                <div className="bg-[#030712] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl aspect-square flex items-center justify-center p-4">
+                <div className="bg-gray-50 dark:bg-[#030712] rounded-[2rem] overflow-hidden border border-gray-100 dark:border-white/5 shadow-2xl aspect-square flex items-center justify-center p-4">
                     <img 
                         src={user?.profileImg?.secure_url} 
                         alt={user?.name} 

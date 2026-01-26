@@ -76,7 +76,7 @@ const Footer = () => {
 									rel="noopener noreferrer"
 									whileHover={{ y: -3, scale: 1.1 }}
 									whileTap={{ scale: 0.9 }}
-									className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-lg text-gray-600 dark:text-gray-400 hover:text-orange dark:hover:text-orange transition-all"
+									className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-lg text-gray-500 dark:text-gray-400 hover:text-white dark:hover:text-white hover:bg-orange dark:hover:bg-orange hover:border-orange dark:hover:border-orange transition-all"
 									aria-label={social.label}
 								>
 									{social.icon}

@@ -47,8 +47,8 @@
 
 	/* Global Scrollbar Styles */
 	::-webkit-scrollbar {
-		width: 10px;
-		height: 10px;
+		width: 5px;
+		height: 5px;
 	}
 
 	::-webkit-scrollbar-track {
@@ -58,13 +58,13 @@
 	::-webkit-scrollbar-thumb {
 		background-color: #d1d5db;
 		border-radius: 20px;
-		border: 3px solid transparent;
+		border: 1px solid transparent;
 		background-clip: content-box;
 		transition: background-color 0.3s ease;
 	}
 
 	.dark ::-webkit-scrollbar-thumb {
-		background-color: #374151;
+		background-color: #4b5563;
 	}
 
 	::-webkit-scrollbar-thumb:hover {
@@ -74,11 +74,11 @@
 	/* Firefox */
 	* {
 		scrollbar-width: thin;
-		scrollbar-color: #e5e7eb transparent;
+		scrollbar-color: #d1d5db transparent;
 	}
 
 	.dark * {
-		scrollbar-color: #374151 transparent;
+		scrollbar-color: #4b5563 transparent;
 	}
 }
 

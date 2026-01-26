@@ -7,7 +7,7 @@ const AppLayout = () => {
 	return (
 		<div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col overflow-x-hidden relative">
 			<Header />
-			<main className="grow w-full relative">
+			<main className="grow w-full relative custom-scrollbar">
 				<Outlet />
 			</main>
 			<Footer />

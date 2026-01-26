@@ -12,9 +12,13 @@ export default function useLogin() {
 		isLoading,
 	} = useMutation({
 		mutationFn: login,
-		onSuccess: async () => {
-			// Ensure the cache is updated before navigating
-			await queryClient.invalidateQueries({ queryKey: ["User"] });
+		onSuccess: (data) => {
+			// Manually update the User query data to avoid extra fetch and race conditions
+			if (data?.user) {
+				queryClient.setQueryData(["User"], { status: "success", data: data.user });
+			}
+			
+			// Navigate immediately with the new state
 			navigate("/adminPanel/dashboard", { replace: true });
 		},
 	});

@@ -30,7 +30,6 @@ const Login = () => {
 		loginFunc(data, {
 			onSuccess: () => {
 				toast.success("Welcome back!");
-				navigate("/adminPanel/dashboard");
 			},
 			onError: (err) =>
 				toast.error(err?.response?.data?.message || "Login failed"),

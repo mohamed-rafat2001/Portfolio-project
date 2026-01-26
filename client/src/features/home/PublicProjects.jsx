@@ -55,13 +55,14 @@ const PublicProjects = () => {
 	return (
 		<div className="min-h-screen pt-40 pb-32 bg-[#030712] text-white overflow-hidden relative">
             {/* Background Image with Overlay */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 overflow-hidden">
                 <img 
-                    src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop" 
                     alt="Background" 
-                    className="w-full h-full object-cover opacity-10 grayscale"
+                    className="w-full h-full object-cover opacity-[0.03] scale-110 grayscale"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-transparent to-[#030712]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030712_100%)] opacity-60"></div>
             </div>
 
             {/* Darker, more cinematic background effects */}

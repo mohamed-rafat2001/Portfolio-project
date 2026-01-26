@@ -12,9 +12,10 @@ export default function useLogin() {
 		isLoading,
 	} = useMutation({
 		mutationFn: login,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["User"] });
-			navigate("/adminPanel/dashboard");
+		onSuccess: async () => {
+			// Ensure the cache is updated before navigating
+			await queryClient.invalidateQueries({ queryKey: ["User"] });
+			navigate("/adminPanel/dashboard", { replace: true });
 		},
 	});
 	const user = response?.data?.user || null;

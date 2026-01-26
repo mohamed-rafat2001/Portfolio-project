@@ -29,7 +29,10 @@ export default function ProtectRoute() {
 		);
 
 	// If user is not authenticated (either initially or due to state change), redirect to login
-	if (!isAuthenticated || shouldRedirect)
+	if (!isAuthenticated && !isLoading)
+		return <Navigate to="/login" state={{ from: location }} replace />;
+
+	if (shouldRedirect)
 		return <Navigate to="/login" state={{ from: location }} replace />;
 
 	return <Outlet />;

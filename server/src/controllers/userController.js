@@ -16,7 +16,7 @@ const sendRes = getExport(sendResponse);
 
 // get user doc
 export const getMe = catchAsync(async (req, res, _next) => {
-	sendRes(res, 200, req.user);
+	sendRes(res, 200, { data: req.user });
 });
 
 export const getAdminInfo = catchAsync(async (req, res, next) => {

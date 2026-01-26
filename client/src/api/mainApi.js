@@ -30,6 +30,8 @@ mainApi.interceptors.request.use(
 		const token = localStorage.getItem("token");
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
+			// Ensure credentials are sent even with custom headers
+			config.withCredentials = true;
 		}
 		return config;
 	},

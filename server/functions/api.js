@@ -1,4 +1,6 @@
 import serverless from "serverless-http";
+import { app as appExport } from "../app.js";
+import dbConnectExport from "../src/db/config.js";
 
 let serverlessHandler;
 
@@ -9,27 +11,17 @@ const getFunction = (mod) => {
 	return mod;
 };
 
+const app = getFunction(appExport);
+const dbConnect = getFunction(dbConnectExport);
+
 export const handler = async (event, context) => {
 	// Add some debugging info to logs
 	console.log(`API Handler called: ${event.httpMethod} ${event.path}`);
 	
 	try {
-		// Dynamically import to catch initialization errors
-		const appModule = await import("../app.js");
-		const dbConfigModule = await import("../src/db/config.js");
-
-		// Extract the actual exports
-		let app = appModule.app || appModule.default || appModule;
-		const dbConnect = dbConfigModule.default || dbConfigModule;
-
-		// One final check - sometimes nested .default happens in bundling
-		if (app && app.default && typeof app.default === "function") {
-			app = app.default;
-		}
-
+		// Validation
 		if (typeof app !== "function") {
-			const keys = Object.keys(appModule).join(", ");
-			throw new Error(`The imported 'app' is not a function. It is a ${typeof app}. Module keys: [${keys}]. Value: ${JSON.stringify(app).substring(0, 100)}`);
+			throw new Error(`The imported 'app' is not a function. It is a ${typeof app}.`);
 		}
 		
 		if (typeof dbConnect !== "function") {
@@ -65,7 +57,6 @@ export const handler = async (event, context) => {
 				status: "error",
 				message: "Internal Server Error during initialization",
 				error: error.message,
-				// Include stack trace only if it's not a DB connection error (to avoid leaking DB string if it's in the stack)
 				stack: (process.env.NODE_ENV === "development" || !error.message.includes("MongoDB")) ? error.stack : undefined,
 			}),
 		};

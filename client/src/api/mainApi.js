@@ -1,7 +1,16 @@
 import axios from "axios";
 
 const getBaseURL = () => {
-	const url = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1/";
+	let url = import.meta.env.VITE_API_URL;
+	
+	if (!url) {
+		if (import.meta.env.PROD) {
+			url = "https://portfolio-app-server.netlify.app/api/v1/";
+		} else {
+			url = "http://localhost:3000/api/v1/";
+		}
+	}
+
 	// Ensure the production URL ends with /api/v1/ if it doesn't already
 	if (!url.endsWith("/api/v1/")) {
 		return `${url.replace(/\/$/, "")}/api/v1/`;
@@ -12,6 +21,7 @@ const getBaseURL = () => {
 const mainApi = axios.create({
 	baseURL: getBaseURL(),
 	withCredentials: true,
+	timeout: 15000, // 15 seconds timeout
 });
 
 // Response interceptor - Handle token expiration

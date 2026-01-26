@@ -7,10 +7,12 @@ const dbUrl = process.env.PRODUCTION_DB_URL
 	? process.env.PRODUCTION_DB_URL.replace("<db_password>", process.env.DB_PASSWORD)
 	: process.env.LOCAL_DB_URL;
 
-let isConnected = false;
-
 export default async function dbConnect() {
-	if (isConnected) return;
+	// Check if already connected (readyState 1 = connected)
+	if (mongoose.connection.readyState === 1) {
+		console.log("Using existing MongoDB connection");
+		return;
+	}
 
 	if (!dbUrl) {
 		const msg = "Database connection string (PRODUCTION_DB_URL or LOCAL_DB_URL) is missing";

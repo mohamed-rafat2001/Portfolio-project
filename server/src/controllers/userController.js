@@ -12,10 +12,11 @@ const getExport = (mod) => {
 
 const User = getExport(UserModel);
 const AppError = getExport(appError);
+const sendRes = getExport(sendResponse);
 
 // get user doc
 export const getMe = catchAsync(async (req, res, _next) => {
-	sendResponse(res, 200, req.user);
+	sendRes(res, 200, req.user);
 });
 
 export const getAdminInfo = catchAsync(async (req, res, next) => {
@@ -25,7 +26,7 @@ export const getAdminInfo = catchAsync(async (req, res, next) => {
 
 	if (!admin) return next(new AppError("admin not found", 404));
 
-	sendResponse(res, 200, admin);
+	sendRes(res, 200, admin);
 });
 
 // update user info (basic info)

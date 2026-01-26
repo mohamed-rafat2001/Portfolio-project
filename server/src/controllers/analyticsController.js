@@ -9,6 +9,7 @@ const getExport = (mod) => {
 };
 
 const Visitor = getExport(VisitorModel);
+const sendRes = getExport(sendResponse);
 
 export const trackVisit = catchAsync(async (req, res, _next) => {
 	// Check if user is logged in (only via token in cookies)
@@ -16,7 +17,7 @@ export const trackVisit = catchAsync(async (req, res, _next) => {
 
 	// If token exists, assume it's a registered/logged-in user and don't track as a visitor
 	if (token) {
-		return sendResponse(res, 200, "Visit not tracked (logged-in user)");
+		return sendRes(res, 200, "Visit not tracked (logged-in user)");
 	}
 
 	// Simple visit tracking for anonymous visitors
@@ -25,7 +26,7 @@ export const trackVisit = catchAsync(async (req, res, _next) => {
 		userAgent: req.headers["user-agent"],
 	});
 
-	sendResponse(res, 200, "Visit tracked");
+	sendRes(res, 200, "Visit tracked");
 });
 
 export const getStats = catchAsync(async (req, res, _next) => {
@@ -56,16 +57,18 @@ export const getStats = catchAsync(async (req, res, _next) => {
 
 		chartData.push({
 			name: startOfDay.toLocaleDateString("en-US", { weekday: "short" }),
-			visits: count,
+			visitors: count,
 		});
 	}
 
-	sendResponse(res, 200, {
-		todayCount,
-		weekCount,
-		monthCount,
-		yearCount,
-		totalCount,
+	sendRes(res, 200, {
+		stats: {
+			today: todayCount,
+			week: weekCount,
+			month: monthCount,
+			year: yearCount,
+			total: totalCount,
+		},
 		chartData,
 	});
 });

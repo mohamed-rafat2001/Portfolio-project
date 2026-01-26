@@ -13,6 +13,7 @@ const getExport = (mod) => {
 
 const User = getExport(UserModel);
 const AppError = getExport(appError);
+const sendRes = getExport(sendResponse);
 
 // login func
 export const login = catchAsync(async (req, res, next) => {
@@ -33,7 +34,7 @@ export const login = catchAsync(async (req, res, next) => {
 	user.createCookie(res);
 
 	// send response
-	sendResponse(res, 201, { user });
+	sendRes(res, 201, { user });
 });
 
 // log out func
@@ -43,7 +44,7 @@ export const logOut = catchAsync(async (req, res, next) => {
 	if (!user) return next(new AppError("user not found", 404));
 
 	user.removeCookie(res);
-	sendResponse(res, 200, {});
+	sendRes(res, 200, {});
 });
 
 // forgot password func
@@ -74,7 +75,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 	});
 	if (!Email) return next(new AppError("email not send", 400));
 
-	sendResponse(res, 200, {});
+	sendRes(res, 200, {});
 });
 
 // reset password func
@@ -100,5 +101,5 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 	await user.save();
 
 	user.createCookie(res);
-	sendResponse(res, 200, { user });
+	sendRes(res, 200, { user });
 });

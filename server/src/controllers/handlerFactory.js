@@ -12,6 +12,7 @@ const getExport = (mod) => {
 
 const AppError = getExport(appError);
 const Features = getExport(APIFeatures);
+const sendRes = getExport(sendResponse);
 
 // Helper to ensure we have the actual Mongoose Model
 const getModel = (Model) => getExport(Model);
@@ -31,7 +32,7 @@ export const createDoc = (Model, fields = []) =>
 
 		if (!doc) return next(new AppError("doc not created", 400));
 
-		sendResponse(res, 201, doc);
+		sendRes(res, 201, doc);
 	});
 // update doc
 export const updateDoc = (Model, fields = []) =>
@@ -52,7 +53,7 @@ export const updateDoc = (Model, fields = []) =>
 
 		if (!doc) return next(new AppError("doc not updated", 400));
 
-		sendResponse(res, 200, doc);
+		sendRes(res, 200, doc);
 	});
 
 // get by id param
@@ -68,7 +69,7 @@ export const getDocById = (Model) =>
 		modelName = modelName.toLowerCase();
 
 		const responseData = { [modelName]: doc };
-		sendResponse(res, 200, responseData);
+		sendRes(res, 200, responseData);
 	});
 
 // delete doc
@@ -79,7 +80,7 @@ export const deleteDoc = (Model) =>
 
 		if (!doc) return next(new AppError("doc not deleted", 400));
 
-		sendResponse(res, 200, {});
+		sendRes(res, 200, {});
 	});
 
 // get all docs
@@ -118,5 +119,5 @@ export const getAllDocs = (Model) =>
 		}
 
 		const responseData = { [modelName]: docs, totalResults };
-		sendResponse(res, 200, responseData);
+		sendRes(res, 200, responseData);
 	});

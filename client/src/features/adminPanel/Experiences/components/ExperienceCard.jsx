@@ -44,7 +44,7 @@ const ExperienceCard = ({ experience, onEdit, onDelete }) => {
 			</div>
 
 			<div className="mt-6 relative z-10">
-				<div className="flex items-center gap-3 text-gray-400">
+				<div className="flex items-center gap-3 text-gray-500">
                     <HiOutlineCalendar className="text-base text-orange/60" />
                     <span className="text-[9px] font-black uppercase tracking-widest opacity-60">
                         {experience.duration}

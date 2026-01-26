@@ -40,7 +40,7 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
 			</div>
 
             {/* Tags Container */}
-			<div className={`p-6 md:p-8 bg-white dark:bg-[#0b1120] rounded-[2.5rem] border border-gray-100 dark:border-white/5 flex flex-col gap-6 shadow-2xl relative overflow-hidden group/box transition-all duration-500 ${showAll ? 'min-h-[400px]' : 'h-[300px]'}`}>
+			<div className={`p-6 md:p-8 bg-white dark:bg-[#0b1120] rounded-[2.5rem] border border-gray-100 dark:border-white/5 flex flex-col gap-6 shadow-xl relative overflow-hidden group/box transition-all duration-500 ${showAll ? 'min-h-[400px]' : 'h-[300px]'}`}>
                 <div className="absolute inset-0 bg-orange/5 opacity-0 group-hover/box:opacity-100 transition-opacity blur-3xl pointer-events-none"></div>
 				
                 <div className={`flex flex-wrap gap-3 ${!showAll ? 'overflow-hidden' : ''}`}>
@@ -48,7 +48,7 @@ const SkillCard = ({ skill, onEdit, onDelete }) => {
                         <Motion.span
                             layout
                             key={index}
-                            className="px-5 py-2.5 bg-gray-50 dark:bg-[#030712] text-[10px] font-black text-gray-400 uppercase tracking-widest rounded-[1.2rem] border border-gray-100 dark:border-white/5 hover:border-orange/20 hover:text-gray-900 dark:hover:text-white transition-all cursor-default shadow-sm"
+                            className="px-5 py-2.5 bg-gray-50 dark:bg-[#030712] text-[10px] font-black text-gray-500 uppercase tracking-widest rounded-[1.2rem] border border-gray-100 dark:border-white/5 hover:border-orange/20 hover:text-gray-900 dark:hover:text-white transition-all cursor-default shadow-sm"
                         >
                             {s}
                         </Motion.span>

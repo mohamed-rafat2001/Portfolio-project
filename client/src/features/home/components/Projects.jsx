@@ -96,7 +96,7 @@ const Projects = () => {
 				<div className="text-center mt-16">
 					<Link 
 						to="/projects"
-						className="inline-flex items-center gap-4 px-14 py-6 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-black uppercase tracking-[0.34em] text-[10px] hover:bg-orange hover:text-white transition-all duration-700 shadow-2xl hover:-translate-y-2 group"
+						className="inline-flex items-center gap-4 px-14 py-6 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-black uppercase tracking-[0.34em] text-[10px] hover:bg-orange hover:text-white transition-all duration-700 shadow-xl hover:-translate-y-2 group"
 					>
 						View All Projects 
 						<HiArrowUpRight className="text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />

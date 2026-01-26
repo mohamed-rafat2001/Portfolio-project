@@ -60,7 +60,7 @@ const Footer = () => {
 
 					{/* Copyright - Middle */}
 					<div className="flex-1 flex justify-center text-center">
-						<p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] whitespace-nowrap">
+						<p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] whitespace-nowrap">
 							© {new Date().getFullYear()} {displayUser?.name?.toUpperCase() || "MOHAMED RAFAT"}. ALL RIGHTS RESERVED.
 						</p>
 					</div>

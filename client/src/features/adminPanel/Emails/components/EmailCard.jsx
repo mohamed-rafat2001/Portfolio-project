@@ -23,7 +23,7 @@ const EmailCard = ({ email, onClick, onDelete, isSelected }) => {
 					</h3>
 				</div>
                 
-				<p className={`text-[9px] font-bold truncate ${isSelected ? "text-white/80" : "text-gray-400"}`}>
+				<p className={`text-[9px] font-bold truncate ${isSelected ? "text-white/80" : "text-gray-500"}`}>
 					{email.userEmail}
 				</p>
                 

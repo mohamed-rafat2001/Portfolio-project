@@ -25,7 +25,7 @@ const FormCard = ({ title, children, icon, isUpdating, isDirty, showButton = tru
                             whileTap={isDirty ? { scale: 0.98 } : {}}
                             type="submit"
                             disabled={!isDirty || isUpdating}
-                            className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-2xl cursor-pointer ${
+                            className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-xl cursor-pointer ${
                                 isDirty && !isUpdating
                                     ? "bg-orange text-white shadow-orange/20"
                                     : "bg-gray-100 dark:bg-white/5 text-gray-300 dark:text-white/20 cursor-not-allowed"

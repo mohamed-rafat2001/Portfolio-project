@@ -4,7 +4,7 @@ const InputField = React.forwardRef(({ label, error, icon: Icon, className = "",
 	return (
 		<div className="space-y-2.5 w-full group/input">
 			{label && (
-				<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-400 ml-4 group-focus-within/input:text-orange transition-colors">
+				<label className="font-black uppercase tracking-[0.2em] text-[10px] text-gray-500 ml-4 group-focus-within/input:text-orange transition-colors">
 					{label}
 				</label>
 			)}

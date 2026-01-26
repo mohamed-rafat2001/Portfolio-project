@@ -40,7 +40,7 @@ const Contact = () => {
 						<h3 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 							Let's Work Together
 						</h3>
-						<p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto text-base font-medium leading-relaxed">
+						<p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-base font-medium leading-relaxed">
 							Have a project in mind or just want to say hi? Feel free to reach
 							out and let's build something amazing together.
 						</p>

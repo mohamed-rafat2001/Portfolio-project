@@ -26,7 +26,7 @@ const AdminHeader = ({ title, description, icon, action }) => {
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.95 }}
 					onClick={action.onClick}
-					className="relative z-10 flex items-center justify-center gap-3 bg-orange text-white px-8 py-4 rounded-2xl font-black uppercase tracking-[0.1em] text-[9px] shadow-2xl shadow-orange/20 hover:shadow-orange/40 transition-all cursor-pointer whitespace-nowrap"
+					className="relative z-10 flex items-center justify-center gap-3 bg-orange text-white px-8 py-4 rounded-2xl font-black uppercase tracking-[0.1em] text-[9px] shadow-xl shadow-orange/20 hover:shadow-orange/40 transition-all cursor-pointer whitespace-nowrap"
 				>
 					{action.icon && <span className="text-base">{action.icon}</span>}
 					{action.label}

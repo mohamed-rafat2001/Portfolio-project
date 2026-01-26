@@ -180,7 +180,7 @@ const AdminLayout = () => {
                                 )}
                             </Motion.button>
 
-                            <button className="relative p-3 text-gray-400 hover:text-orange transition-all cursor-pointer bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm">
+                            <button className="relative p-3 text-gray-500 hover:text-orange transition-all cursor-pointer bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm">
                                 <HiOutlineBell className="text-lg" />
                                 <span className="absolute top-3.5 right-3.5 w-1.5 h-1.5 bg-orange rounded-full" />
                             </button>

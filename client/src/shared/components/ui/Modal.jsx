@@ -30,7 +30,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 								</h3>
 								<button
 									onClick={onClose}
-									className="p-3 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-2xl text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
+									className="p-3 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
 								>
 									<HiOutlineXMark className="text-2xl" />
 								</button>

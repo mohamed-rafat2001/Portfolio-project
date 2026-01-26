@@ -52,7 +52,7 @@ const SkillCategoryCard = ({ skill, catIndex }) => {
 								initial={{ opacity: 0, scale: 0.8 }}
 								animate={{ opacity: 1, scale: 1 }}
 								whileHover={{ scale: 1.05, y: -2 }}
-								className="px-6 py-3 bg-white dark:bg-[#030712] text-gray-600 dark:text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-100 dark:border-white/5 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
+								className="px-6 py-3 bg-white dark:bg-[#030712] text-gray-500 dark:text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-100 dark:border-white/5 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
 							>
 								{s}
 							</Motion.span>

@@ -29,7 +29,7 @@ const SocialSection = ({ register, errors, isUpdating, isDirty, control }) => {
 			<div className="space-y-10">
                 {fields.length === 0 && (
                     <div className="py-10 text-center border-2 border-dashed border-gray-100 dark:border-white/5 rounded-[2rem]">
-                        <p className="text-[10px] font-black text-gray-400 dark:text-gray-600 uppercase tracking-widest">No social platforms added yet</p>
+                        <p className="text-[10px] font-black text-gray-500 dark:text-gray-600 uppercase tracking-widest">No social platforms added yet</p>
                     </div>
                 )}
 

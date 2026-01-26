@@ -90,7 +90,7 @@ const ProjectCard = ({ project, index }) => {
 						{/* Circular Action Button */}
 						<div 
                             onClick={handleCardClick}
-                            className="w-11 h-11 rounded-full bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800/50 flex items-center justify-center text-gray-400 dark:text-gray-500 group-hover/card:bg-[#f97316] group-hover/card:text-white transition-all duration-500 shadow-xl"
+                            className="w-11 h-11 rounded-full bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800/50 flex items-center justify-center text-gray-500 dark:text-gray-500 group-hover/card:bg-[#f97316] group-hover/card:text-white transition-all duration-500 shadow-xl"
                         >
 							<HiArrowUpRight className="text-lg transition-transform" />
 						</div>

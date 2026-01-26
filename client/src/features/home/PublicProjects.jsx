@@ -147,7 +147,7 @@ const PublicProjects = () => {
 						<button
 							onClick={() => setPage((p) => Math.max(1, p - 1))}
 							disabled={page === 1}
-							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-2xl"
+							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-xl"
 						>
 							<HiChevronLeft className="text-2xl" />
 						</button>

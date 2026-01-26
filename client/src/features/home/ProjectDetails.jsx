@@ -328,7 +328,7 @@ const ProjectDetails = () => {
                                               <Motion.span 
                                                   key={tIdx} 
                                                   whileHover={{ y: -2, scale: 1.05 }}
-                                                  className="px-5 py-2.5 bg-gray-100 dark:bg-black/40 border border-gray-200 dark:border-white/5 rounded-xl text-[9px] font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
+                                                  className="px-5 py-2.5 bg-gray-50 dark:bg-black/40 border border-gray-100 dark:border-white/5 rounded-xl text-[9px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
                                               >
                                                   {tech}
                                               </Motion.span>

@@ -36,7 +36,7 @@ const Experience = () => {
 					<span className="text-orange font-black text-sm uppercase tracking-[0.4em]">
 						03
 					</span>
-					<div className="h-px grow bg-gray-200 dark:bg-gray-800/50"></div>
+					<div className="h-px grow bg-gray-100 dark:bg-gray-800/50"></div>
 					<h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
 						My <span className="text-orange">Journey</span>
 					</h2>
@@ -80,7 +80,7 @@ const Experience = () => {
 												{exp.company}
 											</p>
 										</div>
-										<p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
+										<p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed max-w-xl font-medium line-clamp-4">
 											{exp.description}
 										</p>
 									</div>

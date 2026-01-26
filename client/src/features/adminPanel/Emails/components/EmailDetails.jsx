@@ -56,7 +56,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                 {!email.read && (
                     <button 
                         onClick={onMarkAsRead}
-                        className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-orange transition-all cursor-pointer group whitespace-nowrap"
+                        className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 hover:text-orange transition-all cursor-pointer group whitespace-nowrap"
                     >
                         <HiOutlineEye className="text-sm group-hover:scale-110 transition-transform" />
                         Mark as Read
@@ -85,7 +85,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                         <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Transmission Content</span>
                     </div>
 					<div className="relative pl-4">
-                        <div className="p-6 md:p-8 bg-gray-50 dark:bg-[#030712]/50 rounded-[2rem] border border-gray-100 dark:border-white/5 text-gray-600 dark:text-gray-300 leading-relaxed italic relative overflow-hidden group shadow-2xl">
+                        <div className="p-6 md:p-8 bg-gray-50 dark:bg-[#030712]/50 rounded-[2rem] border border-gray-100 dark:border-white/5 text-gray-500 dark:text-gray-300 leading-relaxed italic relative overflow-hidden group shadow-xl">
                             <div className="absolute top-0 right-0 w-48 h-48 bg-orange/2 rounded-full blur-[60px] -mr-24 -mt-24"></div>
                             <span className="text-4xl absolute top-4 left-6 opacity-[0.03] font-serif text-gray-900 dark:text-white group-hover:opacity-[0.07] transition-opacity">"</span>
                             <p className="relative z-10 text-base md:text-lg font-bold tracking-tight px-1 md:px-4 line-height-relaxed opacity-80 break-words whitespace-pre-wrap">

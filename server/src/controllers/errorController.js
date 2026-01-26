@@ -50,14 +50,17 @@ const sendErrorProd = (err, res) => {
 
 		// Programming or other unknown error: don't leak error details
 	} else {
-		// 1) Log error
-		console.error("ERROR 💥", err);
+		// 1) Log error for internal monitoring (not sent to client)
+		// Only log in non-production environments
+		const isProd = process.env.NODE_ENV === "production" || process.env.NODE_MODE === "production" || process.env.NETLIFY === "true";
+		if (!isProd) {
+			console.error("ERROR 💥", err);
+		}
 
-		// 2) Send generic message with error details for troubleshooting
+		// 2) Send generic message
 		res.status(500).json({
 			status: "error",
-			message: "Internal Server Error",
-			error: err.message, // Temporarily added for troubleshooting
+			message: "Something went wrong! Please try again later.",
 		});
 	}
 };

@@ -16,13 +16,13 @@ export default function useCurrentUser() {
 		staleTime: 5 * 60 * 1000,
 	});
 
-	const user = response?.data?.data || response?.data || null;
+	const user = response?.data?.data || response?.data || response || null;
 	const isAuthenticated = !!user;
 
 	return { 
 		user, 
 		isAuthenticated, 
-		isLoading: isLoading && !!token, // If no token, we aren't loading, we're just not auth'd
+		isLoading: (isLoading || (!!token && !user)) && !error, // If we have a token but no user, we are loading
 		error 
 	};
 }

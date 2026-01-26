@@ -5,8 +5,9 @@ export const login = async (data) => {
 	const res = await mainApi.post("auth/login", data);
 	
 	// Store token in localStorage as a fallback for cross-domain issues
-	if (res.data?.token) {
-		localStorage.setItem("token", res.data.token);
+	const token = res.data?.data?.token || res.data?.token;
+	if (token) {
+		localStorage.setItem("token", token);
 	}
 	
 	return res.data;

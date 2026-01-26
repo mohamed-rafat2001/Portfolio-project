@@ -13,13 +13,23 @@ export default function useLogin() {
 	} = useMutation({
 		mutationFn: login,
 		onSuccess: (data) => {
+			// Extract user from the nested data structure
+			const user = data?.data?.user || data?.user;
+			
 			// Manually update the User query data to avoid extra fetch and race conditions
-			if (data?.user) {
-				queryClient.setQueryData(["User"], { status: "success", data: data.user });
+			if (user) {
+				// Match the structure returned by the getMe service
+				queryClient.setQueryData(["User"], { status: "success", data: { data: user } });
+				
+				// Force immediate cache invalidation to trigger a fresh check in ProtectedRoute
+				queryClient.invalidateQueries({ queryKey: ["User"] });
 			}
 			
 			// Navigate immediately with the new state
-			navigate("/adminPanel/dashboard", { replace: true });
+			// We use a small timeout to ensure the cache update has processed
+			setTimeout(() => {
+				navigate("/adminPanel/dashboard", { replace: true });
+			}, 100);
 		},
 	});
 	const user = response?.data?.user || null;

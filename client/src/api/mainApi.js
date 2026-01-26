@@ -48,16 +48,21 @@ mainApi.interceptors.response.use(
 	async (error) => {
 		// Only redirect if it's a 401 error and not a request to the user profile
 		// which is already handled by the ProtectedRoute and useCurrentUser hook
-		if (
-			error.response?.status === 401 &&
-			!error.config.url.includes("users") &&
-			!error.config.url.includes("auth/login")
-		) {
-			const publicPaths = ["/login", "/signup", "/"];
-			const currentPath = window.location.pathname;
+		if (error.response?.status === 401) {
+			localStorage.removeItem("token");
+			
+			// Only redirect if it's not a request to the user profile or login
+			// which are already handled by hooks
+			if (
+				!error.config.url.includes("users") &&
+				!error.config.url.includes("auth/login")
+			) {
+				const publicPaths = ["/login", "/signup", "/"];
+				const currentPath = window.location.pathname;
 
-			if (!publicPaths.includes(currentPath)) {
-				window.location.href = "/login";
+				if (!publicPaths.includes(currentPath)) {
+					window.location.href = "/login";
+				}
 			}
 		}
 

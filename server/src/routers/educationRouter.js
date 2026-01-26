@@ -11,7 +11,14 @@ import { upload } from "../utils/multer.js";
 import { validate } from "../middlewares/validateMiddleware.js";
 import { educationValidation } from "../validations/educationValidation.js";
 
-const Router = express.Router();
+const getFunction = (mod) => {
+	if (typeof mod === "function") return mod;
+	if (mod && typeof mod.default === "function") return mod.default;
+	return mod;
+};
+
+const expressFunc = getFunction(express);
+const Router = expressFunc.Router();
 
 // Public routes
 Router.get("/", getAllEducations);

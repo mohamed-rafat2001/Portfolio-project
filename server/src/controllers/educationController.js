@@ -3,6 +3,17 @@ import { catchAsync } from "../middlewares/catchAsyncMiddleware.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 import sendResponse from "../utils/sendResponse.js";
 import appError from "../utils/appError.js";
+
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const Education = getExport(EducationModel);
+const AppError = getExport(appError);
+const sendRes = getExport(sendResponse);
+
 import {
 	deleteDoc,
 	getAllDocs,
@@ -40,7 +51,7 @@ export const createEducation = catchAsync(async (req, res, next) => {
 		}
 	}
 
-	const doc = await EducationModel.create({
+	const doc = await Education.create({
 		institution,
 		degree,
 		description,
@@ -49,17 +60,17 @@ export const createEducation = catchAsync(async (req, res, next) => {
 		attachments,
 	});
 
-	if (!doc) return next(new appError("doc not created", 400));
+	if (!doc) return next(new AppError("doc not created", 400));
 
-	sendResponse(res, 201, doc);
+	sendRes(res, 201, doc);
 });
 
 // update Education
 export const updateEducation = catchAsync(async (req, res, next) => {
 	const { institution, degree, description, duration } = req.body;
-	const education = await EducationModel.findById(req.params.id);
+	const education = await Education.findById(req.params.id);
 
-	if (!education) return next(new appError("Education not found", 404));
+	if (!education) return next(new AppError("Education not found", 404));
 
 	const updateData = { institution, degree, description, duration };
 
@@ -92,22 +103,22 @@ export const updateEducation = catchAsync(async (req, res, next) => {
 		}
 	}
 
-	const doc = await EducationModel.findByIdAndUpdate(
+	const doc = await Education.findByIdAndUpdate(
 		req.params.id,
 		{ $set: updateData },
 		{ new: true, runValidators: true }
 	);
 
-	if (!doc) return next(new appError("doc not updated", 400));
+	if (!doc) return next(new AppError("doc not updated", 400));
 
-	sendResponse(res, 200, doc);
+	sendRes(res, 200, doc);
 });
 
 // get Education by id
-export const getEducation = getDocById(EducationModel);
+export const getEducation = getDocById(Education);
 
 // delete Education by id
-export const deleteEducation = deleteDoc(EducationModel);
+export const deleteEducation = deleteDoc(Education);
 
-// get all Educations
-export const getAllEducations = getAllDocs(EducationModel);
+// get all educations
+export const getAllEducations = getAllDocs(Education);

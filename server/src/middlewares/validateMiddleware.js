@@ -1,8 +1,17 @@
 import { validationResult } from "express-validator";
-import AppError from "../utils/appError.js";
+import appError from "../utils/appError.js";
+
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const AppError = getExport(appError);
+const validationResultFunc = getExport(validationResult);
 
 export const validate = (req, res, next) => {
-	const errors = validationResult(req);
+	const errors = validationResultFunc(req);
 	if (!errors.isEmpty()) {
 		const errorMessage = errors
 			.array()

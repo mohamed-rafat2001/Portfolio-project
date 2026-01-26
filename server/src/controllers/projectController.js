@@ -6,6 +6,18 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 import { cloudinary } from "../utils/cloudinaryConfig.js";
 import appError from "../utils/appError.js";
 import sendResponse from "../utils/sendResponse.js";
+
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const Project = getExport(ProjectModel);
+const User = getExport(UserModel);
+const AppError = getExport(appError);
+const sendRes = getExport(sendResponse);
+
 import {
 	getAllDocs,
 	getDocById,
@@ -42,7 +54,7 @@ export const uploadProjectImages = catchAsync(async (req, res, next) => {
 });
 
 // add new project
-export const createProject = createDoc(ProjectModel, [
+export const createProject = createDoc(Project, [
 	"title",
 	"techStack",
 	"description",
@@ -54,7 +66,7 @@ export const createProject = createDoc(ProjectModel, [
 ]);
 
 // update project
-export const updateProject = updateDoc(ProjectModel, [
+export const updateProject = updateDoc(Project, [
 	"title",
 	"techStack",
 	"description",
@@ -66,13 +78,13 @@ export const updateProject = updateDoc(ProjectModel, [
 ]);
 
 // get project by id
-export const getProject = getDocById(ProjectModel);
+export const getProject = getDocById(Project);
 
 // delete project by id
 export const deleteProject = catchAsync(async (req, res, next) => {
-	const project = await ProjectModel.findById(req.params.id);
+	const project = await Project.findById(req.params.id);
 
-	if (!project) return next(new appError("Project not found", 404));
+	if (!project) return next(new AppError("Project not found", 404));
 
 	// 1. Delete mainImg from Cloudinary
 	if (project.mainImg?.public_id) {
@@ -87,9 +99,9 @@ export const deleteProject = catchAsync(async (req, res, next) => {
 		await Promise.all(deletePromises);
 	}
 
-	await ProjectModel.findByIdAndDelete(req.params.id);
+	await Project.findByIdAndDelete(req.params.id);
 
-	sendResponse(res, 200, {});
+	sendRes(res, 200, {});
 });
 
 // increment project views
@@ -97,35 +109,33 @@ export const incrementProjectViews = catchAsync(async (req, res, next) => {
     // Check if the request is from an admin (using the token cookie)
     let isAdmin = false;
     const token = req.cookies?.token;
-
+    
     if (token) {
         try {
-            const decoded = jwt.verify(token, process.env.USER_KEY_TOKEN);
-            const user = await UserModel.findById(decoded._id);
-            if (user?.role === "Admin") {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+            const currentUser = await User.findById(decoded.id);
+            if (currentUser && currentUser.role === 'Admin') {
                 isAdmin = true;
             }
-        } catch {
-            // Token invalid or expired, treat as regular visitor
+        } catch (err) {
+            isAdmin = false;
         }
     }
 
     let project;
     if (isAdmin) {
-        // Just return the project without incrementing
-        project = await ProjectModel.findById(req.params.id);
+        project = await Project.findById(req.params.id);
     } else {
-        // Increment for regular visitors
-        project = await ProjectModel.findByIdAndUpdate(
+        project = await Project.findByIdAndUpdate(
             req.params.id,
             { $inc: { views: 1 } },
             { new: true }
         );
     }
+    
+    if (!project) return next(new AppError("Project not found", 404));
 
-	if (!project) return next(new appError("Project not found", 404));
-
-	sendResponse(res, 200, { project });
+    sendRes(res, 200, project);
 });
 
 // get all Projects

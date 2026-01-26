@@ -77,23 +77,23 @@ export const updateMe = catchAsync(async (req, res, next) => {
     // Hide password for response
     user.password = undefined;
 
-	sendResponse(res, 200, user);
+	sendRes(res, 200, user);
 });
 
 // update user nested infos
 export const updateInfos = catchAsync(async (req, res, next) => {
 	const { infos } = req.body;
 
-	if (!infos) return next(new appError("please provide infos to update", 400));
+	if (!infos) return next(new AppError("please provide infos to update", 400));
 
-	const user = await UserModel.findByIdAndUpdate(
+	const user = await User.findByIdAndUpdate(
 		req.user._id,
 		{ $set: { infos } },
 		{ runValidators: true, new: true }
 	);
 
-	if (!user) return next(new appError("user infos not updated", 400));
-	sendResponse(res, 200, user);
+	if (!user) return next(new AppError("user infos not updated", 400));
+	sendRes(res, 200, user);
 });
 
 // update profile image

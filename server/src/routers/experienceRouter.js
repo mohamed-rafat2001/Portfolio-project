@@ -10,7 +10,14 @@ import { protect } from "../middlewares/authMiddleware.js";
 import { validate } from "../middlewares/validateMiddleware.js";
 import { experienceValidation } from "../validations/experienceValidation.js";
 
-const Router = express.Router();
+const getFunction = (mod) => {
+	if (typeof mod === "function") return mod;
+	if (mod && typeof mod.default === "function") return mod.default;
+	return mod;
+};
+
+const expressFunc = getFunction(express);
+const Router = expressFunc.Router();
 
 // Public routes
 Router.get("/", getAllExperiences);

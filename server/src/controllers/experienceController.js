@@ -1,4 +1,13 @@
 import ExperienceModel from "../models/experienceModel.js";
+
+// Helper to handle ESM/CJS interop for default exports
+const getExport = (mod) => {
+    if (mod && mod.default) return mod.default;
+    return mod;
+};
+
+const Experience = getExport(ExperienceModel);
+
 import {
 	createDoc,
 	deleteDoc,
@@ -8,7 +17,7 @@ import {
 } from "./handlerFactory.js";
 
 // add new Experience
-export const createExperience = createDoc(ExperienceModel, [
+export const createExperience = createDoc(Experience, [
 	"company",
 	"description",
 	"duration",
@@ -16,7 +25,7 @@ export const createExperience = createDoc(ExperienceModel, [
 ]);
 
 // update Experience
-export const updateExperience = updateDoc(ExperienceModel, [
+export const updateExperience = updateDoc(Experience, [
 	"company",
 	"description",
 	"duration",
@@ -24,10 +33,10 @@ export const updateExperience = updateDoc(ExperienceModel, [
 ]);
 
 // get Experience by id
-export const getExperience = getDocById(ExperienceModel);
+export const getExperience = getDocById(Experience);
 
 // delete Experience by id
-export const deleteExperience = deleteDoc(ExperienceModel);
+export const deleteExperience = deleteDoc(Experience);
 
 // get all experiences
-export const getAllExperiences = getAllDocs(ExperienceModel);
+export const getAllExperiences = getAllDocs(Experience);

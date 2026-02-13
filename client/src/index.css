@@ -78,14 +78,16 @@
 		background-color: #f59e0b !important;
 	}
 
-	/* Firefox */
-	* {
-		scrollbar-width: thin;
-		scrollbar-color: #d1d5db transparent;
-	}
+	/* Firefox - using standard properties for better performance/compatibility where supported */
+	@supports (scrollbar-color: auto) {
+		* {
+			scrollbar-width: thin;
+			scrollbar-color: #d1d5db transparent;
+		}
 
-	.dark * {
-		scrollbar-color: #4b5563 transparent;
+		.dark * {
+			scrollbar-color: #4b5563 transparent;
+		}
 	}
 }
 

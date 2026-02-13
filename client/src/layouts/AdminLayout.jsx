@@ -25,6 +25,7 @@ import Logo from "../shared/components/ui/Logo.jsx";
 import useLogout from "../features/auth/hooks/useLogout";
 import useCurrentUser from "../features/auth/hooks/useCurrentUser";
 import { useTheme } from "../shared/context/ThemeContext";
+import { optimizeCloudinaryUrl } from "../shared/utils/imageOptimizer";
 
 const navLinks = [
 	{ to: "dashboard", label: "Dashboard", icon: HiOutlineSquares2X2 },
@@ -63,14 +64,14 @@ const AdminLayout = () => {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						onClick={() => setIsSidebarOpen(false)}
-						className="fixed inset-0 z-[60] bg-gray-950/60 backdrop-blur-sm lg:hidden"
+						className="fixed inset-0 z-60 bg-gray-950/60 backdrop-blur-sm lg:hidden"
 					/>
 				)}
 			</AnimatePresence>
 
 			{/* Sidebar */}
 			<aside
-				className={`fixed inset-y-0 left-0 z-[70] w-72 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 lg:static lg:relative lg:translate-x-0 ${
+				className={`fixed inset-y-0 left-0 z-70 w-72 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 lg:static lg:translate-x-0 ${
 					isSidebarOpen ? "translate-x-0" : "-translate-x-full"
 				} ${isCollapsed ? "lg:w-20" : "lg:w-72"}`}
 			>
@@ -79,6 +80,7 @@ const AdminLayout = () => {
 					<button
 						onClick={() => setIsCollapsed(!isCollapsed)}
 						className="hidden lg:flex absolute -right-4 top-10 z-10 w-8 h-8 items-center justify-center bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full shadow-md text-gray-500 hover:text-orange transition-all cursor-pointer hover:scale-110"
+						aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
 					>
 						{isCollapsed ? <HiChevronRight className="text-sm" /> : <HiChevronLeft className="text-sm" />}
 					</button>
@@ -90,6 +92,7 @@ const AdminLayout = () => {
 						<button
 							onClick={() => setIsSidebarOpen(false)}
 							className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl cursor-pointer"
+							aria-label="Close sidebar"
 						>
 							<HiXMark className="text-xl" />
 						</button>
@@ -149,11 +152,12 @@ const AdminLayout = () => {
 			{/* Main Content Area Wrapper */}
 			<div className="flex-1 flex flex-col min-w-0 h-full">
 				{/* Top Header */}
-				<header className="flex items-center justify-between px-10 h-24 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-100 dark:border-white/5 flex-shrink-0 z-50">
+				<header className="flex items-center justify-between px-10 h-24 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-100 dark:border-white/5 shrink-0 z-50">
 					<div className="flex items-center gap-6">
 						<button
 							onClick={() => setIsSidebarOpen(true)}
 							className="lg:hidden p-3 text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition-all cursor-pointer"
+							aria-label="Open sidebar"
 						>
 							<HiBars3BottomLeft className="text-2xl" />
 						</button>
@@ -180,13 +184,16 @@ const AdminLayout = () => {
                                 )}
                             </Motion.button>
 
-                            <button className="relative p-3 text-gray-500 hover:text-orange transition-all cursor-pointer bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm">
+                            <button 
+                                className="relative p-3 text-gray-500 hover:text-orange transition-all cursor-pointer bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm"
+                                aria-label="View notifications"
+                            >
                                 <HiOutlineBell className="text-lg" />
                                 <span className="absolute top-3.5 right-3.5 w-1.5 h-1.5 bg-orange rounded-full" />
                             </button>
                         </div>
 						
-						<div className="h-8 w-[1px] bg-gray-100 dark:bg-white/5" />
+						<div className="h-8 w-px bg-gray-100 dark:bg-white/5" />
 
 						<Link to="profile" className="flex items-center gap-4 group cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5 p-2 pr-4 rounded-2xl transition-all">
 							<div className="text-right hidden sm:block">
@@ -199,7 +206,7 @@ const AdminLayout = () => {
 							</div>
 							<div className="w-11 h-11 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 border-2 border-white dark:border-white/5 shadow-2xl group-hover:scale-105 transition-transform">
 								<img
-									src={user?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+									src={user?.profileImg?.secure_url ? optimizeCloudinaryUrl(user.profileImg.secure_url, 80) : `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
 									alt={user?.name}
 									className="w-full h-full object-cover"
 									crossOrigin="anonymous"

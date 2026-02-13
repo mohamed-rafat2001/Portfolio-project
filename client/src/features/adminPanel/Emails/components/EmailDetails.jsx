@@ -52,7 +52,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
 
             {/* Actions Bar */}
             <div className="flex items-center justify-between gap-3 h-8">
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-100 dark:via-white/5 to-transparent"></div>
+                <div className="h-px flex-1 bg-linear-to-r from-transparent via-gray-100 dark:via-white/5 to-transparent"></div>
                 {!email.read && (
                     <button 
                         onClick={onMarkAsRead}
@@ -62,7 +62,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                         Mark as Read
                     </button>
                 )}
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-100 dark:via-white/5 to-transparent"></div>
+                <div className="h-px flex-1 bg-linear-to-r from-transparent via-gray-100 dark:via-white/5 to-transparent"></div>
             </div>
 
 			{/* Communication Content Area */}
@@ -73,7 +73,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                         <div className="w-1 h-5 bg-orange rounded-full shadow-[0_0_10px_rgba(255,165,0,0.5)]" />
                         <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Subject Inquiry</span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter pl-4 break-words leading-tight">
+                    <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter pl-4 wrap-break-word leading-tight">
                         {email.subject}
                     </h3>
                 </div>
@@ -85,10 +85,10 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
                         <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Transmission Content</span>
                     </div>
 					<div className="relative pl-4">
-                        <div className="p-6 md:p-8 bg-gray-50 dark:bg-[#030712]/50 rounded-[2rem] border border-gray-100 dark:border-white/5 text-gray-500 dark:text-gray-300 leading-relaxed italic relative overflow-hidden group shadow-xl">
+                        <div className="p-6 md:p-8 bg-gray-50 dark:bg-[#030712]/50 rounded-4xl border border-gray-100 dark:border-white/5 text-gray-500 dark:text-gray-300 leading-relaxed italic relative overflow-hidden group shadow-xl">
                             <div className="absolute top-0 right-0 w-48 h-48 bg-orange/2 rounded-full blur-[60px] -mr-24 -mt-24"></div>
                             <span className="text-4xl absolute top-4 left-6 opacity-[0.03] font-serif text-gray-900 dark:text-white group-hover:opacity-[0.07] transition-opacity">"</span>
-                            <p className="relative z-10 text-base md:text-lg font-bold tracking-tight px-1 md:px-4 line-height-relaxed opacity-80 break-words whitespace-pre-wrap">
+                            <p className="relative z-10 text-base md:text-lg font-bold tracking-tight px-1 md:px-4 line-height-relaxed opacity-80 wrap-break-word whitespace-pre-wrap">
                                 {email.emailBody}
                             </p>
                             <span className="text-4xl absolute bottom-4 right-6 opacity-[0.03] font-serif text-gray-900 dark:text-white group-hover:opacity-[0.07] transition-opacity">"</span>
@@ -101,7 +101,7 @@ const EmailDetails = ({ email, onMarkAsRead }) => {
 			<div className="pt-12 flex justify-end">
 				<a
 					href={`mailto:${email.userEmail}?subject=Re: ${email.subject}`}
-					className="px-12 py-6 bg-orange text-white rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-[10px] hover:bg-orange/90 transition-all shadow-2xl shadow-orange/20 hover:shadow-orange/40 hover:-translate-y-1 active:translate-y-0"
+					className="px-12 py-6 bg-orange text-white rounded-3xl font-black uppercase tracking-[0.2em] text-[10px] hover:bg-orange/90 transition-all shadow-2xl shadow-orange/20 hover:shadow-orange/40 hover:-translate-y-1 active:translate-y-0"
 				>
 					Reply
 				</a>

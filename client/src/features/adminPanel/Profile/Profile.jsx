@@ -27,6 +27,8 @@ import LoadingState from "../../../shared/components/ui/LoadingState";
 import ProfileImageModal from "./components/ProfileImageModal";
 import Modal from "../../../shared/components/ui/Modal";
 
+import { optimizeCloudinaryUrl } from "../../../shared/utils/imageOptimizer";
+
 const profileSchema = z.object({
 	name: z.string().min(3, "Name must be at least 3 characters"),
 	email: z.string().email("Invalid email address"),
@@ -143,7 +145,7 @@ const Profile = () => {
                         <div className="w-32 h-32 md:w-44 md:h-44 rounded-[2.5rem] bg-gray-50 dark:bg-[#030712] flex items-center justify-center text-orange overflow-hidden border-4 border-white dark:border-white/5 shadow-2xl">
                             {user?.profileImg?.secure_url ? (
                                 <img
-                                    src={user.profileImg.secure_url}
+                                    src={optimizeCloudinaryUrl(user.profileImg.secure_url, 300)}
                                     alt={user.name}
                                     className="w-full h-full object-cover"
                                     crossOrigin="anonymous"
@@ -194,7 +196,7 @@ const Profile = () => {
                         </AnimatePresence>
                     </div>
 
-                    <div className="text-center md:text-left flex-grow">
+                    <div className="text-center md:text-left grow">
                         <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-4">
                             {user?.name}
                         </h1>
@@ -267,7 +269,7 @@ const Profile = () => {
                 maxWidth="max-w-md"
                 padding="p-6 md:p-10"
             >
-                <div className="bg-gray-50 dark:bg-[#030712] rounded-[2rem] overflow-hidden border border-gray-100 dark:border-white/5 shadow-2xl aspect-square flex items-center justify-center p-4">
+                <div className="bg-gray-50 dark:bg-[#030712] rounded-4xl overflow-hidden border border-gray-100 dark:border-white/5 shadow-2xl aspect-square flex items-center justify-center p-4">
                     <img 
                         src={user?.profileImg?.secure_url} 
                         alt={user?.name} 

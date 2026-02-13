@@ -7,6 +7,8 @@ import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
 import useLogout from "../../../features/auth/hooks/useLogout";
 import { useTheme } from "../../context/ThemeContext";
 
+import { optimizeCloudinaryUrl } from "../../utils/imageOptimizer";
+
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { isDark, toggleTheme } = useTheme();
@@ -89,7 +91,7 @@ const Header = () => {
 								>
                                     <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-gray-100 dark:border-white/5 group-hover:border-orange transition-colors">
                                         <img
-                                            src={user?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+                                            src={user?.profileImg?.secure_url ? optimizeCloudinaryUrl(user.profileImg.secure_url, 80) : `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
                                             alt={user?.name}
                                             width={36}
                                             height={36}
@@ -103,6 +105,7 @@ const Header = () => {
 									onClick={() => logoutFunc()}
 									className="p-2 rounded-xl cursor-pointer text-gray-400 hover:text-red-500 transition-all hover:bg-red-50 dark:hover:bg-red-500/10"
 									title="Logout"
+									aria-label="Logout"
 								>
 									<HiArrowRightOnRectangle className="text-xl" />
 								</button>

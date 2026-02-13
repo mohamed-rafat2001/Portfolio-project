@@ -60,7 +60,7 @@ const Footer = () => {
 
 					{/* Copyright - Middle */}
 					<div className="flex-1 flex justify-center text-center">
-						<p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] whitespace-nowrap">
+						<p className="text-[10px] font-black text-gray-700 dark:text-gray-400 uppercase tracking-[0.2em] whitespace-nowrap">
 							© {new Date().getFullYear()} {displayUser?.name?.toUpperCase() || "MOHAMED RAFAT"}. ALL RIGHTS RESERVED.
 						</p>
 					</div>
@@ -76,7 +76,7 @@ const Footer = () => {
 									rel="noopener noreferrer"
 									whileHover={{ y: -3, scale: 1.1 }}
 									whileTap={{ scale: 0.9 }}
-									className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-lg text-gray-500 dark:text-gray-400 hover:text-white dark:hover:text-white hover:bg-orange dark:hover:bg-orange hover:border-orange dark:hover:border-orange transition-all"
+									className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-lg text-gray-700 dark:text-gray-400 hover:text-white dark:hover:text-white hover:bg-orange dark:hover:bg-orange hover:border-orange dark:hover:border-orange transition-all"
 									aria-label={social.label}
 								>
 									{social.icon}

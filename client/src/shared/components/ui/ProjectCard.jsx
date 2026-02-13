@@ -1,6 +1,7 @@
 import { motion as Motion } from "framer-motion";
 import { HiArrowUpRight, HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { optimizeCloudinaryUrl } from "../../utils/imageOptimizer";
 
 import { incrementViews } from "../../../features/adminPanel/Projects/services/project";
 
@@ -24,7 +25,7 @@ const ProjectCard = ({ project, index }) => {
                 <div className="p-2.5 pb-0">
                     <div className="relative aspect-[1.35] w-full overflow-hidden rounded-[2.2rem]">
                         <img
-                            src={project.mainImg?.secure_url}
+                            src={optimizeCloudinaryUrl(project.mainImg?.secure_url, 600)}
                             alt={project.title}
                             width={400}
                             height={300}

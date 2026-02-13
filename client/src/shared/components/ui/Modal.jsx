@@ -5,7 +5,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 	return (
 		<AnimatePresence>
 			{isOpen && (
-				<div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+				<div className="fixed inset-0 z-100 flex items-center justify-center p-4">
 					{/* Backdrop */}
 					<Motion.div
 						initial={{ opacity: 0 }}
@@ -30,6 +30,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHe
 								</h3>
 								<button
 									onClick={onClose}
+									aria-label="Close modal"
 									className="p-3 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-2xl text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
 								>
 									<HiOutlineXMark className="text-2xl" />

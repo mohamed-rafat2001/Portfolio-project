@@ -109,9 +109,9 @@ const ProfileImageModal = ({ isOpen, onClose }) => {
                         </div>
                         <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                             <Motion.div 
-                                className="h-full bg-orange"
-                                initial={{ width: 0 }}
-                                animate={{ width: `${progress}%` }}
+                                className="h-full bg-orange origin-left"
+                                initial={{ scaleX: 0 }}
+                                animate={{ scaleX: progress / 100 }}
                             />
                         </div>
                     </div>

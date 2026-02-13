@@ -61,7 +61,7 @@ const PublicProjects = () => {
                     alt="Background" 
                     className="w-full h-full object-cover opacity-[0.03] scale-110 grayscale"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white dark:from-[#030712] dark:via-transparent dark:to-[#030712]"></div>
+                <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-white dark:from-[#030712] dark:via-transparent dark:to-[#030712]"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,white_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,#030712_100%)] opacity-60"></div>
             </div>
 
@@ -147,6 +147,7 @@ const PublicProjects = () => {
 						<button
 							onClick={() => setPage((p) => Math.max(1, p - 1))}
 							disabled={page === 1}
+							aria-label="Previous page"
 							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-xl"
 						>
 							<HiChevronLeft className="text-2xl" />
@@ -175,7 +176,8 @@ const PublicProjects = () => {
 						<button
 							onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
 							disabled={page === totalPages}
-							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-2xl"
+							aria-label="Next page"
+							className="w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 disabled:opacity-5 disabled:cursor-not-allowed hover:bg-orange hover:border-orange hover:text-white transition-all shadow-xl"
 						>
 							<HiChevronRight className="text-2xl" />
 						</button>

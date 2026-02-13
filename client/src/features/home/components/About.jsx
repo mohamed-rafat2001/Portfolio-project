@@ -2,6 +2,7 @@ import { m as Motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi2";
 import profileImg from "../../../shared/assets/profissionalMe.png";
 import useAdminInfo from "../../../shared/hooks/useAdminInfo";
+import { optimizeCloudinaryUrl } from "../../../shared/utils/imageOptimizer";
 
 import LoadingState from "../../../shared/components/ui/LoadingState";
 
@@ -52,7 +53,7 @@ const About = () => {
 
 							<div className="relative aspect-square rounded-[3rem] bg-gray-50 dark:bg-[#0a0f1c] overflow-hidden border-8 border-gray-50 dark:border-[#0a0f1c] shadow-xl">
 								<img
-									src={admin?.profileImg?.secure_url || profileImg}
+									src={admin?.profileImg?.secure_url ? optimizeCloudinaryUrl(admin.profileImg.secure_url, 600) : profileImg}
 									alt={admin?.name || "Mohamed Rafat"}
 									width={500}
 									height={500}

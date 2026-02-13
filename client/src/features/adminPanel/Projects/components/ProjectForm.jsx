@@ -19,6 +19,7 @@ import {
 } from "react-icons/hi2";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import InputField from "../../Profile/components/InputField";
+import { optimizeCloudinaryUrl } from "../../../../shared/utils/imageOptimizer";
 
 const projectSchema = z.object({
 	title: z.string().min(3, "Title must be at least 3 characters"),
@@ -31,9 +32,9 @@ const projectSchema = z.object({
 
 const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
     const [step, setStep] = useState(1);
-	const [mainImgPreview, setMainImgPreview] = useState(project?.mainImg?.secure_url || null);
+	const [mainImgPreview, setMainImgPreview] = useState(project?.mainImg?.secure_url ? optimizeCloudinaryUrl(project.mainImg.secure_url, 400) : null);
 	const [mainImgFile, setMainImgFile] = useState(null);
-    const [galleryPreviews, setGalleryPreviews] = useState(project?.images?.map(img => img.secure_url) || []);
+    const [galleryPreviews, setGalleryPreviews] = useState(project?.images?.map(img => optimizeCloudinaryUrl(img.secure_url, 300)) || []);
     const [galleryFiles, setGalleryFiles] = useState([]);
     
     const galleryInputRef = useRef(null);
@@ -156,6 +157,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                 <button 
                     type="button"
                     onClick={onCancel}
+                    aria-label="Cancel"
                     className="w-12 h-12 bg-gray-50 dark:bg-[#030712] hover:bg-gray-100 dark:hover:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer group"
                 >
                     <HiOutlineXMark className="text-2xl group-hover:rotate-90 transition-transform" />
@@ -167,9 +169,9 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                 {[1, 2].map((i) => (
                     <div key={i} className="flex-1 h-2 bg-gray-100 dark:bg-[#030712] rounded-full overflow-hidden border border-gray-100 dark:border-white/5">
                         <Motion.div 
-                            className="h-full bg-orange"
-                            initial={{ width: 0 }}
-                            animate={{ width: step >= i ? "100%" : "0%" }}
+                            className="h-full bg-orange origin-left"
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: step >= i ? 1 : 0 }}
                             transition={{ duration: 0.5, ease: "circOut" }}
                         />
                     </div>
@@ -200,7 +202,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                     Project Description
                                 </label>
                                 <textarea
-                                    className="w-full px-6 py-5 bg-gray-50 dark:bg-[#030712] border-2 border-gray-100 dark:border-white/5 rounded-[2rem] transition-all text-sm font-medium text-gray-900 dark:text-white/90 outline-none focus:border-orange/30 min-h-[160px] leading-relaxed placeholder:text-gray-500"
+                                    className="w-full px-6 py-5 bg-gray-50 dark:bg-[#030712] border-2 border-gray-100 dark:border-white/5 rounded-4xl transition-all text-sm font-medium text-gray-900 dark:text-white/90 outline-none focus:border-orange/30 min-h-[160px] leading-relaxed placeholder:text-gray-500"
                                     placeholder="Tell the story of this innovation..."
                                     {...register("description")}
                                 />
@@ -317,12 +319,13 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                             layout
                                             initial={{ opacity: 0, scale: 0.8 }}
                                             animate={{ opacity: 1, scale: 1 }}
-                                            className="relative aspect-square rounded-[1.5rem] bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 overflow-hidden group shadow-lg"
+                                            className="relative aspect-square rounded-3xl bg-gray-50 dark:bg-[#030712] border border-gray-100 dark:border-white/5 overflow-hidden group shadow-lg"
                                         >
                                             <img src={preview} alt="Gallery" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                             <button 
                                                 type="button"
                                                 onClick={() => removeGalleryImage(index)}
+                                                aria-label="Remove image"
                                                 className="absolute inset-0 bg-red-600/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"
                                             >
                                                 <HiOutlineTrash className="text-2xl" />
@@ -334,7 +337,7 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                         onClick={() => galleryInputRef.current.click()}
-                                        className="aspect-square rounded-[1.5rem] bg-[#030712] border-2 border-dashed border-white/5 flex flex-col items-center justify-center text-gray-700 hover:border-orange/20 hover:text-orange transition-all"
+                                        className="aspect-square rounded-3xl bg-[#030712] border-2 border-dashed border-white/5 flex flex-col items-center justify-center text-gray-700 hover:border-orange/20 hover:text-orange transition-all"
                                     >
                                         <HiOutlinePlus className="text-3xl mb-2" />
                                         <span className="text-[8px] font-black uppercase tracking-widest">Add Media</span>
@@ -359,9 +362,9 @@ const ProjectForm = ({ project, onSubmit, isLoading, onCancel, progress }) => {
                                     </div>
                                     <div className="h-2 bg-black/40 rounded-full overflow-hidden p-[2px]">
                                         <Motion.div 
-                                            className="h-full bg-gradient-to-r from-orange to-orange-400 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.5)]"
-                                            initial={{ width: 0 }}
-                                            animate={{ width: `${progress}%` }}
+                                            className="h-full bg-linear-to-r from-orange to-orange-400 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.5)] origin-left"
+                                            initial={{ scaleX: 0 }}
+                                            animate={{ scaleX: progress / 100 }}
                                             transition={{ ease: "linear" }}
                                         />
                                     </div>

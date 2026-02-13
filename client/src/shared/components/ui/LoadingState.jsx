@@ -1,13 +1,15 @@
 import { m as Motion } from "framer-motion";
 import { PuffLoader } from "react-spinners";
 
-const LoadingState = ({ message = "Loading..." }) => {
+const LoadingState = ({ message = "Loading...", fullScreen = false }) => {
 	return (
 		<Motion.div 
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
-			className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white/50 dark:bg-[#030712]/50 backdrop-blur-sm text-gray-900 dark:text-white space-y-8"
+			className={`flex flex-col items-center justify-center w-full bg-white/50 dark:bg-[#030712]/50 backdrop-blur-sm text-gray-900 dark:text-white space-y-8 ${
+				fullScreen ? "min-h-screen" : "min-h-[400px]"
+			}`}
 		>
 			<div className="relative flex items-center justify-center">
 				{/* Modern Spinner from react-spinners */}

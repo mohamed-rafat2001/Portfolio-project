@@ -1,13 +1,15 @@
+import { lazy, Suspense } from "react";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Projects from "./components/Projects";
-import Experience from "./components/Experience";
-import Skills from "./components/Skills";
-import Contact from "./components/Contact";
 import useAdminInfo from "../../shared/hooks/useAdminInfo";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import useTrackVisit from "./hooks/useTrackVisit";
 import LoadingState from "../../shared/components/ui/LoadingState";
+
+const Projects = lazy(() => import("./components/Projects"));
+const Experience = lazy(() => import("./components/Experience"));
+const Skills = lazy(() => import("./components/Skills"));
+const Contact = lazy(() => import("./components/Contact"));
 
 const Home = () => {
 	const { admin, isLoading: isAdminLoading } = useAdminInfo();
@@ -15,7 +17,7 @@ const Home = () => {
 
 	useTrackVisit(user, false);
 
-	if (isAdminLoading) return <LoadingState message="Loading Portfolio..." />;
+	if (isAdminLoading) return <LoadingState message="Loading Portfolio..." fullScreen />;
 
 	if (!admin) {
 		return (

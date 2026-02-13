@@ -23,6 +23,7 @@ import 'swiper/css/free-mode';
 
 import useProject from "../adminPanel/Projects/hooks/useProject";
 import LoadingState from "../../shared/components/ui/LoadingState";
+import { optimizeCloudinaryUrl } from "../../shared/utils/imageOptimizer";
 
 const ProjectDetails = () => {
     const navigate = useNavigate();
@@ -63,12 +64,12 @@ const ProjectDetails = () => {
             <div className="relative min-h-[75vh] w-full flex items-center pt-32 pb-44">
                 <div className="absolute inset-0 z-0">
                     <img 
-                        src={mainImg?.secure_url} 
+                        src={optimizeCloudinaryUrl(mainImg?.secure_url, 1200)} 
                         alt={title} 
                         className="w-full h-full object-cover opacity-30 dark:opacity-30"
                         crossOrigin="anonymous"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white dark:from-[#030712] dark:via-transparent dark:to-[#030712]"></div>
+                    <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-white dark:from-[#030712] dark:via-transparent dark:to-[#030712]"></div>
                 </div>
                 
                 <div className="relative container mx-auto px-4 z-10 text-center md:text-left">
@@ -145,7 +146,7 @@ const ProjectDetails = () => {
 
                                     {/* Sub-cards */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 border-t border-gray-100 dark:border-white/5">
-                                        <div className="p-6 md:p-8 bg-white dark:bg-black/40 rounded-[1.5rem] border border-gray-100 dark:border-white/5 flex items-center gap-6 group/box hover:border-orange/20 transition-all">
+                                        <div className="p-6 md:p-8 bg-white dark:bg-black/40 rounded-3xl border border-gray-100 dark:border-white/5 flex items-center gap-6 group/box hover:border-orange/20 transition-all">
                                             <div className="text-orange opacity-60">
                                                 <HiOutlineSparkles className="text-2xl" />
                                             </div>
@@ -155,7 +156,7 @@ const ProjectDetails = () => {
                                             </div>
                                         </div>
 
-                                        <div className="p-6 md:p-8 bg-white dark:bg-black/40 rounded-[1.5rem] border border-gray-100 dark:border-white/5 flex items-center gap-6 group/box hover:border-blue-500/20 transition-all">
+                                        <div className="p-6 md:p-8 bg-white dark:bg-black/40 rounded-3xl border border-gray-100 dark:border-white/5 flex items-center gap-6 group/box hover:border-blue-500/20 transition-all">
                                             <div className="text-blue-600 dark:text-blue-400 opacity-60">
                                                 <HiCodeBracket className="text-2xl" />
                                             </div>
@@ -180,10 +181,16 @@ const ProjectDetails = () => {
                                 </div>
                                 <div className="flex items-center gap-6">
                                     <div className="flex gap-2">
-                                        <button className="gallery-prev-btn w-10 h-10 rounded-full bg-white dark:bg-[#0a0f1c] border border-gray-100 dark:border-white/5 flex items-center justify-center hover:bg-orange transition-all text-gray-400 dark:text-white/40 cursor-pointer shadow-lg hover:text-white">
+                                        <button 
+                                            aria-label="Previous image"
+                                            className="gallery-prev-btn w-10 h-10 rounded-full bg-white dark:bg-[#0a0f1c] border border-gray-100 dark:border-white/5 flex items-center justify-center hover:bg-orange transition-all text-gray-400 dark:text-white/40 cursor-pointer shadow-lg hover:text-white"
+                                        >
                                             <HiChevronLeft className="text-lg" />
                                         </button>
-                                        <button className="gallery-next-btn w-10 h-10 rounded-full bg-white dark:bg-[#0a0f1c] border border-gray-100 dark:border-white/5 flex items-center justify-center hover:bg-orange transition-all text-gray-400 dark:text-white/40 cursor-pointer shadow-lg hover:text-white">
+                                        <button 
+                                            aria-label="Next image"
+                                            className="gallery-next-btn w-10 h-10 rounded-full bg-white dark:bg-[#0a0f1c] border border-gray-100 dark:border-white/5 flex items-center justify-center hover:bg-orange transition-all text-gray-400 dark:text-white/40 cursor-pointer shadow-lg hover:text-white"
+                                        >
                                             <HiChevronRight className="text-lg" />
                                         </button>
                                     </div>
@@ -214,7 +221,7 @@ const ProjectDetails = () => {
                                     {galleryImages.map((img, idx) => (
                                         <SwiperSlide key={img.public_id || idx}>
                                             <img
-                                                src={img.secure_url}
+                                                src={optimizeCloudinaryUrl(img.secure_url, 1000)}
                                                 alt={`Project slide ${idx + 1}`}
                                                 className="w-full h-auto aspect-video object-cover"
                                                 crossOrigin="anonymous"
@@ -226,9 +233,9 @@ const ProjectDetails = () => {
                                 {/* Animated Progress Bar */}
                                 <div className="h-1.5 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
                                     <Motion.div 
-                                        className="h-full bg-orange"
-                                        initial={{ width: "0%" }}
-                                        animate={{ width: `${((activeIndex + 1) / galleryImages.length) * 100}%` }}
+                                        className="h-full bg-orange origin-left"
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: (activeIndex + 1) / galleryImages.length }}
                                         transition={{ duration: 0.5 }}
                                     />
                                 </div>
@@ -251,7 +258,7 @@ const ProjectDetails = () => {
                                         <SwiperSlide key={`thumb-${idx}`} className="cursor-pointer">
                                             <div className={`aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeIndex === idx ? 'border-orange scale-95' : 'border-transparent opacity-40'}`}>
                                                 <img
-                                                    src={img.secure_url}
+                                                    src={optimizeCloudinaryUrl(img.secure_url, 200)}
                                                     alt={`Thumbnail ${idx + 1}`}
                                                     className="w-full h-full object-cover"
                                                     crossOrigin="anonymous"
@@ -305,7 +312,7 @@ const ProjectDetails = () => {
 
                         {/* Tech Stack Card */}
                         <div className="bg-gray-50 dark:bg-[#0a0f1c]/40 backdrop-blur-3xl rounded-[2.5rem] p-10 border border-gray-100 dark:border-white/5 shadow-2xl relative overflow-hidden group transition-colors duration-500">
-                            <div className="absolute inset-0 bg-gradient-to-br from-black/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="absolute inset-0 bg-linear-to-br from-black/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <div className="flex items-center gap-4 mb-16 relative z-10">
                                 <div className="w-10 h-10 rounded-xl bg-white dark:bg-black border border-gray-100 dark:border-white/10 flex items-center justify-center text-orange shadow-lg">

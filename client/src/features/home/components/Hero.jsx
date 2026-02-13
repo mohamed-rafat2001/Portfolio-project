@@ -137,10 +137,10 @@ const Hero = () => {
 						<div className="w-12 h-12 rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange">
 							<HiEnvelope className="text-xl" />
 						</div>
-						<div className="text-left">
-							<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
-								Email
-							</p>
+						<div className="space-y-1">
+									<p className="text-[10px] text-gray-700 dark:text-gray-400 uppercase font-black tracking-widest mb-1">
+										Email
+									</p>
 							<a href={`mailto:${admin?.email || "mohamed20rafat@gmail.com"}`} className="text-sm font-bold text-gray-900 dark:text-white hover:text-orange transition-colors">
 								{admin?.email || "mohamed20rafat@gmail.com"}
 							</a>
@@ -165,10 +165,10 @@ const Hero = () => {
 						<div className="w-12 h-12 rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange">
 							<HiMapPin className="text-xl" />
 						</div>
-						<div className="text-left">
-							<p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">
-								Location
-							</p>
+						<div className="space-y-1">
+									<p className="text-[10px] text-gray-700 dark:text-gray-400 uppercase font-black tracking-widest mb-1">
+										Location
+									</p>
 							<p className="text-sm font-bold text-gray-900 dark:text-white">
 								{admin?.moreInfo?.location || "Egypt"}
 							</p>

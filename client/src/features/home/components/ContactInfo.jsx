@@ -34,7 +34,7 @@ const ContactInfo = () => {
 						<HiEnvelope className="text-2xl" aria-hidden="true" />
 					</div>
 					<div className="min-w-0">
-						<p className="text-[11px] font-black text-gray-500 uppercase tracking-widest mb-2">
+						<p className="text-[11px] font-black text-gray-700 dark:text-gray-400 uppercase tracking-widest mb-2">
 							Email Me
 						</p>
 						<a
@@ -51,7 +51,7 @@ const ContactInfo = () => {
 						<HiPhone className="text-2xl" aria-hidden="true" />
 					</div>
 					<div className="min-w-0">
-						<p className="text-[11px] font-black text-gray-500 uppercase tracking-widest mb-2">
+						<p className="text-[11px] font-black text-gray-700 dark:text-gray-400 uppercase tracking-widest mb-2">
 							Call Me
 						</p>
 						<a
@@ -68,7 +68,7 @@ const ContactInfo = () => {
 						<HiMapPin className="text-2xl" aria-hidden="true" />
 					</div>
 					<div className="min-w-0">
-						<p className="text-[11px] font-black text-gray-500 uppercase tracking-widest mb-2">
+						<p className="text-[11px] font-black text-gray-700 dark:text-gray-400 uppercase tracking-widest mb-2">
 							Location
 						</p>
 						<p className="text-base font-bold text-gray-900 dark:text-white truncate block">
@@ -79,7 +79,7 @@ const ContactInfo = () => {
 			</div>
 
 			<div className="pt-12 border-t border-gray-100 dark:border-gray-800/50">
-				<p className="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] mb-8">
+				<p className="text-[11px] font-black text-gray-700 dark:text-gray-400 uppercase tracking-[0.4em] mb-8">
 					Follow My Work
 				</p>
 				<div className="flex flex-wrap gap-5">
@@ -90,7 +90,7 @@ const ContactInfo = () => {
 								href={social.url}
 								target="_blank"
 								rel="noreferrer"
-								className="w-14 h-14 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-white hover:bg-orange hover:border-orange transition-all duration-300 group shadow-xl"
+								className="w-14 h-14 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-center justify-center text-gray-700 dark:text-gray-400 hover:text-white hover:bg-orange hover:border-orange transition-all duration-300 group shadow-xl"
 								title={social.name}
 							>
 								<span className="text-2xl transition-transform group-hover:scale-110">

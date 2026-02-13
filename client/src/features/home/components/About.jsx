@@ -53,7 +53,7 @@ const About = () => {
 
 							<div className="relative aspect-square rounded-[3rem] bg-gray-50 dark:bg-[#0a0f1c] overflow-hidden border-8 border-gray-50 dark:border-[#0a0f1c] shadow-xl">
 								<img
-									src={admin?.profileImg?.secure_url ? optimizeCloudinaryUrl(admin.profileImg.secure_url, 600) : profileImg}
+									src={admin?.profileImg?.secure_url ? optimizeCloudinaryUrl(admin.profileImg.secure_url, 450) : profileImg}
 									alt={admin?.name || "Mohamed Rafat"}
 									width={500}
 									height={500}

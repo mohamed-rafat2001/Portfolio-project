@@ -25,7 +25,7 @@ const ProjectCard = ({ project, index }) => {
                 <div className="p-2.5 pb-0">
                     <div className="relative aspect-[1.35] w-full overflow-hidden rounded-[2.2rem]">
                         <img
-                            src={optimizeCloudinaryUrl(project.mainImg?.secure_url, 600)}
+                            src={optimizeCloudinaryUrl(project.mainImg?.secure_url, 400)}
                             alt={project.title}
                             width={400}
                             height={300}

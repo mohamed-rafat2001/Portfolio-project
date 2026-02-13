@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { HiBars3, HiXMark, HiSun, HiMoon, HiArrowRightOnRectangle, HiUserCircle } from "react-icons/hi2";
-import { m as Motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
 import useLogout from "../../../features/auth/hooks/useLogout";
@@ -134,9 +134,11 @@ const Header = () => {
 						)}
 					</Motion.button>
 
-					<button
+					<Motion.button
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 0.9 }}
 						className="cursor-pointer p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-orange dark:hover:text-orange transition-colors bg-gray-50 dark:bg-gray-800"
-						onClick={() => setIsOpen(!isOpen)}
+						onClick={() => setIsOpen((prev) => !prev)}
 						aria-label="Toggle menu"
 					>
 						{isOpen ? (
@@ -144,7 +146,7 @@ const Header = () => {
 						) : (
 							<HiBars3 className="text-2xl" />
 						)}
-					</button>
+					</Motion.button>
 				</div>
 			</div>
 

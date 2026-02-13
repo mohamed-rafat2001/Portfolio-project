@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { HiArrowUp } from "react-icons/hi2";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 
 const ScrollToTop = () => {
 	const [isVisible, setIsVisible] = useState(false);

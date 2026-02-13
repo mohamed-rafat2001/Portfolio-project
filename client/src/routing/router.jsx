@@ -1,29 +1,36 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 import AppLayout from "../layouts/AppLayout";
 import AdminLayout from "../layouts/AdminLayout";
+import LoadingState from "../shared/components/ui/LoadingState";
 
-import Home from "../features/home/Home";
-import PublicProjects from "../features/home/PublicProjects";
-import ProjectDetails from "../features/home/ProjectDetails";
-import PublicSkills from "../features/home/PublicSkills";
+// Lazy load features
+const Home = lazy(() => import("../features/home/Home"));
+const PublicProjects = lazy(() => import("../features/home/PublicProjects"));
+const ProjectDetails = lazy(() => import("../features/home/ProjectDetails"));
+const PublicSkills = lazy(() => import("../features/home/PublicSkills"));
 
-import Login from "../features/auth/Login";
+const Login = lazy(() => import("../features/auth/Login"));
 
-import Dashboard from "../features/adminPanel/Dashboard/Dashboard";
-import Profile from "../features/adminPanel/Profile/Profile";
-import Projects from "../features/adminPanel/Projects/Projects";
-import Educations from "../features/adminPanel/Educations/Educations";
-import Experiences from "../features/adminPanel/Experiences/Experiences";
-import Skills from "../features/adminPanel/Skills/Skills";
-import Emails from "../features/adminPanel/Emails/Emails";
+const Dashboard = lazy(() => import("../features/adminPanel/Dashboard/Dashboard"));
+const Profile = lazy(() => import("../features/adminPanel/Profile/Profile"));
+const Projects = lazy(() => import("../features/adminPanel/Projects/Projects"));
+const Educations = lazy(() => import("../features/adminPanel/Educations/Educations"));
+const Experiences = lazy(() => import("../features/adminPanel/Experiences/Experiences"));
+const Skills = lazy(() => import("../features/adminPanel/Skills/Skills"));
+const Emails = lazy(() => import("../features/adminPanel/Emails/Emails"));
 
 import NotFound from "../shared/components/ui/NotFound";
 import ProtectRoute from "./ProtectRoute.jsx";
 
 const router = createBrowserRouter([
 	{
-		element: <AppLayout />,
+		element: (
+			<Suspense fallback={<LoadingState message="Loading..." />}>
+				<AppLayout />
+			</Suspense>
+		),
 		children: [
 			{
 				path: "/",
@@ -52,7 +59,11 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/adminPanel",
-				element: <AdminLayout />,
+				element: (
+					<Suspense fallback={<LoadingState message="Loading Admin Panel..." />}>
+						<AdminLayout />
+					</Suspense>
+				),
 				children: [
 					{
 						index: true,

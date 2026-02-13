@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { PuffLoader } from "react-spinners";
 
 const LoadingState = ({ message = "Loading..." }) => {

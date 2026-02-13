@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import {
 	HiArrowRight,
 	HiPaperAirplane,
@@ -98,7 +98,7 @@ const Hero = () => {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: 0.4, duration: 0.5 }}
-					className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-16 leading-relaxed font-medium"
+					className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-16 leading-relaxed font-medium"
 				>
 					{admin?.moreInfo?.job?.note || "Building robust, scalable applications with a focus on seamless user experiences and modern architecture."}
 				</Motion.p>

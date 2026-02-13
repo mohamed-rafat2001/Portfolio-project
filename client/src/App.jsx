@@ -2,6 +2,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { LazyMotion, domMax } from "framer-motion";
 import router from "./routing/router";
 import queryClient from "./shared/utils/queryClient";
 import { ThemeProvider, useTheme } from "./shared/context/ThemeContext";
@@ -41,11 +42,13 @@ const ToasterContainer = () => {
 const App = () => {
 	return (
 		<ThemeProvider>
-			<QueryClientProvider client={queryClient}>
-				<ToasterContainer />
-				<ReactQueryDevtools initialIsOpen={false} />
-				<RouterProvider router={router} />
-			</QueryClientProvider>
+			<LazyMotion features={domMax}>
+				<QueryClientProvider client={queryClient}>
+					<ToasterContainer />
+					<ReactQueryDevtools initialIsOpen={false} />
+					<RouterProvider router={router} />
+				</QueryClientProvider>
+			</LazyMotion>
 		</ThemeProvider>
 	);
 };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import {
 	HiCommandLine,
 	HiCircleStack,
@@ -48,11 +48,10 @@ const SkillCategoryCard = ({ skill, catIndex }) => {
 						{displaySkills?.map((s, sIndex) => (
 							<Motion.span
 								key={sIndex}
-								layout
 								initial={{ opacity: 0, scale: 0.8 }}
 								animate={{ opacity: 1, scale: 1 }}
 								whileHover={{ scale: 1.05, y: -2 }}
-								className="px-6 py-3 bg-white dark:bg-[#030712] text-gray-500 dark:text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-100 dark:border-white/5 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
+								className="px-6 py-3 bg-white dark:bg-[#030712] text-gray-600 dark:text-gray-300 text-[12px] font-bold rounded-2xl border border-gray-100 dark:border-white/5 hover:border-orange/40 hover:text-orange hover:bg-orange/5 transition-all cursor-default shadow-sm"
 							>
 								{s}
 							</Motion.span>
@@ -65,7 +64,7 @@ const SkillCategoryCard = ({ skill, catIndex }) => {
 						onClick={() => setShowAll(!showAll)}
 						className="mt-auto pt-6 text-[10px] font-black text-orange uppercase tracking-[0.3em] hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-2 cursor-pointer w-fit"
 					>
-						<div className="w-6 h-[1px] bg-orange/30"></div>
+						<div className="w-6 h-px bg-orange/30"></div>
 						{showAll ? "Show Less" : `+ View ${skill.skills.length - 8} More`}
 					</button>
 				)}

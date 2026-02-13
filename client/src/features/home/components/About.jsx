@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi2";
 import profileImg from "../../../shared/assets/profissionalMe.png";
 import useAdminInfo from "../../../shared/hooks/useAdminInfo";
@@ -54,10 +54,14 @@ const About = () => {
 								<img
 									src={admin?.profileImg?.secure_url || profileImg}
 									alt={admin?.name || "Mohamed Rafat"}
+									width={500}
+									height={500}
+									loading="eager"
+									fetchPriority="high"
 									className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
 									crossOrigin="anonymous"
 								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 dark:from-[#030712]/80 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700"></div>
+								<div className="absolute inset-0 bg-linear-to-t from-gray-900/40 dark:from-[#030712]/80 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700"></div>
 							</div>
 						</div>
 					</div>
@@ -71,7 +75,7 @@ const About = () => {
 							</h3>
 						</div>
 
-						<div className="space-y-8 text-gray-500 dark:text-gray-400">
+						<div className="space-y-8 text-gray-600 dark:text-gray-400">
 							<div className="text-lg md:text-xl leading-relaxed font-medium">
 								{admin?.infos?.aboutMe?.message ? (
 									<p>{admin.infos.aboutMe.message}</p>

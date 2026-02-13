@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-	--color-orange: #f59e0b;
+	--color-orange: #ea580c;
 	--color-orange-600: #d97706;
 	--color-orange-700: #b45309;
 }
@@ -20,9 +20,16 @@
 		overflow-x: hidden;
 	}
 
-	* {
+	/* * {
 		transition-property: color, background-color, border-color,
 			text-decoration-color, fill, stroke;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 300ms;
+	} */
+
+	/* Targeted transitions for better performance */
+	a, button, input, textarea, .transition-theme {
+		transition-property: color, background-color, border-color, opacity, transform;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 300ms;
 	}

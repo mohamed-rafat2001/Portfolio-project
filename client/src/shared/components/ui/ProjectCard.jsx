@@ -26,14 +26,17 @@ const ProjectCard = ({ project, index }) => {
                         <img
                             src={project.mainImg?.secure_url}
                             alt={project.title}
+                            width={400}
+                            height={300}
+                            loading="lazy"
                             className="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-110"
                             crossOrigin="anonymous"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/10 to-gray-900/40"></div>
+                        <div className="absolute inset-0 bg-linear-to-b from-transparent via-gray-900/10 to-gray-900/40"></div>
 
                         {/* FEATURED badge pill */}
                         <div className="absolute top-4 left-4 z-10">
-                            <div className="flex items-center gap-2 px-5 py-2.5 bg-[#f97316] text-white rounded-[1rem] shadow-xl">
+                            <div className="flex items-center gap-2 px-5 py-2.5 bg-[#f97316] text-white rounded-2xl shadow-xl">
                                 <HiArrowLongRight className="text-white text-sm" />
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em]">
                                     Featured
@@ -52,7 +55,7 @@ const ProjectCard = ({ project, index }) => {
                 </div>
 
                 {/* Tightened Content Area */}
-                <div className="px-6 py-6 md:px-8 md:py-7 flex flex-col flex-grow relative">
+                <div className="px-6 py-6 md:px-8 md:py-7 flex flex-col grow relative">
                     <h3 className="text-[22px] font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-3 leading-tight group-hover/card:text-[#f97316] transition-colors duration-300">
                         {project.title}
                     </h3>
@@ -88,12 +91,13 @@ const ProjectCard = ({ project, index }) => {
                             )}
                         </div>
 						{/* Circular Action Button */}
-						<div 
+						<button 
                             onClick={handleCardClick}
-                            className="w-11 h-11 rounded-full bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800/50 flex items-center justify-center text-gray-500 dark:text-gray-500 group-hover/card:bg-[#f97316] group-hover/card:text-white transition-all duration-500 shadow-xl"
+                            aria-label={`View details for ${project.title}`}
+                            className="w-11 h-11 rounded-full bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800/50 flex items-center justify-center text-gray-500 dark:text-gray-500 group-hover/card:bg-[#f97316] group-hover/card:text-white transition-all duration-500 shadow-xl cursor-pointer"
                         >
 							<HiArrowUpRight className="text-lg transition-transform" />
-						</div>
+						</button>
 					</div>
                 </div>
             </div>

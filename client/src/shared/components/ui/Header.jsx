@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { HiBars3, HiXMark, HiSun, HiMoon, HiArrowRightOnRectangle, HiUserCircle } from "react-icons/hi2";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import useCurrentUser from "../../../features/auth/hooks/useCurrentUser";
 import useLogout from "../../../features/auth/hooks/useLogout";
@@ -91,6 +91,8 @@ const Header = () => {
                                         <img
                                             src={user?.profileImg?.secure_url || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
                                             alt={user?.name}
+                                            width={36}
+                                            height={36}
                                             className="w-full h-full object-cover"
                                             crossOrigin="anonymous"
                                         />
@@ -143,9 +145,9 @@ const Header = () => {
 			<AnimatePresence>
 				{isOpen && (
 					<Motion.div
-						initial={{ opacity: 0, height: 0 }}
-						animate={{ opacity: 1, height: "calc(100vh - 65px)" }}
-						exit={{ opacity: 0, height: 0 }}
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -20 }}
 						transition={{ duration: 0.3, ease: "easeInOut" }}
 						className="fixed inset-0 top-[65px] bg-white dark:bg-gray-900 z-40 md:hidden overflow-y-auto"
 					>

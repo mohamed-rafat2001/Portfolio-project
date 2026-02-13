@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiArrowUpRight, HiArrowLongRight, HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -43,7 +43,7 @@ const Projects = () => {
                             Featured Projects
                         </h2>
                     </div>
-					<div className="flex-grow mx-10 h-px bg-gray-100 dark:bg-white/10 relative hidden md:block">
+					<div className="grow mx-10 h-px bg-gray-100 dark:bg-white/10 relative hidden md:block">
 						<span className="absolute right-0 top-1/2 -translate-y-1/2 text-[10px] font-black text-gray-400 dark:text-white/20 uppercase tracking-[0.5em] pl-6 bg-white dark:bg-[#030712]">
 							{projects?.length || 0}
 						</span>
@@ -51,10 +51,16 @@ const Projects = () => {
                     
                     {/* Navigation Buttons */}
                     <div className="flex gap-3">
-                        <button className="projects-prev-btn w-12 h-12 rounded-full border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 hover:bg-orange hover:border-orange hover:text-white transition-all cursor-pointer shadow-xl disabled:opacity-10">
+                        <button 
+                            aria-label="Previous projects"
+                            className="projects-prev-btn w-12 h-12 rounded-full border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 hover:bg-orange hover:border-orange hover:text-white transition-all cursor-pointer shadow-xl disabled:opacity-10"
+                        >
                             <HiArrowLongLeft className="text-xl" />
                         </button>
-                        <button className="projects-next-btn w-12 h-12 rounded-full border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 hover:bg-orange hover:border-orange hover:text-white transition-all cursor-pointer shadow-xl disabled:opacity-10">
+                        <button 
+                            aria-label="Next projects"
+                            className="projects-next-btn w-12 h-12 rounded-full border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 hover:bg-orange hover:border-orange hover:text-white transition-all cursor-pointer shadow-xl disabled:opacity-10"
+                        >
                             <HiArrowLongRight className="text-xl" />
                         </button>
                     </div>

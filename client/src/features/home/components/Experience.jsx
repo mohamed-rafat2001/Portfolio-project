@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiBriefcase, HiAcademicCap } from "react-icons/hi2";
 import useExperiences from "../../adminPanel/Experiences/hooks/useExperiences";
 import useEducations from "../../adminPanel/Educations/hooks/useEducations";
@@ -46,7 +46,7 @@ const Experience = () => {
 					{/* Experience Column */}
 					<div className="space-y-16">
 						<div className="flex items-center gap-6">
-							<div className="w-16 h-16 rounded-[1.5rem] bg-gray-50 dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange text-3xl shadow-xl transition-colors">
+							<div className="w-16 h-16 rounded-3xl bg-gray-50 dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange text-3xl shadow-xl transition-colors">
 								<HiBriefcase />
 							</div>
 							<h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
@@ -92,7 +92,7 @@ const Experience = () => {
 					{/* Education Column */}
 					<div className="space-y-16">
 						<div className="flex items-center gap-6">
-							<div className="w-16 h-16 rounded-[1.5rem] bg-gray-50 dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange text-3xl shadow-xl transition-colors">
+							<div className="w-16 h-16 rounded-3xl bg-gray-50 dark:bg-[#0a0f1c] border border-gray-100 dark:border-gray-800 flex items-center justify-center text-orange text-3xl shadow-xl transition-colors">
 								<HiAcademicCap />
 							</div>
 							<h3 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">

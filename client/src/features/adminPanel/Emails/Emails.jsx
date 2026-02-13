@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import { HiOutlineEnvelope } from "react-icons/hi2";
 import useEmails from "./hooks/useEmails";
 import useUpdateEmailStatus from "./hooks/useUpdateEmailStatus";

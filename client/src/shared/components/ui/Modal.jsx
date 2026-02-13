@@ -1,4 +1,4 @@
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import { HiOutlineXMark } from "react-icons/hi2";
 
 const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-lg", hideHeader = false, padding = "px-12 pb-12" }) => {

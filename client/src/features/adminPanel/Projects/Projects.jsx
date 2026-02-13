@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import { HiOutlinePlus, HiOutlineSparkles } from "react-icons/hi2";
 import useProjects from "./hooks/useProjects";
 import useCreateProj from "./hooks/useCreateProj";

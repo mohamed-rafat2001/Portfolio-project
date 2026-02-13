@@ -17,7 +17,7 @@ import {
     HiOutlineComputerDesktop,
     HiOutlineTag
 } from "react-icons/hi2";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import InputField from "../../Profile/components/InputField";
 import { optimizeCloudinaryUrl } from "../../../../shared/utils/imageOptimizer";
 

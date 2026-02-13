@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiEnvelope, HiLockClosed, HiArrowRight } from "react-icons/hi2";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";

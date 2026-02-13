@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiOutlineTrash, HiOutlineClock } from "react-icons/hi2";
 import { format } from "date-fns";
 

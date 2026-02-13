@@ -5,6 +5,7 @@ import useAdminInfo from "../../shared/hooks/useAdminInfo";
 import useCurrentUser from "../../features/auth/hooks/useCurrentUser";
 import useTrackVisit from "./hooks/useTrackVisit";
 import LoadingState from "../../shared/components/ui/LoadingState";
+import LazySection from "../../shared/components/ui/LazySection";
 
 const Projects = lazy(() => import("./components/Projects"));
 const Experience = lazy(() => import("./components/Experience"));
@@ -41,10 +42,20 @@ const Home = () => {
 		<div className="flex flex-col">
 			<Hero user={displayUser} />
 			<About user={displayUser} />
-			<Projects limit={6} user={displayUser} />
-			<Experience user={displayUser} />
-			<Skills user={displayUser} />
-			<Contact user={displayUser} />
+			<Suspense fallback={<div className="h-screen bg-white dark:bg-[#030712]" />}>
+				<LazySection>
+					<Projects limit={6} user={displayUser} />
+				</LazySection>
+				<LazySection>
+					<Experience user={displayUser} />
+				</LazySection>
+				<LazySection>
+					<Skills user={displayUser} />
+				</LazySection>
+				<LazySection>
+					<Contact user={displayUser} />
+				</LazySection>
+			</Suspense>
 		</div>
 	);
 };

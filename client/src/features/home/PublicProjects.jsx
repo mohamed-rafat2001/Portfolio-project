@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import ProjectCard from "../../shared/components/ui/ProjectCard";
 import useProjects from "../adminPanel/Projects/hooks/useProjects";

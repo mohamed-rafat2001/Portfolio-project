@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiArrowUpRight } from "react-icons/hi2";
 
 const StatCard = ({ title, value, icon, color }) => {

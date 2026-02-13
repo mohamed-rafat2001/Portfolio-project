@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion as Motion } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import { 
     HiArrowUpRight, 
     HiCodeBracket, 

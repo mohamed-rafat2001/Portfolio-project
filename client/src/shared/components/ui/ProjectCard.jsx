@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiArrowUpRight, HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { optimizeCloudinaryUrl } from "../../utils/imageOptimizer";

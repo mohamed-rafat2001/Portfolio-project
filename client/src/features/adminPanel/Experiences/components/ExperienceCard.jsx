@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 import { HiOutlineBriefcase, HiOutlinePencil, HiOutlineTrash, HiOutlineCalendar } from "react-icons/hi2";
 
 const ExperienceCard = ({ experience, onEdit, onDelete }) => {

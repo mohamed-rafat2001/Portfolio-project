@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 
 const AdminHeader = ({ title, description, icon, action }) => {
 	return (

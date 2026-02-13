@@ -1,4 +1,4 @@
-import { motion as Motion } from "framer-motion";
+import { m as Motion } from "framer-motion";
 
 const FormCard = ({ title, children, icon, isUpdating, isDirty, showButton = true, headerAction }) => {
 	return (

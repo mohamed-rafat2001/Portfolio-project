@@ -19,7 +19,7 @@ import {
 	HiMoon,
 } from "react-icons/hi2";
 import { useState, useEffect } from "react";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { m as Motion, AnimatePresence } from "framer-motion";
 import ScrollToTop from "../shared/components/ui/ScrollToTop.jsx";
 import Logo from "../shared/components/ui/Logo.jsx";
 import useLogout from "../features/auth/hooks/useLogout";
